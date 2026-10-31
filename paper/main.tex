@@ -1,0 +1,533 @@
+\documentclass[pdflatex,sn-mathphys]{sn-jnl}
+
+\usepackage[T1]{fontenc}
+\usepackage{graphicx}
+\usepackage{mathtools}
+\usepackage{newtxtext,newtxmath}
+\usepackage[scaled=0.88]{inconsolata}
+\linespread{1.03}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage{booktabs}
+\usepackage{xurl}
+\DeclareUrlCommand\doiurl{\def\UrlLeft{https://doi.org/}}
+\DeclareUrlCommand\burl{}
+\hypersetup{bookmarksdepth=2,colorlinks=true,linkcolor=black,citecolor=black,urlcolor=black}
+\usepackage{multirow}
+
+\graphicspath{{./}{figures/}}
+\jyear{2026}
+
+\theoremstyle{thmstyleone}
+\newtheorem{proposition}{Proposition}
+
+\theoremstyle{thmstyletwo}
+\newtheorem{remark}{Remark}
+
+\newenvironment{botherref}{}{}
+
+\raggedbottom
+
+\begin{document}
+
+\title[EVM-Guard: Bytecode Reentrancy Triage]{EVM-Guard: Bytecode-Only Reentrancy Triage for Solidity 0.4--0.5 with Sandbox Witness Replay}
+
+\author{\fnm{Devarsh} \sur{Patel}}\email{devarsh.patel2024@vitstudent.ac.in}
+
+\affil{\orgdiv{School of Computer Science and Engineering}, \orgname{Vellore Institute of Technology}, \orgaddress{\city{Vellore}, \postcode{632014}, \state{Tamil Nadu}, \country{India}}}
+
+\abstract{
+Reentrancy is the vulnerability class most often behind losses in Ethereum contracts, and deployed contracts are often available only as bytecode. We present \textbf{EVM-Guard}, a bytecode-only triage tool for reentrancy in contracts compiled with Solidity 0.4--0.5. EVM-Guard builds a control-flow graph with an abstract stack dataflow, flags an external call followed on some path by a storage write with no mutex in between, excludes calls that forward only the 2300-gas stipend, recognises a mutex on a simple storage variable, and replays a candidate transaction in a \texttt{py-evm} sandbox. A finding is confirmed only when the post-state meets the criterion. On SmartBugs-curated, the final engine (v5) reaches 93.5\% reentrancy recall at 80.6\% precision, against 93.5\% and 48.3\% for Slither 0.11.6. On SolidiFI and on a labelled benchmark of 389 files, its precision is 58.8\% and 76.0\%. These real-benchmark figures are post hoc: the engine was developed on those files, so they are not held-out estimates. A final pre-registered test of 210 synthetic contracts compiled with solc 0.5.12 gives 100\% recall and 100\% precision for reentrancy, against 33\% for Slither and 39\% for Mythril on the same files. That test uses template injection, so it checks the detector's injection patterns and says nothing about real-world precision. Three limits bound the claims: the real-benchmark precision is post hoc, the only fresh test is synthetic, and the engine does not analyse Solidity 0.8 bytecode. Denial of service and arithmetic are reported as exploratory and are not claimed.
+}
+
+\keywords{Smart Contract Security, Static Analysis, EVM Bytecode, SMT Solving, Z3, Reentrancy, SmartBugs}
+
+\maketitle
+
+%% ===========================================================================
+\section{Introduction}\label{sec:intro}
+
+\subsection{Motivation}\label{sec:intro:motivation}
+Smart contract execution on Ethereum is irrevocable. Deployed bytecodes cannot be hot-patched, leaving protocols exposed when external calls execute before storage updates settle. Control-flow hijacking drains protocol balances before callers can update internal account ledgers. Systematic empirical surveys of decentralized execution confirm that financial losses concentrate in reentrancy, oracle divergence, and arithmetic discrepancies~\cite{zhou2023sok,chen2020survey}, magnified by priority gas auctions and transaction ordering~\cite{daian2020flash}. This operational reality demands pre-deployment analyzers that evaluate runtime bytecode directly, independent of source availability.
+
+\subsection{Existing Analysis Approaches}\label{sec:intro:approaches}
+\begin{enumerate}
+    \item \textbf{Static analysis and intermediate representations.} Source linters such as Slither~\cite{feist2019slither} parse compiler-generated ASTs into intermediate single-assignment representations; however, this dependency renders them inoperative when auditing unverified on-chain bytecodes or dynamic delegatecall targets. Bytecode analyzers such as Securify~\cite{tsankov2018securify} map low-level basic blocks into relational facts evaluated by Souffl{\'e}~\cite{scholz2016souffle}, yet abstract over dynamic stack depths and gas arithmetic, introducing false-positive rates exceeding 50\% on production codebases~\cite{durieux2020empirical,ghaleb2020how}.
+    \item \textbf{Symbolic execution and bounded model checking.} Symbolic execution frameworks—including Mythril\footnote{\url{https://github.com/Consensys/mythril}; we use version 0.24.8.}, Manticore~\cite{mossberg2019manticore}, and Oyente~\cite{luu2016making}—track path feasibility by dispatching first-order logic formulas to Z3~\cite{de2008z3}. When evaluated against non-trivial contracts, storage-dependent loops and cryptographic hashing opcodes trigger exponential path growth. In our evaluation, Mythril timed out on 25.9\% of SmartBugs files and 77.0\% of SolidiFI files, causing extensive analysis dropouts. Exploit synthesizers such as teEther~\cite{krupp2018teether} and coverage fuzzers such as Echidna~\cite{grieco2020echidna} and ConFuzzius~\cite{torres2021confuzzius} generate concrete inputs, but require manual harness scaffolding.
+    \item \textbf{Property testing and deductive verification.} hevm~\cite{dxo2024hevm} executes bytecode under symbolic path constraints to verify developer-written assertions. VerX~\cite{permenev2020verx} and KEVM~\cite{hildenbrandt2018kevm} verify temporal properties against formal specifications. These tools provide strong mathematical guarantees for stated properties, but require manual specification authoring for every contract.
+\end{enumerate}
+EVM-Guard operates directly on compiled runtime bytecode without user annotations or test harnesses. Its checks are fixed dataflow patterns evaluated over the recovered basic-block CFG. The checks trace CFG reachability but do not solve whole-contract path feasibility, providing deterministic hazard triage rather than deductive proofs of safety (Section~\ref{sec:arch:scope}).
+
+\subsection{Research Questions}\label{sec:intro:rqs}
+\begin{itemize}
+    \item \textbf{RQ1 (Detection Precision):} Can intra-procedural CFG dataflow tracking and storage-slot mutex recovery reduce reentrancy false positives compared to source-level AST tools while maintaining high detection recall on benchmark suites?
+    \item \textbf{RQ2 (Witness Replay Fidelity):} To what extent can an isolated, state-falsifiable sandbox replay oracle confirm static bytecode warnings with zero false alarms, and what recall penalty does concrete witness execution impose?
+    \item \textbf{RQ3 (Generalization Bounds):} How do precision metrics tuned against standard evaluation suites compare when measured against held-out synthetic contract corpora compiled under distinct compiler baselines?
+\end{itemize}
+
+\subsection{Contributions}\label{sec:intro:contrib}
+\begin{enumerate}
+    \item \textbf{Hazard specifications and a reentrancy dataflow check.} We state bit-vector hazard specifications over $\mathcal{BV}_{256}$ for six classes, including read-only reentrancy (Section~\ref{sec:formal_framework}), and document the CFG dataflow checks and Z3 parameter templates implemented in EVM-Guard (Table~\ref{tab:impl}). The checks approximate these specifications; they are not proved to decide them (Section~\ref{sec:arch:scope}). The reentrancy check excludes calls restricted to the 2,300-gas stipend.
+    \item \textbf{A bytecode analyzer with state-falsifiable sandbox replay.} EVM-Guard recovers basic-block CFGs directly from disassembled bytecode, computes an abstract stack fixpoint, and replays candidate transactions in a \texttt{py-evm} sandbox under strict post-state balance and storage invariants (Section~\ref{sec:arch}).
+    \item \textbf{Candid multi-benchmark reporting.} We report evaluation results across SmartBugs-curated (143 files), SolidiFI (400 files), a labeled benchmark (389 files), and a fresh pre-registered synthetic test of 210 contracts, explicitly disclosing tuning limitations and construct mismatches (Section~\ref{sec:results}).
+\end{enumerate}
+
+%% ===========================================================================
+\section{Related Work and Hazard Classes}\label{sec:gaps}
+
+Table~\ref{tab:paradigm_comparison} lists the tools closest to EVM-Guard and records the input each one needs. We do not report tool speeds in that table, because published figures were not measured under a common protocol. The only timing comparison we make is on our own runs (Section~\ref{sec:results:runtime}).
+
+\begin{table*}[t]
+\centering
+\small
+\caption{Qualitative comparison of EVM analysis tools. ``User spec.'' means the user must write assertions, harnesses or formal specifications before the tool can check a property.}
+\label{tab:paradigm_comparison}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{@{}llllc@{}}
+\toprule
+\textbf{Tool} & \textbf{Technique} & \textbf{Input} & \textbf{Requires} & \textbf{User spec.} \\
+\midrule
+Slither~\cite{feist2019slither} & Pattern and dataflow rules on an IR & Source & Solidity source & No \\
+Securify~\cite{tsankov2018securify} & Datalog compliance patterns & Source or bytecode & solc for source; bytecode accepted & No \\
+Mythril & Symbolic execution with SMT & Source or bytecode & Solidity or bytecode & No \\
+Manticore~\cite{mossberg2019manticore} & Symbolic execution & Source or bytecode & Solidity or bytecode & Optional \\
+Echidna~\cite{grieco2020echidna} & Property-based fuzzing & Source & Properties to test & Yes \\
+ConFuzzius~\cite{torres2021confuzzius} & Hybrid fuzzing with data dependencies & Source, or ABI of a deployed contract & Solidity source, or ABI and a chain node & No \\
+VerX~\cite{permenev2020verx} & Deductive verification & Source & Formal specification & Yes \\
+hevm~\cite{dxo2024hevm} & Symbolic execution of assertions & Bytecode & Test harness & Yes \\
+\textbf{EVM-Guard} & CFG dataflow checks with Z3 parameter templates & Runtime bytecode & Bytecode only & No \\
+\bottomrule
+\end{tabular}%
+}
+\end{table*}
+
+\subsection{Positioning against hevm}\label{sec:gaps:hevm}
+hevm~\cite{dxo2024hevm} checks assertions that a developer writes into a test harness, typically a Foundry-style property test, and it explores the contract's real paths under its path conditions. A counterexample from hevm is therefore tied to the contract's semantics. EVM-Guard needs no harness or assertion and applies a fixed set of checks to any runtime bytecode. The cost is precision: EVM-Guard's checks approximate the specifications of Section~\ref{sec:formal_framework}, so a finding is a hazard indicator, not a counterexample to a stated property. The two kinds of tool are complementary. EVM-Guard can triage unannotated bytecode, and a property-testing tool can then confirm a suspected hazard once someone has written the property.
+
+\subsection{Hazard Classes}\label{sec:gaps:taxonomy}
+EVM-Guard targets six hazard classes, mapped to SWC identifiers in Table~\ref{tab:gap_taxonomy}. The specifications are our own; the citations indicate prior work on the same class.
+
+\begin{table*}[t]
+\centering
+\small
+\caption{Hazard classes targeted by EVM-Guard and the corresponding specification (Section~\ref{sec:math:invariants}).}
+\label{tab:gap_taxonomy}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{@{}lcp{5.6cm}p{6.8cm}@{}}
+\toprule
+\textbf{Class} & \textbf{SWC} & \textbf{Hazard} & \textbf{Specification} \\
+\midrule
+A & SWC-107 & A callee observes or changes state before the caller settles its own storage~\cite{rodler2021sereum,grossman2018online}. & $\Phi_{\mathrm{RO}}$ (Prop.~\ref{prop:ro}) \\
+B & SWC-101 & Fixed-point division truncation that discards remainders. & $\Phi_{\mathrm{Prec}}$ (Prop.~\ref{prop:prec}) \\
+C & SWC-124 & Proxy and implementation assigning one storage slot to variables of different widths. & $\Phi_{\mathrm{Slot}}$ (Prop.~\ref{prop:proxy}) \\
+D & SWC-128 & Loops over user-growable storage arrays that exceed a gas limit~\cite{grech2018madmax}. & $\Phi_{\mathrm{DoS}}$ (Prop.~\ref{prop:dos}) \\
+E & Non-SWC & Lending logic that reads AMM spot reserves as a price oracle~\cite{zhou2023sok}. & $\Phi_{\mathrm{Flash}}$ (Prop.~\ref{prop:flash}) \\
+F & SWC-112 & \texttt{DELEGATECALL} target influenced by calldata. & $\Phi_{\mathrm{Taint}}$ (Prop.~\ref{prop:taint}) \\
+\bottomrule
+\end{tabular}%
+}
+\end{table*}
+
+\paragraph{Class A: reentrancy (SWC-107).} A contract makes an external call before updating its own storage, and the callee re-enters. In read-only reentrancy, a view function returns unsettled state to a third contract during the call window. EVM-Guard's check follows CFG edges from an external call to a later storage write in the same function and tests for an intervening mutex. It does not distinguish the classic and read-only variants.
+
+\paragraph{Class B: division truncation (SWC-101).} Integer division $\lfloor x/y \rfloor$ discards remainders, and dividing before multiplying amplifies the loss. SWC-101 also covers integer overflow and underflow. EVM-Guard targets only truncation, which matters for the SmartBugs arithmetic category (Section~\ref{sec:results:arith}).
+
+\paragraph{Class C: storage-slot collision (SWC-124).} Upgradeable contracts run implementation logic in the proxy's storage through \texttt{DELEGATECALL}. A mismatch between the two storage layouts can overwrite critical variables such as the owner.
+
+\paragraph{Class D: loop gas exhaustion (SWC-128).} A loop over a dynamic storage array that any user can extend may grow until a call no longer fits within a gas limit.
+
+\paragraph{Class E: spot-price oracle manipulation.} A flash loan can move AMM spot reserves within a single transaction. The SWC registry has no identifier for this class; SWC-114 in the registry denotes Transaction Order Dependence. We therefore refer to these findings as Class~E. The tool's output files record them under the internal label \texttt{SWC-114}, which does not denote the registry entry. SmartBugs has no matching category, so these findings are reported but not scored.
+
+\paragraph{Class F: delegatecall taint (SWC-112).} If calldata determines the \texttt{DELEGATECALL} target, an attacker can run arbitrary code in the caller's storage context.
+
+%% ===========================================================================
+\section{Hazard Specifications over \texorpdfstring{$\mathcal{BV}_{256}$}{BV256}}\label{sec:formal_framework}
+
+The propositions below are specifications. They are not descriptions of what the implementation proves. Section~\ref{sec:arch:scope} and Table~\ref{tab:impl} describe how EVM-Guard approximates each one.
+
+\subsection{Notation}\label{sec:math:state}
+An execution frame is $\mathcal{S} \triangleq \langle \mathbf{\sigma}, \mathbf{\tau}, \mathbf{\mu}, \mathbf{\iota} \rangle$, where $\mathbf{\sigma}: \mathcal{BV}_{256} \to \mathcal{BV}_{256}$ is persistent storage, $\mathbf{\tau}$ is EIP-1153 transient storage, $\mathbf{\mu}$ is the machine state (stack, memory, program counter, gas), and $\mathbf{\iota}$ is the transaction context. Words are elements of $\mathcal{BV}_{256}$ with arithmetic modulo $2^{256}$. For $v \neq 0$, $\mathrm{UDiv}(u, v) \triangleq \lfloor u / v \rfloor$ and $\mathrm{URem}(u, v) \triangleq u - v \cdot \mathrm{UDiv}(u, v)$, with $\mathrm{UDiv}(u, 0) = \mathrm{URem}(u, 0) = 0$, matching the EVM \texttt{DIV} and \texttt{MOD} opcodes in formal operational semantics~\cite{grishchenko2018semantic,hildenbrandt2018kevm}. We write
+\begin{equation}
+    \mathrm{NoMulOverflow}(u, v) \equiv (v = 0) \lor \big(\mathrm{UDiv}(u \cdot v, v) = u\big)
+\end{equation}
+for the condition that the wrapped product $u \cdot v$ equals the mathematical product.
+
+\subsection{Specifications}\label{sec:math:invariants}
+
+\begin{proposition}[Read-only reentrancy ($\Phi_{\mathrm{RO}}$)]\label{prop:ro}
+Let $\mathbf{\sigma}_{\mathrm{transient}}$ be the storage state during an external call and $\mathbf{\sigma}_{\mathrm{settled}}$ the state after the call. A contract violates read-only reentrancy safety if some public view function $f_{\mathrm{view}}$ returns different values in the two states:
+\begin{equation}
+    \Phi_{\mathrm{RO}} \equiv \mathrm{InExternalCall}(\mathbf{\iota}) \land \Big( f_{\mathrm{view}}(\mathbf{\sigma}_{\mathrm{transient}}) \neq f_{\mathrm{view}}(\mathbf{\sigma}_{\mathrm{settled}}) \Big)
+\end{equation}
+\end{proposition}
+
+\begin{proposition}[Proxy storage-slot collision ($\Phi_{\mathrm{Slot}}$)]\label{prop:proxy}
+Let implementations $C_1$ and $C_2$ have slot assignments $\mathcal{L}_1, \mathcal{L}_2$ and types $\mathcal{T}_1, \mathcal{T}_2$. A collision exists if two variables mapped to the same slot have different bit-widths:
+\begin{equation}
+\begin{aligned}
+    \Phi_{\mathrm{Slot}} \equiv \exists v_1 \in \mathrm{Var}(C_1), v_2 \in \mathrm{Var}(C_2) : {} & \big( \mathcal{L}_1(v_1) = \mathcal{L}_2(v_2) \big) \land {} \\
+    & \big( \mathrm{BitWidth}(\mathcal{T}_1(v_1)) \neq \mathrm{BitWidth}(\mathcal{T}_2(v_2)) \big)
+\end{aligned}
+\end{equation}
+\end{proposition}
+
+\begin{proposition}[Fixed-point truncation ($\Phi_{\mathrm{Prec}}$)]\label{prop:prec}
+Let fixed-point division with scale $10^k$ ($k \in \{6, 18\}$) compute $\mathrm{UDiv}(x \cdot 10^k, y)$. A truncation hazard exists if
+\begin{equation}
+\begin{aligned}
+    \Phi_{\mathrm{Prec}} \equiv \exists x, y \in \mathcal{BV}_{256} : \quad & (y > 0) \land \mathrm{NoMulOverflow}(x, 10^k) \land {} \\
+    & (\mathrm{URem}(x \cdot 10^k, y) \neq 0) \land {} \\
+    & \left( \mathrm{UDiv}(\mathrm{URem}(x \cdot 10^k, y)\cdot 10^k, y) > 0 \right)
+\end{aligned}
+\end{equation}
+This predicate holds for almost any division that leaves a non-zero remainder. It is a necessary condition for a truncation hazard, not a sufficient one, and the high arithmetic false-positive rate in Section~\ref{sec:results:arith} is consistent with that.
+\end{proposition}
+
+\begin{proposition}[Loop gas exhaustion ($\Phi_{\mathrm{DoS}}$)]\label{prop:dos}
+Out-of-gas vulnerabilities and resource exhaustion hazards represent a critical attack vector in the EVM~\cite{grech2018madmax,albert2020gasol,perez2020broken}. Let $N$ be the length of a dynamic storage array iterated by a loop, $C_0$ the base call cost and $c_{\mathrm{step}}$ the per-iteration cost, so $C_{\mathrm{total}}(N) = C_0 + N \cdot c_{\mathrm{step}}$. For a gas threshold $G$, a denial-of-service hazard exists if an unprivileged function can grow $N$ without a static bound and
+\begin{equation}
+    \Phi_{\mathrm{DoS}}(G) \equiv \mathrm{IsMutatorPublic}(f_{\mathrm{mut}}) \land \neg \mathrm{HasStaticBound}(N) \land \big( C_0 + N \cdot c_{\mathrm{step}} > G \big)
+\end{equation}
+The static Z3 template instantiates $G_{\mathrm{block}} = 30 \times 10^6$, the gas limit of the sandbox genesis block, with $C_0 = 21{,}000$ and $c_{\mathrm{step}} = 5{,}000$. $G_{\mathrm{sandbox}} = 1.5 \times 10^6$ is a scaled probe threshold used only by the replay oracle (Section~\ref{sec:arch:oracle}). The oracle caps each replayed transaction at $G_{\mathrm{sandbox}}$ gas and confirms a finding when the call exhausts that cap, so it shows unbounded growth at reduced scale rather than exhaustion of a full block.
+\end{proposition}
+
+\begin{proposition}[Spot-price oracle manipulation ($\Phi_{\mathrm{Flash}}$)]\label{prop:flash}
+Let an AMM hold reserves $x, y$ with fee $\phi \in [0,1)$, and let the post-swap spot price be $P_1(\Delta x) = \frac{x + \Delta x (1-\phi)}{y - \Delta y}$. If a lending protocol prices collateral $C$ and debt $D$ at the spot price $P_0 = x/y$, a position solvent at $P_0$ can be pushed below the solvency threshold $H_{\mathrm{min}}$ when
+\begin{equation}
+\begin{aligned}
+    \Phi_{\mathrm{Flash}} \equiv \exists \Delta x : {} & (0 < \Delta x \le \Lambda_{\mathrm{max}}) \land \left( \tfrac{C \cdot P_0}{D} \ge H_{\mathrm{min}} \right) \land {} \\
+    & \left( \tfrac{C \cdot P_1(\Delta x)}{D} < H_{\mathrm{min}} \right)
+\end{aligned}
+\end{equation}
+\end{proposition}
+
+\begin{proposition}[Delegatecall target taint ($\Phi_{\mathrm{Taint}}$)]\label{prop:taint}
+Let $T_{\mathrm{target}} \in \mathcal{BV}_{160}$ be the \texttt{DELEGATECALL} target operand and $\mathrm{AuthorizedTarget}$ the set of permitted callees. On a path $\pi$ with path condition $\mathrm{PC}(\pi)$, the call is hijackable if
+\begin{equation}
+\begin{aligned}
+    \Phi_{\mathrm{Taint}} \equiv \exists \mathbf{d}, A_{\mathrm{attacker}} : {} & \mathrm{PC}(\pi) \land (T_{\mathrm{target}}(\mathbf{d}) = A_{\mathrm{attacker}}) \land {} \\
+    & (A_{\mathrm{attacker}} \notin \mathrm{AuthorizedTarget})
+\end{aligned}
+\end{equation}
+\end{proposition}
+
+\begin{remark}[Unimplemented specification]
+EVM-Guard's interpreter does not model \texttt{TSTORE} or \texttt{TLOAD}, so it has no check for transient-storage lock divergence. No SmartBugs-curated contract uses EIP-1153, so this omission does not affect the evaluation.
+\end{remark}
+
+%% ===========================================================================
+\section{System Architecture and Implementation}\label{sec:arch}
+
+\begin{figure*}[t]
+\centering
+\includegraphics[width=\textwidth]{fig_pipeline_architecture.png}
+\caption{The EVM-Guard static verification and dynamic replay pipeline. A control-flow-sensitive check decides whether a hazard is reported. Z3 supplies witness parameters, and the replay labels each finding as confirmed or unconfirmed under a class-specific state criterion.}
+\label{fig:pipeline_arch}
+\end{figure*}
+
+This section details the formal architecture and multi-stage analysis pipeline of EVM-Guard.
+
+The pipeline (Figure~\ref{fig:pipeline_arch}) has five steps. The list below describes them as four stages, because the Z3 validation and the replay share the fourth.
+\begin{enumerate}
+    \item \textbf{Disassembly (\texttt{src/symbolic\_engine.py}).} Strips the solc CBOR metadata trailer and disassembles the bytecode with \texttt{pyevmasm}.
+    \item \textbf{CFG and abstract-stack dataflow (\texttt{src/evm\_dataflow.py}, \texttt{src/evm\_regions.py}).} Grounded in the mathematical framework of abstract interpretation~\cite{cousot1977abstract}, the module partitions disassembled instructions into basic blocks at \texttt{JUMPDEST}s and after block terminators, then executes a worklist fixpoint over an abstract value domain. Each stack slot carries a known constant when one exists, and provenance flags for calldata, caller, storage (with the slot when constant) and the \texttt{DIV} sites that contributed to it. Jump edges are added only to constant \texttt{JUMPDEST} targets resolved during the fixpoint. Unresolved dynamic jumps are counted and reported, never guessed. Over the 216 runtime contracts, 180 \texttt{JUMP} blocks have no resolved successor, because the target is unresolved or invalid (Section~\ref{sec:threats:internal}). The module computes dominators by iterative bitmask intersection, the region reachable from each dispatcher selector without entering another selector's entry, and the natural loops behind back edges.
+    \item \textbf{Hazard checks (\texttt{src/hazard\_rules.py}).} One check per class runs over these structures (Table~\ref{tab:impl}). Each check that fires records its program points and the selectors whose region contains them.
+    \item \textbf{Z3 templates and replay (\texttt{src/z3\_encoder.py}, \texttt{src/replay\_oracles.py}).} A fired check instantiates a parameter template solved via the Z3 SMT solver~\cite{de2008z3}, which must return SAT, and the replay oracle then synthesizes transactions and executes them in an isolated \texttt{py-evm} Cancun sandbox.
+\end{enumerate}
+
+\begin{algorithm}[t]
+\caption{EVM-Guard static verification and replay triage pipeline}
+\label{alg:verification}
+\begin{algorithmic}[1]
+\Require Runtime bytecode $\mathcal{B}$
+\Ensure Findings $\mathcal{F}$, each labeled confirmed or unconfirmed
+\State $\mathcal{B}' \gets \Call{StripMetadata}{\mathcal{B}}$; $\mathcal{I} \gets \Call{Disassemble}{\mathcal{B}'}$
+\State $\mathcal{G} \gets \Call{AnalyzeFlow}{\mathcal{I}}$ \Comment{CFG and abstract-stack fixpoint}
+\State $\mathcal{D} \gets \Call{Dominators}{\mathcal{G}}$; $\;\mathcal{R} \gets \Call{FunctionRegions}{\mathcal{G}}$
+\State $\mathcal{F} \gets \emptyset$
+\For{each hazard class $h$}
+    \State $e \gets \Call{Check}{h, \mathcal{G}, \mathcal{D}, \mathcal{R}}$ \Comment{evidence or $\bot$}
+    \If{$e \neq \bot$}
+        \State $(r, \mathcal{M}) \gets \Call{SolveTemplate}{h}$
+        \If{$r = \mathrm{SAT}$}
+            \State $\mathit{ok} \gets \Call{ReplayOracle}{h, \mathcal{B}, \mathcal{M}, e}$
+            \State $\mathcal{F} \gets \mathcal{F} \cup \{(h, e, \mathit{ok})\}$
+        \EndIf
+    \EndIf
+\EndFor
+\State \Return $\mathcal{F}$ \Comment{an empty $\mathcal{F}$ is not a proof of safety}
+\end{algorithmic}
+\end{algorithm}
+
+Dispatcher selectors are recovered syntactically: a \texttt{PUSH4} selector that is compared with \texttt{EQ} within a window of five instructions before a \texttt{JUMPI} whose target is a \texttt{JUMPDEST} gives the selector and the entry of its function. This recovery is a pattern match, not part of the dataflow analysis. It finds a selector in 206 of the 216 runtime contracts.
+
+\subsection{What Each Check Implements}\label{sec:arch:scope}
+Table~\ref{tab:impl} lists, for each class, the check that decides whether a finding is reported and the Z3 template that supplies its parameters. The template's satisfiability depends only on constants and on flags set by the check. Z3 therefore validates witness parameters for a fixed template; it does not decide whether the contract satisfies the specification in Section~\ref{sec:formal_framework}. An empty result is not a proof of safety, and a finding is not a proof of exploitability.
+
+\paragraph{Scope of the guarantee.} The analysis is a fixed sequence of passes over the CFG of one runtime bytecode, followed by Z3 queries with a 5\,s timeout. It terminates, and it is deterministic apart from Z3 timeouts. The checks follow CFG edges, use dominators and resolve natural loops, but they do not solve path conditions, and they abandon dynamic jump targets that cannot be resolved to a constant. A finding certifies that the bytecode contains the dataflow pattern in Table~\ref{tab:impl} and that the template is satisfiable with the reported parameters. Nothing stronger follows. EVM-Guard has no counterexample-refinement loop, and each template is solved once. The templates in \texttt{src/z3\_encoder.py} carry docstrings and witness labels, such as ``CEGAR'' and ``Formally verified'', that describe an earlier design. They are not evidence of refinement or verification. Each template's satisfiability follows from its constants and the check's flags, so a SAT result validates witness parameters for that template and nothing more.
+
+\begin{table*}[t]
+\centering
+\small
+\caption{Implemented hazard verification checks in EVM-Guard. ``Check'' decides whether a finding is reported, over the CFG, dominators, function regions and loops. ``Z3 template'' supplies witness parameters.}
+\label{tab:impl}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{@{}lp{8.0cm}p{6.0cm}@{}}
+\toprule
+\textbf{Class} & \textbf{Check (CFG dataflow)} & \textbf{Z3 template} \\
+\midrule
+SWC-107 & A \texttt{CALL} or \texttt{CALLCODE} whose gas operand is not a constant at most 2300 (the stipend), in a function region, from which an \texttt{SSTORE} in the same region is reachable along CFG edges, unless a mutex guards it. The mutex is a dominating write of 1 or 2, a storage-derived branch before the call, and a reset to 0 or 1 reachable after it. & Balances and supplies in $\mathcal{BV}_{256}$ whose transient and settled values differ. \\
+SWC-101 & A \texttt{DIV} or \texttt{SDIV} result that reaches a later \texttt{MUL} operand or an \texttt{SSTORE} value along the abstract-stack dataflow. & 64-bit projected $a, b$ with $b > 1000$ and $\mathrm{URem}(1000a, b) > 0$; the candidate is scaled by $10^{14}$ and its remainder recomputed in 256 bits. \\
+SWC-112 & A \texttt{DELEGATECALL} whose target is not a constant, derives from calldata, and is not dominated by a block containing \texttt{CALLER}. & SAT if and only if the taint flag is set. \\
+SWC-124 & A \texttt{DELEGATECALL} in a contract that contains the EIP-1967 implementation-slot constant, or whose target derives from a storage read. & Collision query over a fixed layout pair (slot 0: \texttt{address} vs \texttt{uint256}). Layouts are not recovered from the bytecode. \\
+SWC-128 & A natural loop whose header lies in a dispatcher function region, is not dominated by a \texttt{CALLER} block, and has an exit branch that tests a storage read. Exits to revert blocks are ignored. & $\Phi_{\mathrm{DoS}}(G_{\mathrm{block}})$ with $\mathrm{IsMutatorPublic}$ assumed true. \\
+Class~E & \texttt{DIV} present, at least two \texttt{SLOAD}, and no \texttt{SSTORE}, \texttt{CALL}, \texttt{DELEGATECALL} or \texttt{TIMESTAMP}. This is a presence heuristic, not a dataflow check. & Fixed reserves, with a borrow that shifts the spot price by at least 25\%. \\
+\bottomrule
+\end{tabular}%
+}
+\end{table*}
+
+\subsection{Sandbox Replay}\label{sec:arch:oracle}
+The replay oracle installs the runtime bytecode as account code in a \texttt{py-evm} Cancun chain, so no constructor runs. Each replay starts from a fresh chain, and transactions are sent from one externally owned account. The criteria, as implemented, are:
+\begin{itemize}
+    \item \textbf{SWC-107:} an attacker contract forwards calls to the victim and, when it receives value without calldata, re-enters the victim once with the stored calldata. The oracle tries deposit and withdraw calldata built from the recovered selectors (up to 8 selectors each). A finding is confirmed only when the victim calls back into the attacker and the attacker's gain in the withdraw transaction exceeds its deposit.
+    \item \textbf{SWC-112:} a probe contract writes 0x2a to slot 0x5afe. The finding is confirmed only if calling a selector with the probe address as its arguments makes the victim's own storage at that slot equal 0x2a.
+    \item \textbf{SWC-124:} slot 0 is seeded with an address-width value. The finding is confirmed only if a call overwrites it with a value of 160 bits or more.
+    \item \textbf{SWC-128:} the loop-bound slot is set to $10^6$. A finding whose exit test has no constant slot is never replayed. The finding is confirmed only if a call with that storage exhausts the $G_{\mathrm{sandbox}}$ gas cap (an out-of-gas halt) and the same call on the original storage does not fail.
+    \item \textbf{SWC-101 and Class~E:} no state-level oracle. A truncation or spot-price effect has no post-state criterion that the sandbox can check without a per-contract economic model, so these findings are never confirmed.
+\end{itemize}
+A transaction that merely does not revert never counts as confirmation. We report total findings (F) and confirmed findings (C) separately (Table~\ref{tab:replay}). Table~\ref{tab:replay_scores} re-scores the four scored classes using only confirmed findings.
+
+%% ===========================================================================
+\section{Empirical Evaluation on SmartBugs-Curated}\label{sec:results}
+
+An earlier version of this work evaluated EVM-Guard on a 226-contract corpus built and labeled by the author. We no longer report that evaluation, because its labels were not independent and its contracts came from a small number of templates. This section uses an external benchmark.
+
+\subsection{Corpus}\label{sec:results:corpus}
+We evaluate across the canonical SmartBugs-curated dataset~\cite{durieux2020empirical,ferreira2020smartbugs} at commit \texttt{230e6491} (2024-06-16). It has 143 Solidity files, each labeled with one category from the dataset's \texttt{vulnerabilities.json}: unchecked low-level calls (52), reentrancy (31), access control (18), arithmetic (15), bad randomness (8), denial of service (6), time manipulation (5), front running (4), other (3) and short addresses (1). Each file is compiled with the solc version listed in the dataset's \texttt{versions.csv} (0.4.0--0.5.0). All 143 files compile, producing 216 runtime contracts. Files range from 6 to 1,254 source lines (mean 63.4). No file is labeled safe, so a file is a negative for category $X$ if it carries no label in $X$.
+
+\subsection{Evaluation Protocol and Baseline Standardization}\label{sec:results:protocol}
+The SmartBugs protocol (\texttt{docs/EXTERNAL\_EVAL\_PROTOCOL.md}) was frozen before the first engine run, with a SHA-256 digest in \texttt{docs/EXTERNAL\_EVAL\_FREEZE.sha256}. The digest covers lines 1--39 of the file. Addendum~A (lines 40--58 of the same file) fixes the mapping from each baseline tool's detector names to the SmartBugs categories; it was written after the first EVM-Guard run and before any baseline run on this corpus. Only that first run (engine v1) is pre-registered: it reached 71.0\% reentrancy recall (22 of 31, CI [52.0, 85.8]) at 44.9\% precision. The engine was then revised on this corpus. Engine v2 is the first revision; v3 adds the gas-stipend bound (Section~\ref{sec:results:correction}); v5, the final engine, adds the \texttt{PUSH0} decoder and the slot-based mutex rule (Section~\ref{sec:results:final}). All SmartBugs figures for v2, v3 and v5 are therefore post hoc.
+
+\paragraph{Category mapping.} SWC-107 maps to reentrancy, SWC-101 to arithmetic, SWC-128 to denial of service, and SWC-112 and SWC-124 to access control. Class~E has no SmartBugs category and is not scored. Unchecked low-level calls, bad randomness, front running, time manipulation, short addresses and other are out of scope, and we claim no recall for them.
+
+\paragraph{Baselines.} Slither 0.11.6 runs on each source file with the dataset-listed solc version and \texttt{--json} output, with no detector filter. Its findings map to categories by detector name. Reentrancy uses \texttt{reentrancy-eth}, \texttt{-no-eth}, \texttt{-benign}, \texttt{-events} and \texttt{-unlimited-gas}. Denial of service uses \texttt{calls-loop} and \texttt{costly-loop}. Access control uses \texttt{arbitrary-send-eth}, \texttt{arbitrary-send-erc20}, \texttt{suicidal}, \texttt{controlled-delegatecall}, \texttt{unprotected-upgrade}, \texttt{tx-origin}, \texttt{protected-vars} and \texttt{incorrect-modifier}. Slither has no overflow detector, so nothing maps to arithmetic. Mythril 0.24.8 runs on each source file with the dataset-listed solc version, \texttt{-o json --execution-timeout 50}, and a 60\,s process kill. Its SWC IDs map as follows: SWC-107 to reentrancy, SWC-101 to arithmetic, SWC-113 and SWC-128 to denial of service, and SWC-105, 106, 112, 115 and 124 to access control.
+
+\paragraph{Scoring.} The unit of scoring is the file. A file is flagged for category $X$ if any of its runtime contracts yields a finding mapping to $X$. Flagging uses all findings the engine reports, independent of replay. For each category we report TP, FP, FN and TN over all 143 files, with exact 95\% Clopper--Pearson intervals. Baseline errors and timeouts count as unflagged, and we report them separately. For EVM-Guard, latency is the wall time of the analysis call per runtime contract, summed per file. It excludes replay.
+
+\paragraph{Platform.} All evaluation runs were executed in an isolated runtime environment with strict 60-second timeouts, running Python~3.12, \texttt{z3-solver}~5.1.0.0 and \texttt{py-evm}~0.12.1b1.
+
+\subsection{Detection Results}\label{sec:results:detection}
+
+\input{generated_tables.tex}
+
+\begin{figure*}[t]
+\centering
+\includegraphics[width=\textwidth]{fig_smartbugs_empirical.png}
+\caption{Empirical evaluation on SmartBugs-curated (143 files): (a) Detection recall for reentrancy, denial of service and access control with exact 95\% Clopper--Pearson confidence intervals, comparing EVM-Guard against Slither 0.11.6 and Mythril 0.24.8; arithmetic is omitted here and reported in Table~\ref{tab:detection}; (b) Execution completion rate breakdown across all 143 benchmark files, highlighting Mythril's 37 timeouts (25.9\%) and 20 tool errors; EVM-Guard completes all 143 files.}
+\label{fig:smartbugs_empirical}
+\end{figure*}
+
+Table~\ref{tab:detection} and Figure~\ref{fig:smartbugs_empirical} report every scored category for all three tools. We treat two tools as distinguishable only when their recall intervals do not overlap.
+
+\paragraph{Reentrancy.} Table~\ref{tab:detection} reports the final engine v5, post hoc. EVM-Guard v5 reaches 93.5\% recall (29 of 31, CI [78.6, 99.2]) at 80.6\% precision. Engine v2, before the stipend correction, had the same recall at 53.7\% precision (Section~\ref{sec:results:correction}). Slither's recall is 93.5\% with the same 29 true positives, and its precision is 48.3\%. Mythril reaches 22.6\% recall (7 of 31, CI [9.6, 41.1]). Its interval does not overlap those of either EVM-Guard or Slither, so Mythril is distinguishable from both on this category. EVM-Guard v5 produces 7 false positives (FPR 6.2\%), whereas Slither produces 31 (FPR 27.7\%). Engine v2 produced 25 false positives on this category, mostly from calls that forward only the stipend, which v3 and v5 exclude.
+
+\paragraph{Denial of service.} EVM-Guard flags 5 of the 6 labeled files, achieving 83.3\% recall (CI [35.9, 99.6]). Slither flags 2 (33.3\%, CI [4.3, 77.7]) and Mythril flags 1 (16.7\%, CI [0.4, 64.1]). With six positives, all three intervals overlap, so these recall differences are not established. EVM-Guard produces 34 false positives, giving 12.8\% precision and an FPR of 24.8\%. Slither's FPR is 10.2\% and Mythril's is 17.5\%. The loop check requires a storage-derived exit test in a public function region.
+
+\paragraph{Access control.} Mythril leads with 72.2\% recall (13 of 18, CI [46.5, 90.3]) and 54.2\% precision. Slither reaches 44.4\% recall (8 of 18, CI [21.5, 69.2]) at 17.8\% precision. EVM-Guard flags 2 of the 18 files (11.1\%, CI [1.4, 34.7]) with zero false positives (100\% precision). Several access-control files use patterns that EVM-Guard does not target, such as \texttt{tx.origin} authorization (2 of the 18 labeled files) and unprotected selfdestructs. Its delegatecall and proxy checks produced no false positive on this corpus, but they cover only direct call-hijacking hazards.
+
+\paragraph{Arithmetic (construct mismatch).}\label{sec:results:arith} SmartBugs labels integer overflow and underflow under arithmetic, while EVM-Guard's SWC-101 check targets division truncation. This row therefore measures how the truncation check behaves on overflow-labeled code, not truncation detection. EVM-Guard flags 1 of 15 labeled files (6.7\%, CI [0.2, 31.9]) and 80 clean files, giving 1.2\% precision and a 62.5\% false-positive rate. The high false-positive rate is consistent with the predicate in Proposition~\ref{prop:prec}, which holds for almost any division with a remainder. Neither Slither nor Mythril reported an overflow issue on this corpus (0\% recall, CI [0.0, 21.8]). Slither has no overflow detector, so the protocol maps nothing to arithmetic for it. For Mythril, 12 of the 15 arithmetic-labeled files completed (2 errors, 1 timeout), yet no SWC-101 finding appeared on any of the 143 files.
+
+\paragraph{Summary.} Engine v5 reaches 80.6\% precision on reentrancy on this corpus, post hoc, and 100\% precision on access control, from two flagged files. Denial of service (12.8\%) and arithmetic (1.2\%) have lower precision, consistent with the conservative loop and truncation abstractions. Reentrancy is the category where the engine matches Slither on recall. On the categories other than reentrancy, v2, v3 and v5 flag the same files.
+
+\subsection{Replay-Confirmed Findings}\label{sec:results:replay}
+Across the 216 runtime contracts, engine v5 produced 194 static hazard findings, 86 of them in the four classes that have a replay oracle (Table~\ref{tab:replay}). The state-level sandbox oracles confirmed 8 high-severity findings (Table~\ref{tab:replay}): 4 reentrancy, 3 loop-gas, and 1 delegatecall. SWC-101 and Class~E have no dynamic oracle, as precision or spot-price deviations require custom financial models. The confirmed reentrancy findings contain zero false positives (100.0\% confirmation precision, 4/4 TP); access control also attains 100.0\% precision (1/1 TP). Denial of service confirms 2 true positives and 1 false alarm relative to SmartBugs file labels (66.7\% precision), giving an overall confirmation precision of 87.5\% across all confirmed findings (7 of 8 true positives). Recall on the confirmed subset is conservative: 12.9\% on reentrancy, 33.3\% on denial of service, and 5.6\% on access control (Table~\ref{tab:replay_scores}). The oracles confirm hazards whose exploit the sandbox reconstructs from recovered selectors with generic attacker or probe contracts. A finding whose exploit needs specialized arguments stays unconfirmed even when the static finding is correct. Dynamic replay therefore operates as a high-precision filter rather than an exhaustive recall oracle. With respect to the second research question, it was found that the oracle does not confirm warnings with zero false alarms: one of the 8 confirmed findings is a false alarm relative to the file labels, and recall falls to between 5.6\% and 33.3\% on the confirmed subset.
+
+\subsection{Case Studies from the Corpus}\label{sec:case_studies}
+Both case studies are SmartBugs-curated contracts that EVM-Guard flags and the replay oracle confirms. Line numbers refer to the dataset sources.
+
+\paragraph{Reentrancy: \texttt{simple\_dao.sol} (labeled reentrancy).} \texttt{SimpleDAO} keeps a \texttt{credit} mapping. Its \texttt{withdraw(uint)} checks the balance (line 17), calls \texttt{msg.sender.call.value(amount)()} (line 19), and only then decrements \texttt{credit[msg.sender]} (line 20). The external call therefore precedes the storage write. EVM-Guard recovers the dispatcher selectors, finds a CFG path from the \texttt{CALL} block to the \texttt{SSTORE} block within the \texttt{withdraw} region, finds no mutex on that path, and reports SWC-107. In replay, the attacker first calls \texttt{donate(attacker)} with 1 ETH, which credits the attacker's address. It then calls \texttt{withdraw(1 ETH)}. The victim's transfer re-enters the attacker, which calls \texttt{withdraw} again before the balance is decremented. The attacker ends the transaction with 2 ETH on a 1 ETH deposit, so the oracle confirms the finding.
+
+\paragraph{Loop gas: \texttt{dos\_address.sol} (labeled denial of service).} \texttt{DosGas} keeps a dynamic array, \texttt{creditorAddresses}, at storage slot 0. The function \texttt{addCreditors} is public and pushes 350 entries per call. \texttt{emptyCreditors} is also public: it checks \texttt{creditorAddresses.length > 1500} and then clears the array. EVM-Guard reports a loop in the region of \texttt{emptyCreditors} (selector \texttt{0x0d870b7f}) whose exit test reads storage slot 0, the array length, and whose function is not guarded by a \texttt{CALLER} check. In replay, the oracle sets slot 0 to $10^6$, and a call to \texttt{emptyCreditors} then exhausts the $G_{\mathrm{sandbox}} = 1.5\times10^6$ gas cap. The same call on the original storage completes. This confirms unbounded growth at the reduced sandbox scale. It is consistent with $\Phi_{\mathrm{DoS}}(G_{\mathrm{block}})$, but it does not show exhaustion of a full 30\,M-gas block.
+
+\subsection{Evaluation on the SolidiFI Bug-Injection Benchmark}\label{sec:results:heldout}
+To assess generalization on an independent corpus, we evaluated EVM-Guard on the SolidiFI benchmark~\cite{ghaleb2020how}, which injects bugs of seven types into 50 base contracts (50 files per type) and provides 50 clean base contracts. The protocol (\texttt{docs/HELDOUT\_EVAL\_PROTOCOL.md}, SHA-256 in \texttt{docs/HELDOUT\_EVAL\_FREEZE.sha256}) fixed the corpus commits, label mappings, and compiler settings prior to analysis. Reentrancy and arithmetic are scored; the other injected types have no EVM-Guard detector, and the corpus has no denial-of-service or delegatecall class. All 400 files compiled with solc 0.5.12, giving 984 runtime contracts. Baselines ran with the same settings as on SmartBugs.
+
+The held-out run used engine v2. On reentrancy, v2 flags all 50 injected files (100\%, CI [92.9, 100]) with 130 false positives, for 27.8\% precision and a 37.1\% false-positive rate. Table~\ref{tab:heldout} reports the final engine v5, post hoc: it has 35 false positives, for 58.8\% precision and a 10.0\% false-positive rate, the same as v3. Slither flags all 50 with 150 false positives (25.0\% precision, 42.9\% FPR). Mythril finished only 84 of the 400 files (308 timeouts, 8 errors), flagging 2 of the 50 reentrancy files (4\% recall, 22.2\% precision, 2.0\% FPR). Because every SolidiFI file shares one of the same 50 base contracts, some false positives reflect reentrancy patterns already present in the unannotated base code; on the 50 clean contracts alone, v2 flags 6 for reentrancy (12\%) and v5 flags 5 (10\%).
+
+The arithmetic row exhibits the construct mismatch: EVM-Guard flags 45 of the 50 overflow-injected files (90\%), but also flags 45 of the 50 clean contracts due to division truncation in the shared base code. Across all 350 files without an arithmetic label, EVM-Guard flags 315 (90.0\% FPR, 12.5\% precision). Neither Slither nor Mythril reported an arithmetic finding.
+
+Replay confirmed no reentrancy finding on this corpus. It confirmed 16 SWC-128 findings, which are not scored here. In the file we inspected (\texttt{Re-entrancy/buggy\_1.sol}), the injected withdraw functions pay out from per-sender balance mappings that no function in the contract credits, so in a fresh sandbox the attacker has no balance to withdraw and the strict gain criterion cannot be met. That contract also exposes 29 selectors, more than the oracle's limit of 8 candidates. Zero confirmations here therefore reflect the oracle's reach, not the absence of the injected bugs.
+
+The engine was changed after this run (v3 and v5), so the SolidiFI figures for those versions are post hoc. Testing a precision improvement fairly needs a fresh corpus, because both held-out corpora have now been used.
+
+\subsection{Evaluation on a Labeled Benchmark Suite}\label{sec:results:heldout2}
+SolidiFI has no denial-of-service class and no tx.origin or SELFDESTRUCT class, and its files share 50 base contracts. We therefore evaluated EVM-Guard on an open labeled benchmark repository\footnote{\url{https://github.com/bit-smartcontract-analysis/smartcontract-benchmark}} at commit \texttt{8b903aa}. Its 389 Solidity files are labeled by folder: reentrancy (81), arithmetic (65), unsafe delegatecall (12), tx.origin (10), unsafe SELFDESTRUCT (11), and five further classes (unchecked send, TOD, time manipulation, bad randomness, gasless send), plus 17 safe contracts. The evaluation protocol (\texttt{docs/HELDOUT2\_EVAL\_PROTOCOL.md}, SHA-256 in \texttt{docs/HELDOUT2\_EVAL\_FREEZE.sha256}) fixed the taxonomy mappings and compiler configurations. The catalog records the commit and SHA-256 digest of each source for exact reproducibility.
+
+The folder labels map to the SmartBugs categories as follows. Reentrancy is SWC-107 and arithmetic is SWC-101, the same construct mismatch as before. Access control groups the delegatecall folder (SWC-112), the tx.origin folder (SWC-115) and the SELFDESTRUCT folder (SWC-106), as in the SmartBugs mapping. EVM-Guard has no check for tx.origin or SELFDESTRUCT, so those 21 files can only count as misses. The five remaining classes are negatives for every scored category. Denial of service is not evaluated, because no file is labeled with it. Thirteen files do not compile with the installed compilers; they remain in the scoring as unflagged.
+
+\begin{table}[t]
+\centering
+\small
+\caption{Evaluation on the labeled benchmark (389 files; 376 compile, 13 count as unflagged). EVM-Guard rows are the final engine v5, post hoc; the held-out engine v2 results are given in the text. Recall, precision and FPR with exact 95\% Clopper--Pearson intervals. Denial of service is not evaluated, because the benchmark has no denial-of-service label.}
+\label{tab:heldout2}
+\resizebox{\columnwidth}{!}{%
+\begin{tabular}{@{}llrrrrr@{}}
+\toprule
+\textbf{Category} & \textbf{Tool} & \textbf{TP} & \textbf{FP} & \textbf{Recall [CI]} & \textbf{Precision [CI]} & \textbf{FPR [CI]} \\
+\midrule
+Reentrancy (81 pos.) & \textbf{EVM-Guard} & 79 & 25 & 97.5 [91.4, 99.7] & 76.0 [66.6, 83.8] & 8.1 [5.3, 11.7] \\
+ & Slither & 79 & 111 & 97.5 [91.4, 99.7] & 41.6 [34.5, 48.9] & 36.0 [30.7, 41.7] \\
+ & Mythril & 14 & 32 & 17.3 [9.8, 27.3] & 30.4 [17.7, 45.8] & 10.4 [7.2, 14.4] \\
+\midrule
+Arithmetic (65 pos.) & \textbf{EVM-Guard} & 46 & 245 & 70.8 [58.2, 81.4] & 15.8 [11.8, 20.5] & 75.6 [70.6, 80.2] \\
+ & Slither & 0 & 0 & 0.0 [0.0, 5.5] & n/a & 0.0 [0.0, 1.1] \\
+ & Mythril & 0 & 0 & 0.0 [0.0, 5.5] & n/a & 0.0 [0.0, 1.1] \\
+\midrule
+Access control (33 pos.) & \textbf{EVM-Guard} & 7 & 0 & 21.2 [9.0, 38.9] & 100.0 [59.0, 100.0] & 0.0 [0.0, 1.0] \\
+ & Slither & 22 & 152 & 66.7 [48.2, 82.0] & 12.6 [8.1, 18.5] & 42.7 [37.5, 48.0] \\
+ & Mythril & 11 & 25 & 33.3 [18.0, 51.8] & 30.6 [16.4, 48.1] & 7.0 [4.6, 10.2] \\
+\bottomrule
+\end{tabular}%
+}
+\end{table}
+
+
+The held-out run used engine v2. On reentrancy, v2 reaches 97.5\% recall (79 of 81) with 46.2\% precision (CI [38.6, 54.0]) and a 29.9\% false-positive rate. Table~\ref{tab:heldout2} reports the final engine v5, post hoc: the same recall with 76.0\% precision (CI [66.6, 83.8]) and an 8.1\% false-positive rate. Slither matches the recall (97.5\%) with 41.6\% precision and a 36.0\% false-positive rate. Mythril completed 143 of 389 files, with 231 timeouts and 15 errors, reaching 17.3\% recall. A rerun at a 300\,s limit completed only 2 of the 231 timed-out files, raising Mythril's access-control recall from 33.3\% to 39.4\% while leaving reentrancy unchanged. Of the 92 reentrancy false positives of v2, 58 are in the TOD folder; of the 25 of v5, 5 are. These files are scored as negative by label, without manual review.
+
+On access control, EVM-Guard v5 flags 7 files with zero false positives (100\% precision), all seven in the delegatecall folder; v2 flagged 6. Its recall is 21.2\% over 33 positives, because tx.origin and SELFDESTRUCT files are outside its checks. Slither reaches 66.7\% recall at 12.6\% precision, and Mythril 33.3\% recall at 30.6\% precision. The arithmetic row again reflects overflow labels against a truncation check: EVM-Guard v5 flags 46 of 65 overflow files (70.8\% recall) and 245 of the 324 negatives (75.6\% FPR, 15.8\% precision). Neither Slither nor Mythril reported an arithmetic finding. Under dynamic replay, EVM-Guard confirms 4 reentrancy findings and 2 access-control findings with 100\% precision.
+
+Across SolidiFI and this benchmark, v5 reentrancy precision is 58.8\% and 76.0\%. Both figures are post hoc.
+
+\subsection{Ablation: Impact of Sound Gas-Stipend Bounds}\label{sec:results:correction}
+In the EVM execution model, Solidity lowers \texttt{address.transfer} and \texttt{address.send} to a \texttt{CALL} whose gas operand is computed as $2300 \cdot \mathrm{ISZERO}(v)$ rather than specified as an arbitrary constant. Such calls forward at most the 2300-gas stipend, which is insufficient to perform state-modifying \texttt{SSTORE} operations in the callee: under legacy pre-Istanbul semantics, \texttt{SSTORE} requires at least 5,000 gas, while under post-Istanbul (EIP-2200, EIP-2929) rules, an explicit sentry check halts execution with an out-of-gas error whenever remaining gas is $\le 2300$. A stipend-only call therefore cannot re-enter and modify the caller's storage.
+
+To evaluate this mechanism, we perform an ablation analysis comparing EVM-Guard with and without sound gas-stipend bounds. In the full pipeline, abstract stack values carry sound upper bounds, propagated through \texttt{ISZERO} (bound 1), \texttt{MUL} (product of bounds), and \texttt{AND} (smaller bound), excluding any call whose upper bound does not exceed 2300 gas.
+
+Table~\ref{tab:correction} compares reentrancy detection across the three real benchmarks for engine v2, the stipend-corrected engine v3 and the final engine v5. Applying the stipend bound raises precision from 53.7\% to 78.4\% on SmartBugs-curated, from 27.8\% to 58.8\% on SolidiFI, and from 46.2\% to 75.2\% on the labelled benchmark, with recall unchanged. The slot-based mutex rule of v5 removes one further false positive on SmartBugs-curated (80.6\%) and one on the labelled benchmark (76.0\%). These are post hoc figures. Of the 58 TOD-folder files that v2 flags for reentrancy on the labeled benchmark, the stipend bound removes 53; in each of these 53 sources, value is sent only through \texttt{transfer} or \texttt{send}.
+
+\begin{table}[t]
+\centering
+\small
+\caption{Reentrancy (SWC-107) precision and FPR (\%) for engine v2 (no stipend bound), v3 (stipend bound) and v5 (final engine) on the three real benchmarks. All figures are post hoc. Recall is the same for the three versions on each benchmark.}
+\label{tab:correction}
+\resizebox{\columnwidth}{!}{%
+\begin{tabular}{@{}lrrrrrr@{}}
+\toprule
+\textbf{Corpus (positives)} & \multicolumn{2}{c}{\textbf{v2}} & \multicolumn{2}{c}{\textbf{v3}} & \multicolumn{2}{c}{\textbf{v5}} \\
+ & Prec. & FPR & Prec. & FPR & Prec. & FPR \\
+\midrule
+SmartBugs-curated (31) & 53.7 & 22.3 & 78.4 & 7.1 & \textbf{80.6} & \textbf{6.2} \\
+SolidiFI (50) & 27.8 & 37.1 & 58.8 & 10.0 & \textbf{58.8} & \textbf{10.0} \\
+Labeled benchmark (81) & 46.2 & 29.9 & 75.2 & 8.4 & \textbf{76.0} & \textbf{8.1} \\
+\bottomrule
+\end{tabular}%
+}
+\end{table}
+
+We also disabled the components of the final engine one at a time on SmartBugs-curated (\texttt{results/ablation/}). The ablation covers reentrancy only, and recall is unchanged in every configuration. Removing the stipend exclusion, or keeping it for constant gas operands only, raises the false positives from 7 to 22 (56.9\% precision). Removing the slot-based mutex rule raises them to 8 (78.4\%); removing both mutex rules gives the same result. Disabling \texttt{PUSH0} decoding, CBOR stripping or the dominance requirement for the mutex changes no reentrancy flag. A configuration that reproduces engine v2 gives 25 false positives (53.7\%), matching the archived v2 run file by file.
+
+\subsection{Fresh Pre-Registered Test on Solidity 0.5.12}\label{sec:results:fresh}
+This test ran engine v3 on a corpus that no development step had seen. The protocol (\texttt{docs/INJECTED05\_EVAL\_PROTOCOL.md}) and its generator, catalog and engine manifest were frozen before the run (hashes in \texttt{docs/INJECTED05\_EVAL\_FREEZE.sha256}). The corpus has 210 contracts compiled with solc 0.5.12, in 7 groups of 30: reentrancy-injected and denial-of-service-injected positives, and five negatives (checks before effects, a mutex-guarded call, a \texttt{transfer}-based payout, a bounded loop, and no injected pattern). Labels are assigned by construction, and the families are few, so this is a test of the detector on its own injection patterns. It is not evidence about real contracts. Its purpose is to test precision on a fresh sample.
+
+Table~\ref{tab:fresh} reports the results with exact 95\% intervals. On reentrancy, EVM-Guard flags all 30 injected contracts. Its 30 false positives are all in the mutex-guarded group. The checks-before-effects, \texttt{transfer} and bounded-loop groups produce no false positives. Slither and Mythril also flag all 30 positives, with 60 and 57 false positives. On denial of service, EVM-Guard flags all 30 injected contracts with no false positives, and Slither and Mythril flag none of the 30. Mythril timed out on 3 of the 210 files, which count as unflagged.
+
+\begin{table}[t]
+\centering
+\small
+\caption{Fresh pre-registered test (210 Solidity 0.5.12 contracts, synthetic). Recall, precision and FPR with exact 95\% Clopper--Pearson intervals. The categories are scored on their own positives and negatives.}
+\label{tab:fresh}
+\resizebox{\columnwidth}{!}{%
+\begin{tabular}{@{}llrrrrr@{}}
+\toprule
+\textbf{Category (positives)} & \textbf{Tool} & \textbf{TP} & \textbf{FP} & \textbf{Recall [CI]} & \textbf{Precision [CI]} & \textbf{FPR [CI]} \\
+\midrule
+Reentrancy (30) & EVM-Guard & 30 & 30 & 100.0 [88.4, 100.0] & 50.0 [36.8, 63.2] & 16.7 [11.5, 22.9] \\
+ & Slither & 30 & 60 & 100.0 [88.4, 100.0] & 33.3 [23.7, 44.1] & 33.3 [26.5, 40.7] \\
+ & Mythril & 30 & 57 & 100.0 [88.4, 100.0] & 34.5 [24.6, 45.4] & 31.7 [25.0, 39.0] \\
+\midrule
+Denial of service (30) & EVM-Guard & 30 & 0 & 100.0 [88.4, 100.0] & 100.0 [88.4, 100.0] & 0.0 [0.0, 2.0] \\
+ & Slither & 0 & 0 & 0.0 [0.0, 11.6] & n/a & 0.0 [0.0, 2.0] \\
+ & Mythril & 0 & 0 & 0.0 [0.0, 11.6] & n/a & 0.0 [0.0, 2.0] \\
+\bottomrule
+\end{tabular}%
+}
+\end{table}
+
+The mutex failure is specific. In the mutex-guarded contracts, \texttt{locked} is written through a masked read-modify-write, so the stored value is not the constant the mutex rule expects, and the guard is not recognised. We did not change the engine in response, because the corpus is then spent. Fixing the mutex rule is the next engine revision, and it would need a new pre-registered corpus.
+
+
+\subsection{Final Pre-Registered Test (Engine v5)}\label{sec:results:final}
+The final engine (v5) is v3 with the \texttt{PUSH0} decoder and the slot-based mutex rule. It has no return-site fallback, because that fallback reduced real-benchmark precision (SmartBugs reentrancy from 78.4\% to 55.6\%, SolidiFI from 58.8\% to 23.6\%). Protocol~6 (\texttt{docs/FINAL\_V5\_EVAL\_PROTOCOL.md}, frozen before the run, hashes in \texttt{docs/FINAL\_V5\_EVAL\_FREEZE.sha256}) ran this engine once on a new corpus of 210 solc 0.5.12 contracts. Protocol~5 had tested an intermediate engine (v4) with the return-site fallback on two further corpora, which are now spent. The corpus has the same seven groups as before, and it was not used for any engine version. Its labels are assigned by construction, so the result checks the detector on its own injection patterns and says nothing about real-world precision. Table~\ref{tab:final} reports the results.
+
+\begin{table}[t]
+\centering
+\small
+\caption{Final pre-registered test (210 Solidity 0.5.12 contracts, synthetic). Recall, precision and FPR with exact 95\% Clopper--Pearson intervals. Mythril had 12 timeouts and 1 error, which count as unflagged.}
+\label{tab:final}
+\resizebox{\columnwidth}{!}{%
+\begin{tabular}{@{}llrrrrr@{}}
+\toprule
+\textbf{Category (positives)} & \textbf{Tool} & \textbf{TP} & \textbf{FP} & \textbf{Recall [CI]} & \textbf{Precision [CI]} & \textbf{FPR [CI]} \\
+\midrule
+Reentrancy (30) & EVM-Guard v5 & 30 & 0 & 100.0 [88.4, 100.0] & 100.0 [88.4, 100.0] & 0.0 [0.0, 2.0] \\
+ & Slither & 30 & 60 & 100.0 [88.4, 100.0] & 33.3 [23.7, 44.1] & 33.3 [26.5, 40.7] \\
+ & Mythril & 30 & 47 & 100.0 [88.4, 100.0] & 39.0 [28.1, 50.8] & 26.1 [19.9, 33.2] \\
+\midrule
+Denial of service (30) & EVM-Guard v5 & 30 & 0 & 100.0 [88.4, 100.0] & 100.0 [88.4, 100.0] & 0.0 [0.0, 2.0] \\
+ & Slither & 0 & 0 & 0.0 [0.0, 11.6] & n/a & 0.0 [0.0, 2.0] \\
+ & Mythril & 0 & 0 & 0.0 [0.0, 11.6] & n/a & 0.0 [0.0, 2.0] \\
+\bottomrule
+\end{tabular}%
+}
+\end{table}
+
+The denial-of-service result shows that the baselines do not flag this template, and it does not show that EVM-Guard detects denial of service on real contracts. The earlier seed-1 synthetic test (Section~\ref{sec:results:fresh}) found the mutex defect at 50\% precision. Engine v5 scores 100\% on that corpus as well, but that corpus is now spent, so the figure is post hoc.
+
+\subsection{Runtime and Completion}\label{sec:results:runtime}
+Table~\ref{tab:runtime} reports run outcomes and per-file wall time for the analysis stage, excluding replay. EVM-Guard completed all 143 files with zero timeouts or file-level errors, at a median analysis latency of 87\,ms (mean 128\,$\pm$\,170\,ms). Slither completed 141 files and raised errors on 2, with a median of 289\,ms (mean 304\,$\pm$\,135\,ms). Mythril completed 86 files, suffering 37 timeouts (25.9\% of 143) and 20 tool crashes, with a median of 26,025\,ms (mean 30,288\,$\pm$\,24,942\,ms). Baseline timers include solc compilation from source, while EVM-Guard operates directly on compiled bytecode. One of the 216 runtime contracts, \texttt{LedgerChannel} in \texttt{spank\_chain\_payment.sol}, contains an unlinked library placeholder and is not analysed; its file is scored on its other contracts. With the placeholder linked, the file is also flagged for reentrancy, and reentrancy recall becomes 96.8\% (30 of 31, CI [83.3, 99.9]) at 81.1\% precision. Mythril's timeouts and errors lower its recall in Table~\ref{tab:detection}, because unfinished files count as unflagged.
+
+%% ===========================================================================
+\section{Discussion}\label{sec:disc}
+
+\paragraph{Where EVM-Guard is competitive.} On the final pre-registered synthetic test, engine v5 matches Slither and Mythril on recall for reentrancy (100\%) and has higher precision (100\%, against 33.3\% for Slither and 39.0\% for Mythril). On real benchmarks it matches Slither's recall on SmartBugs-curated and SolidiFI. It needs only bytecode, so it can run where source is unavailable.
+
+\paragraph{Where it is not.} On the first fresh test (engine v3) every false positive was a mutex-guarded contract, because a mutex stored in a packed slot is written through a masked read-modify-write and was not recognised. Engine v5 recognises a mutex on a simple storage variable by its slot, and it scores 100\% on the final test. That rule is a heuristic on slot identity, and the packed-slot case is covered only through the slot. The engine also does not analyse Solidity 0.8 bytecode beyond the dispatcher, because the return addresses of shared helpers are merged. Denial of service and arithmetic are not claimed (Sections~\ref{sec:results:detection} and~\ref{sec:results:heldout}).
+
+\paragraph{Real benchmarks versus synthetic tests.} On SmartBugs-curated, SolidiFI and the labelled benchmark, the engine was developed against the same files, so the v5 precision figures there (80.6\%, 58.8\% and 76.0\%) are post hoc. The synthetic tests have a different distribution (template injection), so their precision values are not comparable with the real-benchmark figures.
+
+\paragraph{Research questions.} With respect to the first research question, it was found that CFG dataflow with the stipend bound and the mutex rules reduces reentrancy false positives relative to Slither at equal recall on all three real benchmarks, but only post hoc. With respect to the second, replay confirms 8 findings on SmartBugs-curated, one of them a false alarm, at a large cost in recall (Section~\ref{sec:results:replay}). With respect to the third, precision on the synthetic tests (50.0\% for v3, 100\% for v5) is not comparable with the real-benchmark figures, because the distributions differ.
+
+\paragraph{Specifications versus implementation.} The specification in Section~\ref{sec:formal_framework} describes what a path-complete analysis would decide. The implementation approximates it on the CFG and does not solve the contract's path conditions.
+
+\section{Threats to Validity}\label{sec:threats}
+
+\subsection{Construct Validity}\label{sec:threats:construct}
+SmartBugs-curated assigns one category per file, and a file is a negative for every other category. A file that contains an unlabeled instance of category $X$ therefore counts as a false positive for any tool that flags it. This can understate precision and overstate false-positive rates for all three tools. The arithmetic category measures overflow, not the truncation property EVM-Guard checks. On the labeled benchmark, 58 of the 92 reentrancy false positives of v2, and 5 of the 25 of v5, lie in a folder labeled TOD, which the protocol scores as a negative; these flags were not reviewed by hand, so they may include unrecorded reentrancy. EVM-Guard's access-control mapping uses only SWC-112 and SWC-124, which cover a small part of what SmartBugs labels as access control.
+
+\subsection{Internal Validity}\label{sec:threats:internal}
+Each protocol was fixed before the run it governs, but the engine was revised after the results on SmartBugs-curated, SolidiFI and the labeled benchmark were known (v2, v3 and v5). Only the v1 SmartBugs run, the v2 SolidiFI run, the v2 labeled-benchmark run and the two synthetic tests are pre-registered. The baseline mappings (Addendum~A of \texttt{docs/EXTERNAL\_EVAL\_PROTOCOL.md}) were written after the first EVM-Guard run and before any baseline run. Four engine source files were changed after the v5 engine manifest was frozen, and the frozen copies were not kept; the current sources reproduce the v5 flags of every file on all five corpora (\texttt{docs/REPRODUCIBILITY.md}). The held-out SolidiFI run addresses generalization for reentrancy and arithmetic under protocol \texttt{docs/HELDOUT\_EVAL\_PROTOCOL.md}. Access control has an independent evaluation from the second benchmark, where 21 of its 33 positives lie outside EVM-Guard's targeted hazard rules. Each baseline ran once per file. Mythril's 37 timeouts and 20 errors count as unflagged, which lowers its recall. The CFG resolves only constant jump targets; across the corpus, 180 \texttt{JUMP} blocks have no resolved successor, which can hide paths and cause false negatives.
+
+\subsection{External Validity}\label{sec:threats:external}
+SmartBugs-curated contracts are small (mean 63.4 source lines) and compile with solc 0.4.0--0.5.0, which predates checked arithmetic and EIP-1153. The results may not carry over to modern Solidity, large production protocols or compilers that emit different layouts, and EVM-Guard's checks depend on those layouts. On a corpus of 210 solc~0.8.20 contracts, 60 of them built to inject reentrancy or denial-of-service patterns (\texttt{docs/INJECTED\_EVAL\_PROTOCOL.md}), EVM-Guard produced no findings for either category. Two causes were identified: first, earlier disassembler logic decoded \texttt{PUSH0} as \texttt{INVALID}, which halted CFG construction at the dispatcher (now resolved); second, the abstract stack merges return addresses of shared internal helpers introduced by checked arithmetic in 0.8 compilers, cutting intra-procedural dataflow. The evaluation therefore strictly covers Solidity 0.4--0.5 bytecodes. The SolidiFI corpus has the same compiler profile (all files compile with solc 0.5.12).
+
+\subsection{Statistical Conclusion Validity}\label{sec:threats:statistical}
+Several categories have few positives: 6 for denial of service, 15 for arithmetic and 18 for access control. Their Clopper--Pearson intervals are wide, and many intervals overlap across tools. We report intervals rather than significance tests, and differences whose intervals overlap should not be read as established.
+
+%% ===========================================================================
+\section{Conclusion}\label{sec:conclusion}
+We presented EVM-Guard, a bytecode-only reentrancy triage tool for Solidity 0.4--0.5 contracts. It builds a control-flow graph with an abstract stack dataflow, flags external calls followed by storage writes without a mutex, excludes stipend-only calls, recognises a mutex on a simple storage variable, and validates candidate transactions under a post-state criterion via sandbox replay. On SmartBugs-curated it reaches 93.5\% recall at 80.6\% precision, post hoc, against 93.5\% and 48.3\% for Slither. On a final pre-registered synthetic test of 210 contracts it reaches 100\% recall and 100\% precision, against 33\% and 39\% precision for Slither and Mythril. Those synthetic figures check the detector on its own injection patterns and do not measure real-world precision. Solidity 0.8 is outside the scope of this evaluation, because the engine does not analyse 0.8 bytecode beyond the dispatcher. The next step is a precision evaluation on contracts that were not used in development.
+
+\section*{Declarations}
+\begin{itemize}
+    \item \textbf{Funding:} This research received no specific grant from any funding agency in the public, commercial, or not-for-profit sectors.
+    \item \textbf{Conflict of Interest / Competing Interests:} The author declares no competing financial or non-financial interests related to this work.
+    \item \textbf{Data Availability:} The pre-registered protocols, catalogs, SolidiFI and synthetic sources, and the outputs of every reported run are available at \url{https://github.com/RaffeOP/EVM-Guard}. SmartBugs-curated (commit \texttt{230e6491}) and the labeled benchmark (commit \texttt{8b903aa}) are not redistributed; the script \texttt{reproduce.sh} clones them at these commits.
+    \item \textbf{Code Availability:} The EVM-Guard analyzer, the Z3 template encoder, the replay oracles and the evaluation scripts are available at \url{https://github.com/RaffeOP/EVM-Guard} under the MIT licence. The script \texttt{reproduce.sh} rebuilds every corpus with the pinned compilers and package versions and reruns engine v5; \texttt{docs/REPRODUCIBILITY.md} lists the expected results and the differences from the frozen engine manifest.
+    \item \textbf{Authors' Contributions:} Devarsh Patel is the sole author. He designed and implemented EVM-Guard, ran the evaluation and wrote the manuscript.
+    \item \textbf{Use of Artificial Intelligence:} The author discloses that generative AI computational tools were utilized strictly for code formatting and language polishing. All conceptual formulations, proofs, and empirical analyses were independently validated by the author.
+\end{itemize}
+
+\bibliography{references}
+
+\end{document}

@@ -1,0 +1,38 @@
+# Python environment and caches
+.venv/
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Third-party clone with its own git history (SmartBugs dataset), at the root only
+/external/
+
+# LaTeX build intermediates (PDFs are kept as built artifacts)
+*.aux
+*.bbl
+*.blg
+*.log
+*.out
+*.xdv
+*.fls
+*.fdb_latexmk
+*.synctex.gz
+
+# macOS / OS files
+.DS_Store
+._*
+.Spotlight-V100
+.Trashes
+Thumbs.db
+
+# IDE and editors
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Reproduction / Local artifacts
+benchmarks/heldout2_local/
+benchmarks/**/*.bin-runtime
+results/reproduction/

@@ -1,0 +1,31 @@
+{
+  "normality_tests": {
+    "evm_guard": {
+      "shapiro_stat": 0.5945117475322108,
+      "pvalue": 9.741367460740942e-23,
+      "is_normal": false
+    },
+    "slither": {
+      "shapiro_stat": 0.7696195616578584,
+      "pvalue": 1.647006344803286e-17,
+      "is_normal": false
+    },
+    "mythril": {
+      "shapiro_stat": 0.741703845961612,
+      "pvalue": 1.6533385401467949e-18,
+      "is_normal": false
+    }
+  },
+  "evm_vs_slither": {
+    "wilcoxon_stat": 0.0,
+    "wilcoxon_pvalue": 3.941066929221826e-39,
+    "cliffs_delta": -0.9997,
+    "effect_size": "Large Negative (|delta| >= 0.474)"
+  },
+  "evm_vs_mythril": {
+    "wilcoxon_stat": 0.0,
+    "wilcoxon_pvalue": 3.941110392488596e-39,
+    "cliffs_delta": -1.0,
+    "effect_size": "Maximal Large Negative"
+  }
+}

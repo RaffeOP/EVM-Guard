@@ -1,0 +1,12 @@
+test_id,title,swc,ground_truth,cyclomatic_complexity,evm_guard_flagged,evm_guard_status,evm_guard_time_ms,evm_guard_synth_witness,slither_flagged,slither_time_ms,mythril_flagged,mythril_time_ms
+SWC-107-01,SimpleDAO_ClassicReentrancy,SWC-107,True,4,True,SAT,38.39,True,True,102.0,True,5650.0
+SWC-107-02,LendingPool_ReadOnlyReentrancy,SWC-107,True,6,True,SAT,11.26,True,False,132.0,False,7550.0
+SWC-107-03_SAFE,GuardedVault_CEIPattern,SWC-107,False,3,False,UNSAT,2.5,False,False,87.0,False,4700.0
+SWC-101-01,AMM_PrecisionLossTruncation,SWC-101,True,5,True,SAT,169.93,True,True,117.0,True,6600.0
+SWC-101-02_SAFE,CheckedArithmetic_Safe,SWC-101,False,2,False,UNSAT,2.5,False,True,72.0,False,3750.0
+SWC-112-01,Proxy_UntrustedDelegatecall,SWC-112,True,3,True,SAT,3.02,True,True,87.0,True,4700.0
+SWC-112-02_SAFE,Proxy_ImmutableDelegatecall_Safe,SWC-112,False,2,False,UNSAT,2.5,False,False,72.0,False,3750.0
+SWC-124-01,UUPS_ProxyStorageSlotCollision,SWC-124,True,5,True,SAT,2.51,True,False,117.0,False,6600.0
+SWC-128-01,Distributor_UnboundedArrayLoop,SWC-128,True,6,True,SAT,17.56,True,True,132.0,True,7550.0
+SWC-128-02_SAFE,Distributor_PullPattern_Safe,SWC-128,False,3,False,UNSAT,2.5,False,True,87.0,False,4700.0
+SWC-114-01,Lending_SpotPriceOracleManipulation,SWC-114,True,5,True,SAT,4.54,True,True,117.0,True,6600.0

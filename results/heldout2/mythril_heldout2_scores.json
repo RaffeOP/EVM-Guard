@@ -1,0 +1,74 @@
+{
+  "files": 389,
+  "flagged_any": {
+    "reentrancy": {
+      "tp": 14,
+      "fp": 32,
+      "fn": 67,
+      "tn": 276,
+      "recall": 0.1728,
+      "recall_ci95": [
+        0.0978,
+        0.273
+      ],
+      "precision": 0.3043,
+      "precision_ci95": [
+        0.1774,
+        0.4575
+      ],
+      "fpr": 0.1039,
+      "fpr_ci95": [
+        0.0722,
+        0.1435
+      ]
+    },
+    "arithmetic": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 65,
+      "tn": 324,
+      "recall": 0.0,
+      "recall_ci95": [
+        0.0,
+        0.0552
+      ],
+      "precision": null,
+      "precision_ci95": null,
+      "fpr": 0.0,
+      "fpr_ci95": [
+        0.0,
+        0.0113
+      ]
+    },
+    "access_control": {
+      "tp": 11,
+      "fp": 25,
+      "fn": 22,
+      "tn": 331,
+      "recall": 0.3333,
+      "recall_ci95": [
+        0.1796,
+        0.5183
+      ],
+      "precision": 0.3056,
+      "precision_ci95": [
+        0.1635,
+        0.4811
+      ],
+      "fpr": 0.0702,
+      "fpr_ci95": [
+        0.046,
+        0.1019
+      ]
+    }
+  },
+  "latency_ms_per_file": {
+    "mean": 49603.259,
+    "median": 60000.0
+  },
+  "status": {
+    "error": 15,
+    "ok": 143,
+    "timeout": 231
+  }
+}

@@ -1,0 +1,103 @@
+{
+  "linked": [
+    {
+      "contract_id": "reentrancy__spank_chain_payment",
+      "runtime_contracts": [
+        "LedgerChannel"
+      ]
+    }
+  ],
+  "files_changed": [
+    {
+      "contract_id": "reentrancy__spank_chain_payment",
+      "main_run": "arithmetic;denial_of_service",
+      "linked": "arithmetic;denial_of_service;reentrancy"
+    }
+  ],
+  "scores": {
+    "reentrancy": {
+      "tp": 30,
+      "fp": 7,
+      "fn": 1,
+      "tn": 105,
+      "recall": 0.9677,
+      "recall_ci95": [
+        0.833,
+        0.9992
+      ],
+      "precision": 0.8108,
+      "precision_ci95": [
+        0.6484,
+        0.9204
+      ],
+      "fpr": 0.0625,
+      "fpr_ci95": [
+        0.0255,
+        0.1245
+      ]
+    },
+    "denial_of_service": {
+      "tp": 5,
+      "fp": 34,
+      "fn": 1,
+      "tn": 103,
+      "recall": 0.8333,
+      "recall_ci95": [
+        0.3588,
+        0.9958
+      ],
+      "precision": 0.1282,
+      "precision_ci95": [
+        0.043,
+        0.2743
+      ],
+      "fpr": 0.2482,
+      "fpr_ci95": [
+        0.1784,
+        0.3292
+      ]
+    },
+    "access_control": {
+      "tp": 2,
+      "fp": 0,
+      "fn": 16,
+      "tn": 125,
+      "recall": 0.1111,
+      "recall_ci95": [
+        0.0138,
+        0.3471
+      ],
+      "precision": 1.0,
+      "precision_ci95": [
+        0.1581,
+        1.0
+      ],
+      "fpr": 0.0,
+      "fpr_ci95": [
+        0.0,
+        0.0291
+      ]
+    },
+    "arithmetic": {
+      "tp": 1,
+      "fp": 80,
+      "fn": 14,
+      "tn": 48,
+      "recall": 0.0667,
+      "recall_ci95": [
+        0.0017,
+        0.3195
+      ],
+      "precision": 0.0123,
+      "precision_ci95": [
+        0.0003,
+        0.0669
+      ],
+      "fpr": 0.625,
+      "fpr_ci95": [
+        0.5351,
+        0.709
+      ]
+    }
+  }
+}

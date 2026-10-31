@@ -1,0 +1,588 @@
+{
+  "success": true,
+  "error": null,
+  "results": {
+    "detectors": [
+      {
+        "elements": [
+          {
+            "type": "function",
+            "name": "forwardCall",
+            "source_mapping": {
+              "start": 179,
+              "length": 227,
+              "filename_relative": "benchmarks/not_so_smart_contracts/NSSC_SWC_112_Pattern_10.sol",
+              "filename_absolute": "/Users/raffe/Downloads/RSCH_OS/benchmarks/not_so_smart_contracts/NSSC_SWC_112_Pattern_10.sol",
+              "filename_short": "benchmarks/not_so_smart_contracts/NSSC_SWC_112_Pattern_10.sol",
+              "is_dependency": false,
+              "lines": [
+                11,
+                12,
+                13,
+                14,
+                15
+              ],
+              "starting_column": 5,
+              "ending_column": 6
+            },
+            "type_specific_fields": {
+              "parent": {
+                "type": "contract",
+                "name": "NSSC_SWC_112_Pattern_10",
+                "source_mapping": {
+                  "start": 58,
+                  "length": 350,
+                  "filename_relative": "benchmarks/not_so_smart_contracts/NSSC_SWC_112_Pattern_10.sol",
+                  "filename_absolute": "/Users/raffe/Downloads/RSCH_OS/benchmarks/not_so_smart_contracts/NSSC_SWC_112_Pattern_10.sol",
+                  "filename_short": "benchmarks/not_so_smart_contracts/NSSC_SWC_112_Pattern_10.sol",
+                  "is_dependency": false,
+                  "lines": [
+                    4,
+                    5,
+                    6,
+                    7,
+                    8,
+                    9,
+                    10,
+                    11,
+                    12,
+                    13,
+                    14,
+                    15,
+                    16,
+                    17
+                  ],
+                  "starting_column": 1,
+                  "ending_column": 0
+                }
+              },
+              "signature": "forwardCall(address,bytes)"
+            }
+          },
+          {
+            "type": "node",
+            "name": "(success,None) = target.delegatecall(data)",
+            "source_mapping": {
+              "start": 329,
+              "length": 44,
+              "filename_relative": "benchmarks/not_so_smart_contracts/NSSC_SWC_112_Pattern_10.sol",
+              "filename_absolute": "/Users/raffe/Downloads/RSCH_OS/benchmarks/not_so_smart_contracts/NSSC_SWC_112_Pattern_10.sol",
+              "filename_short": "benchmarks/not_so_smart_contracts/NSSC_SWC_112_Pattern_10.sol",
+              "is_dependency": false,
+              "lines": [
+                13
+              ],
+              "starting_column": 9,
+              "ending_column": 53
+            },
+            "type_specific_fields": {
+              "parent": {
+                "type": "function",
+                "name": "forwardCall",
+                "source_mapping": {
+                  "start": 179,
+                  "length": 227,
+                  "filename_relative": "benchmarks/not_so_smart_contracts/NSSC_SWC_112_Pattern_10.sol",
+                  "filename_absolute": "/Users/raffe/Downloads/RSCH_OS/benchmarks/not_so_smart_contracts/NSSC_SWC_112_Pattern_10.sol",
+                  "filename_short": "benchmarks/not_so_smart_contracts/NSSC_SWC_112_Pattern_10.sol",
+                  "is_dependency": false,
+                  "lines": [
+                    11,
+                    12,
+                    13,
+                    14,
+                    15
+                  ],
+                  "starting_column": 5,
+                  "ending_column": 6
+                },
+                "type_specific_fields": {
+                  "parent": {
+                    "type": "contract",
+                    "name": "NSSC_SWC_112_Pattern_10",
+                    "source_mapping": {
+                      "start": 58,
+                      "length": 350,
+                      "filename_relative": "benchmarks/not_so_smart_contracts/NSSC_SWC_112_Pattern_10.sol",
+                      "filename_absolute": "/Users/raffe/Downloads/RSCH_OS/benchmarks/not_so_smart_contracts/NSSC_SWC_112_Pattern_10.sol",
+                      "filename_short": "benchmarks/not_so_smart_contracts/NSSC_SWC_112_Pattern_10.sol",
+                      "is_dependency": false,
+                      "lines": [
+                        4,
+                        5,
+                        6,
+                        7,
+                        8,
+                        9,
+                        10,
+                        11,
+                        12,
+                        13,
+                        14,
+                        15,
+                        16,
+                        17
+                      ],
+                      "starting_column": 1,
+                      "ending_column": 0
+                    }
+                  },
+                  "signature": "forwardCall(address,bytes)"
+                }
+              }
+            }
+          }
+        ],
+        "description": "NSSC_SWC_112_Pattern_10.forwardCall(address,bytes) (benchmarks/not_so_smart_contracts/NSSC_SWC_112_Pattern_10.sol#11-15) uses delegatecall to a input-controlled function id\n\t- (success,None) = target.delegatecall(data) (benchmarks/not_so_smart_contracts/NSSC_SWC_112_Pattern_10.sol#13)\n",
+        "markdown": "[NSSC_SWC_112_Pattern_10.forwardCall(address,bytes)](benchmarks/not_so_smart_contracts/NSSC_SWC_112_Pattern_10.sol#L11-L15) uses delegatecall to a input-controlled function id\n\t- [(success,None) = target.delegatecall(data)](benchmarks/not_so_smart_contracts/NSSC_SWC_112_Pattern_10.sol#L13)\n",
+        "first_markdown_element": "benchmarks/not_so_smart_contracts/NSSC_SWC_112_Pattern_10.sol#L11-L15",
+        "id": "46cf0d75cfb047114ffb0f7f3950bcde4e598dac745740bb48830a131dacb990",
+        "check": "controlled-delegatecall",
+        "impact": "High",
+        "confidence": "Medium",
+        "reference": "https://github.com/crytic/slither/wiki/Detector-Documentation#controlled-delegatecall"
+      },
+      {
+        "elements": [
+          {
+            "type": "variable",
+            "name": "target",
+            "source_mapping": {
+              "start": 200,
+              "length": 14,
+              "filename_relative": "benchmarks/not_so_smart_contracts/NSSC_SWC_112_Pattern_10.sol",
+              "filename_absolute": "/Users/raffe/Downloads/RSCH_OS/benchmarks/not_so_smart_contracts/NSSC_SWC_112_Pattern_10.sol",
+              "filename_short": "benchmarks/not_so_smart_contracts/NSSC_SWC_112_Pattern_10.sol",
+              "is_dependency": false,
+              "lines": [
+                11
+              ],
+              "starting_column": 26,
+              "ending_column": 40
+            },
+            "type_specific_fields": {
+              "parent": {
+                "type": "function",
+                "name": "forwardCall",
+                "source_mapping": {
+                  "start": 179,
+                  "length": 227,
+                  "filename_relative": "benchmarks/not_so_smart_contracts/NSSC_SWC_112_Pattern_10.sol",
+                  "filename_absolute": "/Users/raffe/Downloads/RSCH_OS/benchmarks/not_so_smart_contracts/NSSC_SWC_112_Pattern_10.sol",
+                  "filename_short": "benchmarks/not_so_smart_contracts/NSSC_SWC_112_Pattern_10.sol",
+                  "is_dependency": false,
+                  "lines": [
+                    11,
+                    12,
+                    13,
+                    14,
+                    15
+                  ],
+                  "starting_column": 5,
+                  "ending_column": 6
+                },
+                "type_specific_fields": {
+                  "parent": {
+                    "type": "contract",
+                    "name": "NSSC_SWC_112_Pattern_10",
+                    "source_mapping": {
+                      "start": 58,
+                      "length": 350,
+                      "filename_relative": "benchmarks/not_so_smart_contracts/NSSC_SWC_112_Pattern_10.sol",
+                      "filename_absolute": "/Users/raffe/Downloads/RSCH_OS/benchmarks/not_so_smart_contracts/NSSC_SWC_112_Pattern_10.sol",
+                      "filename_short": "benchmarks/not_so_smart_contracts/NSSC_SWC_112_Pattern_10.sol",
+                      "is_dependency": false,
+                      "lines": [
+                        4,
+                        5,
+                        6,
+                        7,
+                        8,
+                        9,
+                        10,
+                        11,
+                        12,
+                        13,
+                        14,
+                        15,
+                        16,
+                        17
+                      ],
+                      "starting_column": 1,
+                      "ending_column": 0
+                    }
+                  },
+                  "signature": "forwardCall(address,bytes)"
+                }
+              }
+            }
+          },
+          {
+            "type": "node",
+            "name": "(success,None) = target.delegatecall(data)",
+            "source_mapping": {
+              "start": 329,
+              "length": 44,
+              "filename_relative": "benchmarks/not_so_smart_contracts/NSSC_SWC_112_Pattern_10.sol",
+              "filename_absolute": "/Users/raffe/Downloads/RSCH_OS/benchmarks/not_so_smart_contracts/NSSC_SWC_112_Pattern_10.sol",
+              "filename_short": "benchmarks/not_so_smart_contracts/NSSC_SWC_112_Pattern_10.sol",
+              "is_dependency": false,
+              "lines": [
+                13
+              ],
+              "starting_column": 9,
+              "ending_column": 53
+            },
+            "type_specific_fields": {
+              "parent": {
+                "type": "function",
+                "name": "forwardCall",
+                "source_mapping": {
+                  "start": 179,
+                  "length": 227,
+                  "filename_relative": "benchmarks/not_so_smart_contracts/NSSC_SWC_112_Pattern_10.sol",
+                  "filename_absolute": "/Users/raffe/Downloads/RSCH_OS/benchmarks/not_so_smart_contracts/NSSC_SWC_112_Pattern_10.sol",
+                  "filename_short": "benchmarks/not_so_smart_contracts/NSSC_SWC_112_Pattern_10.sol",
+                  "is_dependency": false,
+                  "lines": [
+                    11,
+                    12,
+                    13,
+                    14,
+                    15
+                  ],
+                  "starting_column": 5,
+                  "ending_column": 6
+                },
+                "type_specific_fields": {
+                  "parent": {
+                    "type": "contract",
+                    "name": "NSSC_SWC_112_Pattern_10",
+                    "source_mapping": {
+                      "start": 58,
+                      "length": 350,
+                      "filename_relative": "benchmarks/not_so_smart_contracts/NSSC_SWC_112_Pattern_10.sol",
+                      "filename_absolute": "/Users/raffe/Downloads/RSCH_OS/benchmarks/not_so_smart_contracts/NSSC_SWC_112_Pattern_10.sol",
+                      "filename_short": "benchmarks/not_so_smart_contracts/NSSC_SWC_112_Pattern_10.sol",
+                      "is_dependency": false,
+                      "lines": [
+                        4,
+                        5,
+                        6,
+                        7,
+                        8,
+                        9,
+                        10,
+                        11,
+                        12,
+                        13,
+                        14,
+                        15,
+                        16,
+                        17
+                      ],
+                      "starting_column": 1,
+                      "ending_column": 0
+                    }
+                  },
+                  "signature": "forwardCall(address,bytes)"
+                }
+              }
+            }
+          }
+        ],
+        "description": "NSSC_SWC_112_Pattern_10.forwardCall(address,bytes).target (benchmarks/not_so_smart_contracts/NSSC_SWC_112_Pattern_10.sol#11) lacks a zero-check on :\n\t\t- (success,None) = target.delegatecall(data) (benchmarks/not_so_smart_contracts/NSSC_SWC_112_Pattern_10.sol#13)\n",
+        "markdown": "[NSSC_SWC_112_Pattern_10.forwardCall(address,bytes).target](benchmarks/not_so_smart_contracts/NSSC_SWC_112_Pattern_10.sol#L11) lacks a zero-check on :\n\t\t- [(success,None) = target.delegatecall(data)](benchmarks/not_so_smart_contracts/NSSC_SWC_112_Pattern_10.sol#L13)\n",
+        "first_markdown_element": "benchmarks/not_so_smart_contracts/NSSC_SWC_112_Pattern_10.sol#L11",
+        "id": "4c3cef71a8a5bf18f81c0da168594581a62a80585a358f2427c1c712ee7ba290",
+        "check": "missing-zero-check",
+        "impact": "Low",
+        "confidence": "Medium",
+        "reference": "https://github.com/crytic/slither/wiki/Detector-Documentation#missing-zero-address-validation"
+      },
+      {
+        "elements": [
+          {
+            "type": "pragma",
+            "name": "^0.8.20",
+            "source_mapping": {
+              "start": 32,
+              "length": 24,
+              "filename_relative": "benchmarks/not_so_smart_contracts/NSSC_SWC_112_Pattern_10.sol",
+              "filename_absolute": "/Users/raffe/Downloads/RSCH_OS/benchmarks/not_so_smart_contracts/NSSC_SWC_112_Pattern_10.sol",
+              "filename_short": "benchmarks/not_so_smart_contracts/NSSC_SWC_112_Pattern_10.sol",
+              "is_dependency": false,
+              "lines": [
+                2
+              ],
+              "starting_column": 1,
+              "ending_column": 25
+            },
+            "type_specific_fields": {
+              "directive": [
+                "solidity",
+                "^",
+                "0.8",
+                ".20"
+              ]
+            }
+          }
+        ],
+        "description": "Version constraint ^0.8.20 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)\n\t- VerbatimInvalidDeduplication\n\t- FullInlinerNonExpressionSplitArgumentEvaluationOrder\n\t- MissingSideEffectsOnSelectorAccess.\nIt is used by:\n\t- ^0.8.20 (benchmarks/not_so_smart_contracts/NSSC_SWC_112_Pattern_10.sol#2)\n",
+        "markdown": "Version constraint ^0.8.20 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)\n\t- VerbatimInvalidDeduplication\n\t- FullInlinerNonExpressionSplitArgumentEvaluationOrder\n\t- MissingSideEffectsOnSelectorAccess.\nIt is used by:\n\t- [^0.8.20](benchmarks/not_so_smart_contracts/NSSC_SWC_112_Pattern_10.sol#L2)\n",
+        "first_markdown_element": "benchmarks/not_so_smart_contracts/NSSC_SWC_112_Pattern_10.sol#L2",
+        "id": "dd16d54ff22a9abf37632497b664901b290096c471a644775f407c0c6b9f49c4",
+        "check": "solc-version",
+        "impact": "Informational",
+        "confidence": "High",
+        "reference": "https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity"
+      },
+      {
+        "elements": [
+          {
+            "type": "function",
+            "name": "forwardCall",
+            "source_mapping": {
+              "start": 179,
+              "length": 227,
+              "filename_relative": "benchmarks/not_so_smart_contracts/NSSC_SWC_112_Pattern_10.sol",
+              "filename_absolute": "/Users/raffe/Downloads/RSCH_OS/benchmarks/not_so_smart_contracts/NSSC_SWC_112_Pattern_10.sol",
+              "filename_short": "benchmarks/not_so_smart_contracts/NSSC_SWC_112_Pattern_10.sol",
+              "is_dependency": false,
+              "lines": [
+                11,
+                12,
+                13,
+                14,
+                15
+              ],
+              "starting_column": 5,
+              "ending_column": 6
+            },
+            "type_specific_fields": {
+              "parent": {
+                "type": "contract",
+                "name": "NSSC_SWC_112_Pattern_10",
+                "source_mapping": {
+                  "start": 58,
+                  "length": 350,
+                  "filename_relative": "benchmarks/not_so_smart_contracts/NSSC_SWC_112_Pattern_10.sol",
+                  "filename_absolute": "/Users/raffe/Downloads/RSCH_OS/benchmarks/not_so_smart_contracts/NSSC_SWC_112_Pattern_10.sol",
+                  "filename_short": "benchmarks/not_so_smart_contracts/NSSC_SWC_112_Pattern_10.sol",
+                  "is_dependency": false,
+                  "lines": [
+                    4,
+                    5,
+                    6,
+                    7,
+                    8,
+                    9,
+                    10,
+                    11,
+                    12,
+                    13,
+                    14,
+                    15,
+                    16,
+                    17
+                  ],
+                  "starting_column": 1,
+                  "ending_column": 0
+                }
+              },
+              "signature": "forwardCall(address,bytes)"
+            }
+          },
+          {
+            "type": "node",
+            "name": "(success,None) = target.delegatecall(data)",
+            "source_mapping": {
+              "start": 329,
+              "length": 44,
+              "filename_relative": "benchmarks/not_so_smart_contracts/NSSC_SWC_112_Pattern_10.sol",
+              "filename_absolute": "/Users/raffe/Downloads/RSCH_OS/benchmarks/not_so_smart_contracts/NSSC_SWC_112_Pattern_10.sol",
+              "filename_short": "benchmarks/not_so_smart_contracts/NSSC_SWC_112_Pattern_10.sol",
+              "is_dependency": false,
+              "lines": [
+                13
+              ],
+              "starting_column": 9,
+              "ending_column": 53
+            },
+            "type_specific_fields": {
+              "parent": {
+                "type": "function",
+                "name": "forwardCall",
+                "source_mapping": {
+                  "start": 179,
+                  "length": 227,
+                  "filename_relative": "benchmarks/not_so_smart_contracts/NSSC_SWC_112_Pattern_10.sol",
+                  "filename_absolute": "/Users/raffe/Downloads/RSCH_OS/benchmarks/not_so_smart_contracts/NSSC_SWC_112_Pattern_10.sol",
+                  "filename_short": "benchmarks/not_so_smart_contracts/NSSC_SWC_112_Pattern_10.sol",
+                  "is_dependency": false,
+                  "lines": [
+                    11,
+                    12,
+                    13,
+                    14,
+                    15
+                  ],
+                  "starting_column": 5,
+                  "ending_column": 6
+                },
+                "type_specific_fields": {
+                  "parent": {
+                    "type": "contract",
+                    "name": "NSSC_SWC_112_Pattern_10",
+                    "source_mapping": {
+                      "start": 58,
+                      "length": 350,
+                      "filename_relative": "benchmarks/not_so_smart_contracts/NSSC_SWC_112_Pattern_10.sol",
+                      "filename_absolute": "/Users/raffe/Downloads/RSCH_OS/benchmarks/not_so_smart_contracts/NSSC_SWC_112_Pattern_10.sol",
+                      "filename_short": "benchmarks/not_so_smart_contracts/NSSC_SWC_112_Pattern_10.sol",
+                      "is_dependency": false,
+                      "lines": [
+                        4,
+                        5,
+                        6,
+                        7,
+                        8,
+                        9,
+                        10,
+                        11,
+                        12,
+                        13,
+                        14,
+                        15,
+                        16,
+                        17
+                      ],
+                      "starting_column": 1,
+                      "ending_column": 0
+                    }
+                  },
+                  "signature": "forwardCall(address,bytes)"
+                }
+              }
+            }
+          }
+        ],
+        "description": "Low level call in NSSC_SWC_112_Pattern_10.forwardCall(address,bytes) (benchmarks/not_so_smart_contracts/NSSC_SWC_112_Pattern_10.sol#11-15):\n\t- (success,None) = target.delegatecall(data) (benchmarks/not_so_smart_contracts/NSSC_SWC_112_Pattern_10.sol#13)\n",
+        "markdown": "Low level call in [NSSC_SWC_112_Pattern_10.forwardCall(address,bytes)](benchmarks/not_so_smart_contracts/NSSC_SWC_112_Pattern_10.sol#L11-L15):\n\t- [(success,None) = target.delegatecall(data)](benchmarks/not_so_smart_contracts/NSSC_SWC_112_Pattern_10.sol#L13)\n",
+        "first_markdown_element": "benchmarks/not_so_smart_contracts/NSSC_SWC_112_Pattern_10.sol#L11-L15",
+        "id": "4d2b9a5820434e1342c9fa67a522b17ad9c3064da06ad84008ac1e33dd8c725b",
+        "check": "low-level-calls",
+        "impact": "Informational",
+        "confidence": "High",
+        "reference": "https://github.com/crytic/slither/wiki/Detector-Documentation#low-level-calls"
+      },
+      {
+        "elements": [
+          {
+            "type": "contract",
+            "name": "NSSC_SWC_112_Pattern_10",
+            "source_mapping": {
+              "start": 58,
+              "length": 350,
+              "filename_relative": "benchmarks/not_so_smart_contracts/NSSC_SWC_112_Pattern_10.sol",
+              "filename_absolute": "/Users/raffe/Downloads/RSCH_OS/benchmarks/not_so_smart_contracts/NSSC_SWC_112_Pattern_10.sol",
+              "filename_short": "benchmarks/not_so_smart_contracts/NSSC_SWC_112_Pattern_10.sol",
+              "is_dependency": false,
+              "lines": [
+                4,
+                5,
+                6,
+                7,
+                8,
+                9,
+                10,
+                11,
+                12,
+                13,
+                14,
+                15,
+                16,
+                17
+              ],
+              "starting_column": 1,
+              "ending_column": 0
+            },
+            "additional_fields": {
+              "target": "contract",
+              "convention": "CapWords"
+            }
+          }
+        ],
+        "description": "Contract NSSC_SWC_112_Pattern_10 (benchmarks/not_so_smart_contracts/NSSC_SWC_112_Pattern_10.sol#4-17) is not in CapWords\n",
+        "markdown": "Contract [NSSC_SWC_112_Pattern_10](benchmarks/not_so_smart_contracts/NSSC_SWC_112_Pattern_10.sol#L4-L17) is not in CapWords\n",
+        "first_markdown_element": "benchmarks/not_so_smart_contracts/NSSC_SWC_112_Pattern_10.sol#L4-L17",
+        "id": "db8a3e1bcba3893d3052c91ca38d9c1dc4e79c5d2a165b9980775a17cc432a44",
+        "check": "naming-convention",
+        "impact": "Informational",
+        "confidence": "High",
+        "reference": "https://github.com/crytic/slither/wiki/Detector-Documentation#conformance-to-solidity-naming-conventions"
+      },
+      {
+        "elements": [
+          {
+            "type": "variable",
+            "name": "owner",
+            "source_mapping": {
+              "start": 97,
+              "length": 20,
+              "filename_relative": "benchmarks/not_so_smart_contracts/NSSC_SWC_112_Pattern_10.sol",
+              "filename_absolute": "/Users/raffe/Downloads/RSCH_OS/benchmarks/not_so_smart_contracts/NSSC_SWC_112_Pattern_10.sol",
+              "filename_short": "benchmarks/not_so_smart_contracts/NSSC_SWC_112_Pattern_10.sol",
+              "is_dependency": false,
+              "lines": [
+                5
+              ],
+              "starting_column": 5,
+              "ending_column": 25
+            },
+            "type_specific_fields": {
+              "parent": {
+                "type": "contract",
+                "name": "NSSC_SWC_112_Pattern_10",
+                "source_mapping": {
+                  "start": 58,
+                  "length": 350,
+                  "filename_relative": "benchmarks/not_so_smart_contracts/NSSC_SWC_112_Pattern_10.sol",
+                  "filename_absolute": "/Users/raffe/Downloads/RSCH_OS/benchmarks/not_so_smart_contracts/NSSC_SWC_112_Pattern_10.sol",
+                  "filename_short": "benchmarks/not_so_smart_contracts/NSSC_SWC_112_Pattern_10.sol",
+                  "is_dependency": false,
+                  "lines": [
+                    4,
+                    5,
+                    6,
+                    7,
+                    8,
+                    9,
+                    10,
+                    11,
+                    12,
+                    13,
+                    14,
+                    15,
+                    16,
+                    17
+                  ],
+                  "starting_column": 1,
+                  "ending_column": 0
+                }
+              }
+            }
+          }
+        ],
+        "description": "NSSC_SWC_112_Pattern_10.owner (benchmarks/not_so_smart_contracts/NSSC_SWC_112_Pattern_10.sol#5) should be immutable \n",
+        "markdown": "[NSSC_SWC_112_Pattern_10.owner](benchmarks/not_so_smart_contracts/NSSC_SWC_112_Pattern_10.sol#L5) should be immutable \n",
+        "first_markdown_element": "benchmarks/not_so_smart_contracts/NSSC_SWC_112_Pattern_10.sol#L5",
+        "id": "95b8a804d4e5a7cca3bb1e70800e8de1c2ee0bc9f3670c566b8f49ea93680c78",
+        "check": "immutable-states",
+        "impact": "Optimization",
+        "confidence": "High",
+        "reference": "https://github.com/crytic/slither/wiki/Detector-Documentation#state-variables-that-could-be-declared-immutable"
+      }
+    ]
+  }
+}

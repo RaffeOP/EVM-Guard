@@ -1,0 +1,290 @@
+{
+  "full": {
+    "options": {
+      "should_strip_cbor": true,
+      "should_decode_push0": true,
+      "should_propagate_gas_bounds": true,
+      "should_apply_stipend_bound": true,
+      "should_recognise_constant_mutex": true,
+      "should_recognise_slot_mutex": true,
+      "should_require_mutex_dominance": true
+    },
+    "reentrancy": {
+      "tp": 29,
+      "fp": 7,
+      "fn": 2,
+      "tn": 105,
+      "recall": 0.9355,
+      "recall_ci95": [
+        0.7858,
+        0.9921
+      ],
+      "precision": 0.8056,
+      "precision_ci95": [
+        0.6398,
+        0.9181
+      ],
+      "fpr": 0.0625,
+      "fpr_ci95": [
+        0.0255,
+        0.1245
+      ]
+    }
+  },
+  "no_stipend_exclusion": {
+    "options": {
+      "should_strip_cbor": true,
+      "should_decode_push0": true,
+      "should_propagate_gas_bounds": true,
+      "should_apply_stipend_bound": false,
+      "should_recognise_constant_mutex": true,
+      "should_recognise_slot_mutex": true,
+      "should_require_mutex_dominance": true
+    },
+    "reentrancy": {
+      "tp": 29,
+      "fp": 22,
+      "fn": 2,
+      "tn": 90,
+      "recall": 0.9355,
+      "recall_ci95": [
+        0.7858,
+        0.9921
+      ],
+      "precision": 0.5686,
+      "precision_ci95": [
+        0.4225,
+        0.7065
+      ],
+      "fpr": 0.1964,
+      "fpr_ci95": [
+        0.1274,
+        0.2822
+      ]
+    }
+  },
+  "constant_gas_only": {
+    "options": {
+      "should_strip_cbor": true,
+      "should_decode_push0": true,
+      "should_propagate_gas_bounds": false,
+      "should_apply_stipend_bound": true,
+      "should_recognise_constant_mutex": true,
+      "should_recognise_slot_mutex": true,
+      "should_require_mutex_dominance": true
+    },
+    "reentrancy": {
+      "tp": 29,
+      "fp": 22,
+      "fn": 2,
+      "tn": 90,
+      "recall": 0.9355,
+      "recall_ci95": [
+        0.7858,
+        0.9921
+      ],
+      "precision": 0.5686,
+      "precision_ci95": [
+        0.4225,
+        0.7065
+      ],
+      "fpr": 0.1964,
+      "fpr_ci95": [
+        0.1274,
+        0.2822
+      ]
+    }
+  },
+  "no_slot_mutex": {
+    "options": {
+      "should_strip_cbor": true,
+      "should_decode_push0": true,
+      "should_propagate_gas_bounds": true,
+      "should_apply_stipend_bound": true,
+      "should_recognise_constant_mutex": true,
+      "should_recognise_slot_mutex": false,
+      "should_require_mutex_dominance": true
+    },
+    "reentrancy": {
+      "tp": 29,
+      "fp": 8,
+      "fn": 2,
+      "tn": 104,
+      "recall": 0.9355,
+      "recall_ci95": [
+        0.7858,
+        0.9921
+      ],
+      "precision": 0.7838,
+      "precision_ci95": [
+        0.6179,
+        0.9017
+      ],
+      "fpr": 0.0714,
+      "fpr_ci95": [
+        0.0313,
+        0.1359
+      ]
+    }
+  },
+  "no_mutex": {
+    "options": {
+      "should_strip_cbor": true,
+      "should_decode_push0": true,
+      "should_propagate_gas_bounds": true,
+      "should_apply_stipend_bound": true,
+      "should_recognise_constant_mutex": false,
+      "should_recognise_slot_mutex": false,
+      "should_require_mutex_dominance": true
+    },
+    "reentrancy": {
+      "tp": 29,
+      "fp": 8,
+      "fn": 2,
+      "tn": 104,
+      "recall": 0.9355,
+      "recall_ci95": [
+        0.7858,
+        0.9921
+      ],
+      "precision": 0.7838,
+      "precision_ci95": [
+        0.6179,
+        0.9017
+      ],
+      "fpr": 0.0714,
+      "fpr_ci95": [
+        0.0313,
+        0.1359
+      ]
+    }
+  },
+  "mutex_by_reachability": {
+    "options": {
+      "should_strip_cbor": true,
+      "should_decode_push0": true,
+      "should_propagate_gas_bounds": true,
+      "should_apply_stipend_bound": true,
+      "should_recognise_constant_mutex": true,
+      "should_recognise_slot_mutex": true,
+      "should_require_mutex_dominance": false
+    },
+    "reentrancy": {
+      "tp": 29,
+      "fp": 7,
+      "fn": 2,
+      "tn": 105,
+      "recall": 0.9355,
+      "recall_ci95": [
+        0.7858,
+        0.9921
+      ],
+      "precision": 0.8056,
+      "precision_ci95": [
+        0.6398,
+        0.9181
+      ],
+      "fpr": 0.0625,
+      "fpr_ci95": [
+        0.0255,
+        0.1245
+      ]
+    }
+  },
+  "no_push0_decode": {
+    "options": {
+      "should_strip_cbor": true,
+      "should_decode_push0": false,
+      "should_propagate_gas_bounds": true,
+      "should_apply_stipend_bound": true,
+      "should_recognise_constant_mutex": true,
+      "should_recognise_slot_mutex": true,
+      "should_require_mutex_dominance": true
+    },
+    "reentrancy": {
+      "tp": 29,
+      "fp": 7,
+      "fn": 2,
+      "tn": 105,
+      "recall": 0.9355,
+      "recall_ci95": [
+        0.7858,
+        0.9921
+      ],
+      "precision": 0.8056,
+      "precision_ci95": [
+        0.6398,
+        0.9181
+      ],
+      "fpr": 0.0625,
+      "fpr_ci95": [
+        0.0255,
+        0.1245
+      ]
+    }
+  },
+  "no_cbor_strip": {
+    "options": {
+      "should_strip_cbor": false,
+      "should_decode_push0": true,
+      "should_propagate_gas_bounds": true,
+      "should_apply_stipend_bound": true,
+      "should_recognise_constant_mutex": true,
+      "should_recognise_slot_mutex": true,
+      "should_require_mutex_dominance": true
+    },
+    "reentrancy": {
+      "tp": 29,
+      "fp": 7,
+      "fn": 2,
+      "tn": 105,
+      "recall": 0.9355,
+      "recall_ci95": [
+        0.7858,
+        0.9921
+      ],
+      "precision": 0.8056,
+      "precision_ci95": [
+        0.6398,
+        0.9181
+      ],
+      "fpr": 0.0625,
+      "fpr_ci95": [
+        0.0255,
+        0.1245
+      ]
+    }
+  },
+  "pre_fix_v2": {
+    "options": {
+      "should_strip_cbor": true,
+      "should_decode_push0": false,
+      "should_propagate_gas_bounds": false,
+      "should_apply_stipend_bound": true,
+      "should_recognise_constant_mutex": true,
+      "should_recognise_slot_mutex": false,
+      "should_require_mutex_dominance": true
+    },
+    "reentrancy": {
+      "tp": 29,
+      "fp": 25,
+      "fn": 2,
+      "tn": 87,
+      "recall": 0.9355,
+      "recall_ci95": [
+        0.7858,
+        0.9921
+      ],
+      "precision": 0.537,
+      "precision_ci95": [
+        0.3961,
+        0.6738
+      ],
+      "fpr": 0.2232,
+      "fpr_ci95": [
+        0.15,
+        0.3116
+      ]
+    }
+  }
+}

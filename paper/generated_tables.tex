@@ -1,0 +1,111 @@
+\begin{table*}[t]
+\centering
+\small
+\caption{Per-category detection on SmartBugs-curated (143 files, 216 runtime contracts). EVM-Guard rows are the final engine v5, post hoc. Recall and FPR reported with exact 95\% Clopper--Pearson confidence intervals. A tool with no mapped detector for a category flags nothing in it.}
+\label{tab:detection}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{@{}llrrrrlrl@{}}
+\toprule
+Category & Tool & TP & FP & FN & TN & Recall (\%) & Precision (\%) & FPR (\%) \\
+\midrule
+Reentrancy & \textbf{EVM-Guard} & \textbf{29} & \textbf{7} & \textbf{2} & \textbf{105} & \textbf{93.5 [78.6, 99.2]} & \textbf{80.6} & \textbf{6.2 [2.5, 12.4]} \\
+ & Slither & 29 & 31 & 2 & 81 & 93.5 [78.6, 99.2] & 48.3 & 27.7 [19.6, 36.9] \\
+ & Mythril & 7 & 30 & 24 & 82 & 22.6 [9.6, 41.1] & 18.9 & 26.8 [18.9, 36.0] \\
+\midrule
+Denial of service & \textbf{EVM-Guard} & \textbf{5} & \textbf{34} & \textbf{1} & \textbf{103} & \textbf{83.3 [35.9, 99.6]} & \textbf{12.8} & \textbf{24.8 [17.8, 32.9]} \\
+ & Slither & 2 & 14 & 4 & 123 & 33.3 [4.3, 77.7] & 12.5 & 10.2 [5.7, 16.6] \\
+ & Mythril & 1 & 24 & 5 & 113 & 16.7 [0.4, 64.1] & 4.0 & 17.5 [11.6, 24.9] \\
+\midrule
+Access control & \textbf{EVM-Guard} & \textbf{2} & \textbf{0} & \textbf{16} & \textbf{125} & \textbf{11.1 [1.4, 34.7]} & \textbf{100.0} & \textbf{0.0 [0.0, 2.9]} \\
+ & Slither & 8 & 37 & 10 & 88 & 44.4 [21.5, 69.2] & 17.8 & 29.6 [21.8, 38.4] \\
+ & Mythril & 13 & 11 & 5 & 114 & 72.2 [46.5, 90.3] & 54.2 & 8.8 [4.5, 15.2] \\
+\midrule
+Arithmetic & \textbf{EVM-Guard} & \textbf{1} & \textbf{80} & \textbf{14} & \textbf{48} & \textbf{6.7 [0.2, 31.9]} & \textbf{1.2} & \textbf{62.5 [53.5, 70.9]} \\
+ & Slither & 0 & 0 & 15 & 128 & 0.0 [0.0, 21.8] & n/a & 0.0 [0.0, 2.8] \\
+ & Mythril & 0 & 0 & 15 & 128 & 0.0 [0.0, 21.8] & n/a & 0.0 [0.0, 2.8] \\
+\bottomrule
+\end{tabular}%
+}
+\end{table*}
+
+\begin{table}[t]
+\centering
+\small
+\caption{Run outcomes and per-file wall time on SmartBugs-curated. Baseline times include \texttt{solc} compilation; EVM-Guard times cover analysis of compiled bytecode only, excluding replay.}
+\label{tab:runtime}
+\resizebox{\columnwidth}{!}{%
+\begin{tabular}{@{}lrrrrr@{}}
+\toprule
+Tool & Completed & Errors & Timeouts & Median (ms) & Mean $\pm$ SD (ms) \\
+\midrule
+\textbf{EVM-Guard} & \textbf{143} & \textbf{0} & \textbf{0} & \textbf{87} & \textbf{128 $\pm$ 170} \\
+Slither & 141 & 2 & 0 & 289 & 304 $\pm$ 135 \\
+Mythril & 86 & 20 & 37 & 26,025 & 30,288 $\pm$ 24,942 \\
+\bottomrule
+\end{tabular}%
+}
+\end{table}
+
+\begin{table}[t]
+\centering
+\small
+\caption{Engine v5 findings on 216 runtime contracts by hazard class (F) and the number confirmed by sandbox witness replay (C). SWC-101 and Class~E have no replay oracle. File-level precision of the confirmed findings is given in Table~\ref{tab:replay_scores}.}
+\label{tab:replay}
+\resizebox{\columnwidth}{!}{%
+\begin{tabular}{@{}lrr@{}}
+\toprule
+Class & Static Findings (F) & Replay Confirmed (C) \\
+\midrule
+SWC-107 (reentrancy) & 41 & 4 \\
+SWC-128 (loop gas) & 43 & 3 \\
+SWC-112 (delegatecall) & 1 & 1 \\
+SWC-124 (slot collision) & 1 & 0 \\
+SWC-101 (truncation) & 106 & n/a \\
+Class~E (spot price) & 2 & n/a \\
+\midrule
+Total & 194 & 8 \\
+\bottomrule
+\end{tabular}%
+}
+\end{table}
+
+\begin{table}[t]
+\centering
+\small
+\caption{EVM-Guard v5 file-level scores counting only replay-confirmed findings (95\% Clopper--Pearson interval for recall).}
+\label{tab:replay_scores}
+\resizebox{\columnwidth}{!}{%
+\begin{tabular}{@{}lrrrrlr@{}}
+\toprule
+Category & TP & FP & FN & TN & Recall (\%) & Precision (\%) \\
+\midrule
+Reentrancy & 4 & 0 & 27 & 112 & 12.9 [3.6, 29.8] & 100.0 \\
+Denial of service & 2 & 1 & 4 & 136 & 33.3 [4.3, 77.7] & 66.7 \\
+Access control & 1 & 0 & 17 & 125 & 5.6 [0.1, 27.3] & 100.0 \\
+Arithmetic & 0 & 0 & 15 & 128 & 0.0 [0.0, 21.8] & n/a \\
+\bottomrule
+\end{tabular}%
+}
+\end{table}
+
+\begin{table*}[t]
+\centering
+\small
+\caption{Evaluation on the SolidiFI bug-injection benchmark (400 files: 350 with injected bugs, 50 clean). The protocol was frozen before the held-out engine v2 run, whose results are given in the text; the EVM-Guard rows are the final engine v5, post hoc. Recall and FPR with exact 95\% Clopper--Pearson intervals. Denial of service has no injected class in this corpus and is not scored.}
+\label{tab:heldout}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{@{}llrrrrlrl@{}}
+\toprule
+Category & Tool & TP & FP & FN & TN & Recall (\%) & Precision (\%) & FPR (\%) \\
+\midrule
+Reentrancy & \textbf{EVM-Guard} & \textbf{50} & \textbf{35} & \textbf{0} & \textbf{315} & \textbf{100.0 [92.9, 100.0]} & \textbf{58.8} & \textbf{10.0 [7.1, 13.6]} \\
+ & Slither & 50 & 150 & 0 & 200 & 100.0 [92.9, 100.0] & 25.0 & 42.9 [37.6, 48.2] \\
+ & Mythril & 2 & 7 & 48 & 343 & 4.0 [0.5, 13.7] & 22.2 & 2.0 [0.8, 4.1] \\
+\midrule
+Arithmetic & \textbf{EVM-Guard} & \textbf{45} & \textbf{315} & \textbf{5} & \textbf{35} & \textbf{90.0 [78.2, 96.7]} & \textbf{12.5} & \textbf{90.0 [86.4, 92.9]} \\
+ & Slither & 0 & 0 & 50 & 350 & 0.0 [0.0, 7.1] & n/a & 0.0 [0.0, 1.1] \\
+ & Mythril & 0 & 0 & 50 & 350 & 0.0 [0.0, 7.1] & n/a & 0.0 [0.0, 1.1] \\
+\bottomrule
+\end{tabular}%
+}
+\end{table*}

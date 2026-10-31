@@ -1,0 +1,91 @@
+{
+  "files": 210,
+  "flagged_any": {
+    "reentrancy": {
+      "tp": 30,
+      "fp": 30,
+      "fn": 0,
+      "tn": 150,
+      "recall": 1.0,
+      "recall_ci95": [
+        0.8843,
+        1.0
+      ],
+      "precision": 0.5,
+      "precision_ci95": [
+        0.3681,
+        0.6319
+      ],
+      "fpr": 0.1667,
+      "fpr_ci95": [
+        0.1154,
+        0.2293
+      ]
+    },
+    "denial_of_service": {
+      "tp": 30,
+      "fp": 0,
+      "fn": 0,
+      "tn": 180,
+      "recall": 1.0,
+      "recall_ci95": [
+        0.8843,
+        1.0
+      ],
+      "precision": 1.0,
+      "precision_ci95": [
+        0.8843,
+        1.0
+      ],
+      "fpr": 0.0,
+      "fpr_ci95": [
+        0.0,
+        0.0203
+      ]
+    }
+  },
+  "replay_confirmed": {
+    "reentrancy": {
+      "tp": 30,
+      "fp": 0,
+      "fn": 0,
+      "tn": 180,
+      "recall": 1.0,
+      "recall_ci95": [
+        0.8843,
+        1.0
+      ],
+      "precision": 1.0,
+      "precision_ci95": [
+        0.8843,
+        1.0
+      ],
+      "fpr": 0.0,
+      "fpr_ci95": [
+        0.0,
+        0.0203
+      ]
+    },
+    "denial_of_service": {
+      "tp": 30,
+      "fp": 0,
+      "fn": 0,
+      "tn": 180,
+      "recall": 1.0,
+      "recall_ci95": [
+        0.8843,
+        1.0
+      ],
+      "precision": 1.0,
+      "precision_ci95": [
+        0.8843,
+        1.0
+      ],
+      "fpr": 0.0,
+      "fpr_ci95": [
+        0.0,
+        0.0203
+      ]
+    }
+  }
+}

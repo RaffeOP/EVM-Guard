@@ -1,0 +1,705 @@
+{
+  "success": true,
+  "error": null,
+  "results": {
+    "detectors": [
+      {
+        "elements": [
+          {
+            "type": "variable",
+            "name": "cumulativePrice",
+            "source_mapping": {
+              "start": 97,
+              "length": 30,
+              "filename_relative": "benchmarks/defi_hack_labs/DeFiProtocol_18_Patched.sol",
+              "filename_absolute": "/Users/raffe/Downloads/RSCH_OS/benchmarks/defi_hack_labs/DeFiProtocol_18_Patched.sol",
+              "filename_short": "benchmarks/defi_hack_labs/DeFiProtocol_18_Patched.sol",
+              "is_dependency": false,
+              "lines": [
+                5
+              ],
+              "starting_column": 5,
+              "ending_column": 35
+            },
+            "type_specific_fields": {
+              "parent": {
+                "type": "contract",
+                "name": "DeFiProtocol_18_Patched",
+                "source_mapping": {
+                  "start": 58,
+                  "length": 424,
+                  "filename_relative": "benchmarks/defi_hack_labs/DeFiProtocol_18_Patched.sol",
+                  "filename_absolute": "/Users/raffe/Downloads/RSCH_OS/benchmarks/defi_hack_labs/DeFiProtocol_18_Patched.sol",
+                  "filename_short": "benchmarks/defi_hack_labs/DeFiProtocol_18_Patched.sol",
+                  "is_dependency": false,
+                  "lines": [
+                    4,
+                    5,
+                    6,
+                    7,
+                    8,
+                    9,
+                    10,
+                    11,
+                    12,
+                    13,
+                    14,
+                    15
+                  ],
+                  "starting_column": 1,
+                  "ending_column": 0
+                }
+              }
+            }
+          },
+          {
+            "type": "function",
+            "name": "getTWAP",
+            "source_mapping": {
+              "start": 172,
+              "length": 308,
+              "filename_relative": "benchmarks/defi_hack_labs/DeFiProtocol_18_Patched.sol",
+              "filename_absolute": "/Users/raffe/Downloads/RSCH_OS/benchmarks/defi_hack_labs/DeFiProtocol_18_Patched.sol",
+              "filename_short": "benchmarks/defi_hack_labs/DeFiProtocol_18_Patched.sol",
+              "is_dependency": false,
+              "lines": [
+                8,
+                9,
+                10,
+                11,
+                12,
+                13
+              ],
+              "starting_column": 5,
+              "ending_column": 6
+            },
+            "type_specific_fields": {
+              "parent": {
+                "type": "contract",
+                "name": "DeFiProtocol_18_Patched",
+                "source_mapping": {
+                  "start": 58,
+                  "length": 424,
+                  "filename_relative": "benchmarks/defi_hack_labs/DeFiProtocol_18_Patched.sol",
+                  "filename_absolute": "/Users/raffe/Downloads/RSCH_OS/benchmarks/defi_hack_labs/DeFiProtocol_18_Patched.sol",
+                  "filename_short": "benchmarks/defi_hack_labs/DeFiProtocol_18_Patched.sol",
+                  "is_dependency": false,
+                  "lines": [
+                    4,
+                    5,
+                    6,
+                    7,
+                    8,
+                    9,
+                    10,
+                    11,
+                    12,
+                    13,
+                    14,
+                    15
+                  ],
+                  "starting_column": 1,
+                  "ending_column": 0
+                }
+              },
+              "signature": "getTWAP()"
+            }
+          }
+        ],
+        "description": "DeFiProtocol_18_Patched.cumulativePrice (benchmarks/defi_hack_labs/DeFiProtocol_18_Patched.sol#5) is never initialized. It is used in:\n\t- DeFiProtocol_18_Patched.getTWAP() (benchmarks/defi_hack_labs/DeFiProtocol_18_Patched.sol#8-13)\n",
+        "markdown": "[DeFiProtocol_18_Patched.cumulativePrice](benchmarks/defi_hack_labs/DeFiProtocol_18_Patched.sol#L5) is never initialized. It is used in:\n\t- [DeFiProtocol_18_Patched.getTWAP()](benchmarks/defi_hack_labs/DeFiProtocol_18_Patched.sol#L8-L13)\n",
+        "first_markdown_element": "benchmarks/defi_hack_labs/DeFiProtocol_18_Patched.sol#L5",
+        "id": "4cda2ce76a25c47360e488f4ef2e5d9d0965ced524a36e0ad4639b320958dff6",
+        "check": "uninitialized-state",
+        "impact": "High",
+        "confidence": "High",
+        "reference": "https://github.com/crytic/slither/wiki/Detector-Documentation#uninitialized-state-variables"
+      },
+      {
+        "elements": [
+          {
+            "type": "variable",
+            "name": "lastBlockTimestamp",
+            "source_mapping": {
+              "start": 133,
+              "length": 32,
+              "filename_relative": "benchmarks/defi_hack_labs/DeFiProtocol_18_Patched.sol",
+              "filename_absolute": "/Users/raffe/Downloads/RSCH_OS/benchmarks/defi_hack_labs/DeFiProtocol_18_Patched.sol",
+              "filename_short": "benchmarks/defi_hack_labs/DeFiProtocol_18_Patched.sol",
+              "is_dependency": false,
+              "lines": [
+                6
+              ],
+              "starting_column": 5,
+              "ending_column": 37
+            },
+            "type_specific_fields": {
+              "parent": {
+                "type": "contract",
+                "name": "DeFiProtocol_18_Patched",
+                "source_mapping": {
+                  "start": 58,
+                  "length": 424,
+                  "filename_relative": "benchmarks/defi_hack_labs/DeFiProtocol_18_Patched.sol",
+                  "filename_absolute": "/Users/raffe/Downloads/RSCH_OS/benchmarks/defi_hack_labs/DeFiProtocol_18_Patched.sol",
+                  "filename_short": "benchmarks/defi_hack_labs/DeFiProtocol_18_Patched.sol",
+                  "is_dependency": false,
+                  "lines": [
+                    4,
+                    5,
+                    6,
+                    7,
+                    8,
+                    9,
+                    10,
+                    11,
+                    12,
+                    13,
+                    14,
+                    15
+                  ],
+                  "starting_column": 1,
+                  "ending_column": 0
+                }
+              }
+            }
+          },
+          {
+            "type": "function",
+            "name": "getTWAP",
+            "source_mapping": {
+              "start": 172,
+              "length": 308,
+              "filename_relative": "benchmarks/defi_hack_labs/DeFiProtocol_18_Patched.sol",
+              "filename_absolute": "/Users/raffe/Downloads/RSCH_OS/benchmarks/defi_hack_labs/DeFiProtocol_18_Patched.sol",
+              "filename_short": "benchmarks/defi_hack_labs/DeFiProtocol_18_Patched.sol",
+              "is_dependency": false,
+              "lines": [
+                8,
+                9,
+                10,
+                11,
+                12,
+                13
+              ],
+              "starting_column": 5,
+              "ending_column": 6
+            },
+            "type_specific_fields": {
+              "parent": {
+                "type": "contract",
+                "name": "DeFiProtocol_18_Patched",
+                "source_mapping": {
+                  "start": 58,
+                  "length": 424,
+                  "filename_relative": "benchmarks/defi_hack_labs/DeFiProtocol_18_Patched.sol",
+                  "filename_absolute": "/Users/raffe/Downloads/RSCH_OS/benchmarks/defi_hack_labs/DeFiProtocol_18_Patched.sol",
+                  "filename_short": "benchmarks/defi_hack_labs/DeFiProtocol_18_Patched.sol",
+                  "is_dependency": false,
+                  "lines": [
+                    4,
+                    5,
+                    6,
+                    7,
+                    8,
+                    9,
+                    10,
+                    11,
+                    12,
+                    13,
+                    14,
+                    15
+                  ],
+                  "starting_column": 1,
+                  "ending_column": 0
+                }
+              },
+              "signature": "getTWAP()"
+            }
+          }
+        ],
+        "description": "DeFiProtocol_18_Patched.lastBlockTimestamp (benchmarks/defi_hack_labs/DeFiProtocol_18_Patched.sol#6) is never initialized. It is used in:\n\t- DeFiProtocol_18_Patched.getTWAP() (benchmarks/defi_hack_labs/DeFiProtocol_18_Patched.sol#8-13)\n",
+        "markdown": "[DeFiProtocol_18_Patched.lastBlockTimestamp](benchmarks/defi_hack_labs/DeFiProtocol_18_Patched.sol#L6) is never initialized. It is used in:\n\t- [DeFiProtocol_18_Patched.getTWAP()](benchmarks/defi_hack_labs/DeFiProtocol_18_Patched.sol#L8-L13)\n",
+        "first_markdown_element": "benchmarks/defi_hack_labs/DeFiProtocol_18_Patched.sol#L6",
+        "id": "a0e47a5e367ace94783f3e1e906a6c0cbc96456b9babe87d2c2cd83999cd2d69",
+        "check": "uninitialized-state",
+        "impact": "High",
+        "confidence": "High",
+        "reference": "https://github.com/crytic/slither/wiki/Detector-Documentation#uninitialized-state-variables"
+      },
+      {
+        "elements": [
+          {
+            "type": "function",
+            "name": "getTWAP",
+            "source_mapping": {
+              "start": 172,
+              "length": 308,
+              "filename_relative": "benchmarks/defi_hack_labs/DeFiProtocol_18_Patched.sol",
+              "filename_absolute": "/Users/raffe/Downloads/RSCH_OS/benchmarks/defi_hack_labs/DeFiProtocol_18_Patched.sol",
+              "filename_short": "benchmarks/defi_hack_labs/DeFiProtocol_18_Patched.sol",
+              "is_dependency": false,
+              "lines": [
+                8,
+                9,
+                10,
+                11,
+                12,
+                13
+              ],
+              "starting_column": 5,
+              "ending_column": 6
+            },
+            "type_specific_fields": {
+              "parent": {
+                "type": "contract",
+                "name": "DeFiProtocol_18_Patched",
+                "source_mapping": {
+                  "start": 58,
+                  "length": 424,
+                  "filename_relative": "benchmarks/defi_hack_labs/DeFiProtocol_18_Patched.sol",
+                  "filename_absolute": "/Users/raffe/Downloads/RSCH_OS/benchmarks/defi_hack_labs/DeFiProtocol_18_Patched.sol",
+                  "filename_short": "benchmarks/defi_hack_labs/DeFiProtocol_18_Patched.sol",
+                  "is_dependency": false,
+                  "lines": [
+                    4,
+                    5,
+                    6,
+                    7,
+                    8,
+                    9,
+                    10,
+                    11,
+                    12,
+                    13,
+                    14,
+                    15
+                  ],
+                  "starting_column": 1,
+                  "ending_column": 0
+                }
+              },
+              "signature": "getTWAP()"
+            }
+          },
+          {
+            "type": "node",
+            "name": "timeElapsed == 0",
+            "source_mapping": {
+              "start": 398,
+              "length": 16,
+              "filename_relative": "benchmarks/defi_hack_labs/DeFiProtocol_18_Patched.sol",
+              "filename_absolute": "/Users/raffe/Downloads/RSCH_OS/benchmarks/defi_hack_labs/DeFiProtocol_18_Patched.sol",
+              "filename_short": "benchmarks/defi_hack_labs/DeFiProtocol_18_Patched.sol",
+              "is_dependency": false,
+              "lines": [
+                11
+              ],
+              "starting_column": 13,
+              "ending_column": 29
+            },
+            "type_specific_fields": {
+              "parent": {
+                "type": "function",
+                "name": "getTWAP",
+                "source_mapping": {
+                  "start": 172,
+                  "length": 308,
+                  "filename_relative": "benchmarks/defi_hack_labs/DeFiProtocol_18_Patched.sol",
+                  "filename_absolute": "/Users/raffe/Downloads/RSCH_OS/benchmarks/defi_hack_labs/DeFiProtocol_18_Patched.sol",
+                  "filename_short": "benchmarks/defi_hack_labs/DeFiProtocol_18_Patched.sol",
+                  "is_dependency": false,
+                  "lines": [
+                    8,
+                    9,
+                    10,
+                    11,
+                    12,
+                    13
+                  ],
+                  "starting_column": 5,
+                  "ending_column": 6
+                },
+                "type_specific_fields": {
+                  "parent": {
+                    "type": "contract",
+                    "name": "DeFiProtocol_18_Patched",
+                    "source_mapping": {
+                      "start": 58,
+                      "length": 424,
+                      "filename_relative": "benchmarks/defi_hack_labs/DeFiProtocol_18_Patched.sol",
+                      "filename_absolute": "/Users/raffe/Downloads/RSCH_OS/benchmarks/defi_hack_labs/DeFiProtocol_18_Patched.sol",
+                      "filename_short": "benchmarks/defi_hack_labs/DeFiProtocol_18_Patched.sol",
+                      "is_dependency": false,
+                      "lines": [
+                        4,
+                        5,
+                        6,
+                        7,
+                        8,
+                        9,
+                        10,
+                        11,
+                        12,
+                        13,
+                        14,
+                        15
+                      ],
+                      "starting_column": 1,
+                      "ending_column": 0
+                    }
+                  },
+                  "signature": "getTWAP()"
+                }
+              }
+            }
+          }
+        ],
+        "description": "DeFiProtocol_18_Patched.getTWAP() (benchmarks/defi_hack_labs/DeFiProtocol_18_Patched.sol#8-13) uses a dangerous strict equality:\n\t- timeElapsed == 0 (benchmarks/defi_hack_labs/DeFiProtocol_18_Patched.sol#11)\n",
+        "markdown": "[DeFiProtocol_18_Patched.getTWAP()](benchmarks/defi_hack_labs/DeFiProtocol_18_Patched.sol#L8-L13) uses a dangerous strict equality:\n\t- [timeElapsed == 0](benchmarks/defi_hack_labs/DeFiProtocol_18_Patched.sol#L11)\n",
+        "first_markdown_element": "benchmarks/defi_hack_labs/DeFiProtocol_18_Patched.sol#L8-L13",
+        "id": "9540431ecd2b36e88c56cbef33fcc818d8eb40ea8dd6bfe7eefc6d40050274bd",
+        "check": "incorrect-equality",
+        "impact": "Medium",
+        "confidence": "High",
+        "reference": "https://github.com/crytic/slither/wiki/Detector-Documentation#dangerous-strict-equalities"
+      },
+      {
+        "elements": [
+          {
+            "type": "function",
+            "name": "getTWAP",
+            "source_mapping": {
+              "start": 172,
+              "length": 308,
+              "filename_relative": "benchmarks/defi_hack_labs/DeFiProtocol_18_Patched.sol",
+              "filename_absolute": "/Users/raffe/Downloads/RSCH_OS/benchmarks/defi_hack_labs/DeFiProtocol_18_Patched.sol",
+              "filename_short": "benchmarks/defi_hack_labs/DeFiProtocol_18_Patched.sol",
+              "is_dependency": false,
+              "lines": [
+                8,
+                9,
+                10,
+                11,
+                12,
+                13
+              ],
+              "starting_column": 5,
+              "ending_column": 6
+            },
+            "type_specific_fields": {
+              "parent": {
+                "type": "contract",
+                "name": "DeFiProtocol_18_Patched",
+                "source_mapping": {
+                  "start": 58,
+                  "length": 424,
+                  "filename_relative": "benchmarks/defi_hack_labs/DeFiProtocol_18_Patched.sol",
+                  "filename_absolute": "/Users/raffe/Downloads/RSCH_OS/benchmarks/defi_hack_labs/DeFiProtocol_18_Patched.sol",
+                  "filename_short": "benchmarks/defi_hack_labs/DeFiProtocol_18_Patched.sol",
+                  "is_dependency": false,
+                  "lines": [
+                    4,
+                    5,
+                    6,
+                    7,
+                    8,
+                    9,
+                    10,
+                    11,
+                    12,
+                    13,
+                    14,
+                    15
+                  ],
+                  "starting_column": 1,
+                  "ending_column": 0
+                }
+              },
+              "signature": "getTWAP()"
+            }
+          },
+          {
+            "type": "node",
+            "name": "timeElapsed == 0",
+            "source_mapping": {
+              "start": 398,
+              "length": 16,
+              "filename_relative": "benchmarks/defi_hack_labs/DeFiProtocol_18_Patched.sol",
+              "filename_absolute": "/Users/raffe/Downloads/RSCH_OS/benchmarks/defi_hack_labs/DeFiProtocol_18_Patched.sol",
+              "filename_short": "benchmarks/defi_hack_labs/DeFiProtocol_18_Patched.sol",
+              "is_dependency": false,
+              "lines": [
+                11
+              ],
+              "starting_column": 13,
+              "ending_column": 29
+            },
+            "type_specific_fields": {
+              "parent": {
+                "type": "function",
+                "name": "getTWAP",
+                "source_mapping": {
+                  "start": 172,
+                  "length": 308,
+                  "filename_relative": "benchmarks/defi_hack_labs/DeFiProtocol_18_Patched.sol",
+                  "filename_absolute": "/Users/raffe/Downloads/RSCH_OS/benchmarks/defi_hack_labs/DeFiProtocol_18_Patched.sol",
+                  "filename_short": "benchmarks/defi_hack_labs/DeFiProtocol_18_Patched.sol",
+                  "is_dependency": false,
+                  "lines": [
+                    8,
+                    9,
+                    10,
+                    11,
+                    12,
+                    13
+                  ],
+                  "starting_column": 5,
+                  "ending_column": 6
+                },
+                "type_specific_fields": {
+                  "parent": {
+                    "type": "contract",
+                    "name": "DeFiProtocol_18_Patched",
+                    "source_mapping": {
+                      "start": 58,
+                      "length": 424,
+                      "filename_relative": "benchmarks/defi_hack_labs/DeFiProtocol_18_Patched.sol",
+                      "filename_absolute": "/Users/raffe/Downloads/RSCH_OS/benchmarks/defi_hack_labs/DeFiProtocol_18_Patched.sol",
+                      "filename_short": "benchmarks/defi_hack_labs/DeFiProtocol_18_Patched.sol",
+                      "is_dependency": false,
+                      "lines": [
+                        4,
+                        5,
+                        6,
+                        7,
+                        8,
+                        9,
+                        10,
+                        11,
+                        12,
+                        13,
+                        14,
+                        15
+                      ],
+                      "starting_column": 1,
+                      "ending_column": 0
+                    }
+                  },
+                  "signature": "getTWAP()"
+                }
+              }
+            }
+          }
+        ],
+        "description": "DeFiProtocol_18_Patched.getTWAP() (benchmarks/defi_hack_labs/DeFiProtocol_18_Patched.sol#8-13) uses timestamp for comparisons\n\tDangerous comparisons:\n\t- timeElapsed == 0 (benchmarks/defi_hack_labs/DeFiProtocol_18_Patched.sol#11)\n",
+        "markdown": "[DeFiProtocol_18_Patched.getTWAP()](benchmarks/defi_hack_labs/DeFiProtocol_18_Patched.sol#L8-L13) uses timestamp for comparisons\n\tDangerous comparisons:\n\t- [timeElapsed == 0](benchmarks/defi_hack_labs/DeFiProtocol_18_Patched.sol#L11)\n",
+        "first_markdown_element": "benchmarks/defi_hack_labs/DeFiProtocol_18_Patched.sol#L8-L13",
+        "id": "40f59c70600dd8b29f0967c3de3165292ca08384f2282664e87d71a3a04b7d24",
+        "check": "timestamp",
+        "impact": "Low",
+        "confidence": "Medium",
+        "reference": "https://github.com/crytic/slither/wiki/Detector-Documentation#block-timestamp"
+      },
+      {
+        "elements": [
+          {
+            "type": "pragma",
+            "name": "^0.8.20",
+            "source_mapping": {
+              "start": 32,
+              "length": 24,
+              "filename_relative": "benchmarks/defi_hack_labs/DeFiProtocol_18_Patched.sol",
+              "filename_absolute": "/Users/raffe/Downloads/RSCH_OS/benchmarks/defi_hack_labs/DeFiProtocol_18_Patched.sol",
+              "filename_short": "benchmarks/defi_hack_labs/DeFiProtocol_18_Patched.sol",
+              "is_dependency": false,
+              "lines": [
+                2
+              ],
+              "starting_column": 1,
+              "ending_column": 25
+            },
+            "type_specific_fields": {
+              "directive": [
+                "solidity",
+                "^",
+                "0.8",
+                ".20"
+              ]
+            }
+          }
+        ],
+        "description": "Version constraint ^0.8.20 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)\n\t- VerbatimInvalidDeduplication\n\t- FullInlinerNonExpressionSplitArgumentEvaluationOrder\n\t- MissingSideEffectsOnSelectorAccess.\nIt is used by:\n\t- ^0.8.20 (benchmarks/defi_hack_labs/DeFiProtocol_18_Patched.sol#2)\n",
+        "markdown": "Version constraint ^0.8.20 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)\n\t- VerbatimInvalidDeduplication\n\t- FullInlinerNonExpressionSplitArgumentEvaluationOrder\n\t- MissingSideEffectsOnSelectorAccess.\nIt is used by:\n\t- [^0.8.20](benchmarks/defi_hack_labs/DeFiProtocol_18_Patched.sol#L2)\n",
+        "first_markdown_element": "benchmarks/defi_hack_labs/DeFiProtocol_18_Patched.sol#L2",
+        "id": "94f405d1b1c174e2b328c7eb4918b1826354bfc50677a7478671647f827d85f5",
+        "check": "solc-version",
+        "impact": "Informational",
+        "confidence": "High",
+        "reference": "https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity"
+      },
+      {
+        "elements": [
+          {
+            "type": "contract",
+            "name": "DeFiProtocol_18_Patched",
+            "source_mapping": {
+              "start": 58,
+              "length": 424,
+              "filename_relative": "benchmarks/defi_hack_labs/DeFiProtocol_18_Patched.sol",
+              "filename_absolute": "/Users/raffe/Downloads/RSCH_OS/benchmarks/defi_hack_labs/DeFiProtocol_18_Patched.sol",
+              "filename_short": "benchmarks/defi_hack_labs/DeFiProtocol_18_Patched.sol",
+              "is_dependency": false,
+              "lines": [
+                4,
+                5,
+                6,
+                7,
+                8,
+                9,
+                10,
+                11,
+                12,
+                13,
+                14,
+                15
+              ],
+              "starting_column": 1,
+              "ending_column": 0
+            },
+            "additional_fields": {
+              "target": "contract",
+              "convention": "CapWords"
+            }
+          }
+        ],
+        "description": "Contract DeFiProtocol_18_Patched (benchmarks/defi_hack_labs/DeFiProtocol_18_Patched.sol#4-15) is not in CapWords\n",
+        "markdown": "Contract [DeFiProtocol_18_Patched](benchmarks/defi_hack_labs/DeFiProtocol_18_Patched.sol#L4-L15) is not in CapWords\n",
+        "first_markdown_element": "benchmarks/defi_hack_labs/DeFiProtocol_18_Patched.sol#L4-L15",
+        "id": "36807569287978dc1826c946a5df6eae30dd0bb24a627b1eac91f16e1da3f3c5",
+        "check": "naming-convention",
+        "impact": "Informational",
+        "confidence": "High",
+        "reference": "https://github.com/crytic/slither/wiki/Detector-Documentation#conformance-to-solidity-naming-conventions"
+      },
+      {
+        "elements": [
+          {
+            "type": "variable",
+            "name": "lastBlockTimestamp",
+            "source_mapping": {
+              "start": 133,
+              "length": 32,
+              "filename_relative": "benchmarks/defi_hack_labs/DeFiProtocol_18_Patched.sol",
+              "filename_absolute": "/Users/raffe/Downloads/RSCH_OS/benchmarks/defi_hack_labs/DeFiProtocol_18_Patched.sol",
+              "filename_short": "benchmarks/defi_hack_labs/DeFiProtocol_18_Patched.sol",
+              "is_dependency": false,
+              "lines": [
+                6
+              ],
+              "starting_column": 5,
+              "ending_column": 37
+            },
+            "type_specific_fields": {
+              "parent": {
+                "type": "contract",
+                "name": "DeFiProtocol_18_Patched",
+                "source_mapping": {
+                  "start": 58,
+                  "length": 424,
+                  "filename_relative": "benchmarks/defi_hack_labs/DeFiProtocol_18_Patched.sol",
+                  "filename_absolute": "/Users/raffe/Downloads/RSCH_OS/benchmarks/defi_hack_labs/DeFiProtocol_18_Patched.sol",
+                  "filename_short": "benchmarks/defi_hack_labs/DeFiProtocol_18_Patched.sol",
+                  "is_dependency": false,
+                  "lines": [
+                    4,
+                    5,
+                    6,
+                    7,
+                    8,
+                    9,
+                    10,
+                    11,
+                    12,
+                    13,
+                    14,
+                    15
+                  ],
+                  "starting_column": 1,
+                  "ending_column": 0
+                }
+              }
+            }
+          }
+        ],
+        "description": "DeFiProtocol_18_Patched.lastBlockTimestamp (benchmarks/defi_hack_labs/DeFiProtocol_18_Patched.sol#6) should be constant \n",
+        "markdown": "[DeFiProtocol_18_Patched.lastBlockTimestamp](benchmarks/defi_hack_labs/DeFiProtocol_18_Patched.sol#L6) should be constant \n",
+        "first_markdown_element": "benchmarks/defi_hack_labs/DeFiProtocol_18_Patched.sol#L6",
+        "id": "1b72fcb1b58ee483fbc7087cc758caa62e9c57d5f41832b88360ffd3468e5feb",
+        "check": "constable-states",
+        "impact": "Optimization",
+        "confidence": "High",
+        "reference": "https://github.com/crytic/slither/wiki/Detector-Documentation#state-variables-that-could-be-declared-constant"
+      },
+      {
+        "elements": [
+          {
+            "type": "variable",
+            "name": "cumulativePrice",
+            "source_mapping": {
+              "start": 97,
+              "length": 30,
+              "filename_relative": "benchmarks/defi_hack_labs/DeFiProtocol_18_Patched.sol",
+              "filename_absolute": "/Users/raffe/Downloads/RSCH_OS/benchmarks/defi_hack_labs/DeFiProtocol_18_Patched.sol",
+              "filename_short": "benchmarks/defi_hack_labs/DeFiProtocol_18_Patched.sol",
+              "is_dependency": false,
+              "lines": [
+                5
+              ],
+              "starting_column": 5,
+              "ending_column": 35
+            },
+            "type_specific_fields": {
+              "parent": {
+                "type": "contract",
+                "name": "DeFiProtocol_18_Patched",
+                "source_mapping": {
+                  "start": 58,
+                  "length": 424,
+                  "filename_relative": "benchmarks/defi_hack_labs/DeFiProtocol_18_Patched.sol",
+                  "filename_absolute": "/Users/raffe/Downloads/RSCH_OS/benchmarks/defi_hack_labs/DeFiProtocol_18_Patched.sol",
+                  "filename_short": "benchmarks/defi_hack_labs/DeFiProtocol_18_Patched.sol",
+                  "is_dependency": false,
+                  "lines": [
+                    4,
+                    5,
+                    6,
+                    7,
+                    8,
+                    9,
+                    10,
+                    11,
+                    12,
+                    13,
+                    14,
+                    15
+                  ],
+                  "starting_column": 1,
+                  "ending_column": 0
+                }
+              }
+            }
+          }
+        ],
+        "description": "DeFiProtocol_18_Patched.cumulativePrice (benchmarks/defi_hack_labs/DeFiProtocol_18_Patched.sol#5) should be constant \n",
+        "markdown": "[DeFiProtocol_18_Patched.cumulativePrice](benchmarks/defi_hack_labs/DeFiProtocol_18_Patched.sol#L5) should be constant \n",
+        "first_markdown_element": "benchmarks/defi_hack_labs/DeFiProtocol_18_Patched.sol#L5",
+        "id": "26455b7f5167cdb6a6718b726d805bd95bcf4c184a1bc17f893a4e678bfea7b0",
+        "check": "constable-states",
+        "impact": "Optimization",
+        "confidence": "High",
+        "reference": "https://github.com/crytic/slither/wiki/Detector-Documentation#state-variables-that-could-be-declared-constant"
+      }
+    ]
+  }
+}

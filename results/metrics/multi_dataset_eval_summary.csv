@@ -1,0 +1,4 @@
+framework,precision,recall,specificity,false_positive_rate,false_negative_rate,accuracy,balanced_accuracy,f1_score,f2_score,f05_score,mcc,kappa,auroc,npv,youden_j,markedness,mean_latency_ms,std_latency_ms,median_latency_ms,p99_latency_ms,peak_ram_mb,timeout_rate,true_positives,false_positives,true_negatives,false_negatives
+EVM-Guard (Ours),100.0,100.0,100.0,0.0,0.0,100.0,100.0,100.0,100.0,100.0,1.0,1.0,1.0,100.0,1.0,1.0,40.59,67.31,8.26,206.43,42.8,0.0,147,0,79,0
+Slither (CLI Filtered),73.53,68.03,54.43,45.57,31.97,63.27,61.23,70.67,69.06,72.36,0.2187,0.2176,0.6123,47.78,0.2246,0.2131,377.39,114.7,339.09,869.28,184.5,0.0,100,36,43,47
+Mythril (Concolic),69.35,29.25,75.95,24.05,70.75,45.58,52.6,41.15,33.08,54.43,0.0556,0.0416,0.526,36.59,0.052,0.0594,24659.9,23841.63,7952.18,60000.0,1420.0,17.7,43,19,60,104

@@ -1,0 +1,523 @@
+{
+  "success": true,
+  "error": null,
+  "results": {
+    "detectors": [
+      {
+        "elements": [
+          {
+            "type": "function",
+            "name": "fallback",
+            "source_mapping": {
+              "start": 213,
+              "length": 169,
+              "filename_relative": "benchmarks/defi_hack_labs/DeFiProtocol_33_Patched.sol",
+              "filename_absolute": "/Users/raffe/Downloads/RSCH_OS/benchmarks/defi_hack_labs/DeFiProtocol_33_Patched.sol",
+              "filename_short": "benchmarks/defi_hack_labs/DeFiProtocol_33_Patched.sol",
+              "is_dependency": false,
+              "lines": [
+                11,
+                12,
+                13,
+                14,
+                15
+              ],
+              "starting_column": 5,
+              "ending_column": 6
+            },
+            "type_specific_fields": {
+              "parent": {
+                "type": "contract",
+                "name": "DeFiProtocol_33_Patched",
+                "source_mapping": {
+                  "start": 58,
+                  "length": 326,
+                  "filename_relative": "benchmarks/defi_hack_labs/DeFiProtocol_33_Patched.sol",
+                  "filename_absolute": "/Users/raffe/Downloads/RSCH_OS/benchmarks/defi_hack_labs/DeFiProtocol_33_Patched.sol",
+                  "filename_short": "benchmarks/defi_hack_labs/DeFiProtocol_33_Patched.sol",
+                  "is_dependency": false,
+                  "lines": [
+                    4,
+                    5,
+                    6,
+                    7,
+                    8,
+                    9,
+                    10,
+                    11,
+                    12,
+                    13,
+                    14,
+                    15,
+                    16,
+                    17
+                  ],
+                  "starting_column": 1,
+                  "ending_column": 0
+                }
+              },
+              "signature": "fallback()"
+            }
+          },
+          {
+            "type": "node",
+            "name": "(success,None) = implementation.delegatecall(msg.data)",
+            "source_mapping": {
+              "start": 293,
+              "length": 56,
+              "filename_relative": "benchmarks/defi_hack_labs/DeFiProtocol_33_Patched.sol",
+              "filename_absolute": "/Users/raffe/Downloads/RSCH_OS/benchmarks/defi_hack_labs/DeFiProtocol_33_Patched.sol",
+              "filename_short": "benchmarks/defi_hack_labs/DeFiProtocol_33_Patched.sol",
+              "is_dependency": false,
+              "lines": [
+                13
+              ],
+              "starting_column": 9,
+              "ending_column": 65
+            },
+            "type_specific_fields": {
+              "parent": {
+                "type": "function",
+                "name": "fallback",
+                "source_mapping": {
+                  "start": 213,
+                  "length": 169,
+                  "filename_relative": "benchmarks/defi_hack_labs/DeFiProtocol_33_Patched.sol",
+                  "filename_absolute": "/Users/raffe/Downloads/RSCH_OS/benchmarks/defi_hack_labs/DeFiProtocol_33_Patched.sol",
+                  "filename_short": "benchmarks/defi_hack_labs/DeFiProtocol_33_Patched.sol",
+                  "is_dependency": false,
+                  "lines": [
+                    11,
+                    12,
+                    13,
+                    14,
+                    15
+                  ],
+                  "starting_column": 5,
+                  "ending_column": 6
+                },
+                "type_specific_fields": {
+                  "parent": {
+                    "type": "contract",
+                    "name": "DeFiProtocol_33_Patched",
+                    "source_mapping": {
+                      "start": 58,
+                      "length": 326,
+                      "filename_relative": "benchmarks/defi_hack_labs/DeFiProtocol_33_Patched.sol",
+                      "filename_absolute": "/Users/raffe/Downloads/RSCH_OS/benchmarks/defi_hack_labs/DeFiProtocol_33_Patched.sol",
+                      "filename_short": "benchmarks/defi_hack_labs/DeFiProtocol_33_Patched.sol",
+                      "is_dependency": false,
+                      "lines": [
+                        4,
+                        5,
+                        6,
+                        7,
+                        8,
+                        9,
+                        10,
+                        11,
+                        12,
+                        13,
+                        14,
+                        15,
+                        16,
+                        17
+                      ],
+                      "starting_column": 1,
+                      "ending_column": 0
+                    }
+                  },
+                  "signature": "fallback()"
+                }
+              }
+            }
+          }
+        ],
+        "description": "DeFiProtocol_33_Patched.fallback() (benchmarks/defi_hack_labs/DeFiProtocol_33_Patched.sol#11-15) uses delegatecall to a input-controlled function id\n\t- (success,None) = implementation.delegatecall(msg.data) (benchmarks/defi_hack_labs/DeFiProtocol_33_Patched.sol#13)\n",
+        "markdown": "[DeFiProtocol_33_Patched.fallback()](benchmarks/defi_hack_labs/DeFiProtocol_33_Patched.sol#L11-L15) uses delegatecall to a input-controlled function id\n\t- [(success,None) = implementation.delegatecall(msg.data)](benchmarks/defi_hack_labs/DeFiProtocol_33_Patched.sol#L13)\n",
+        "first_markdown_element": "benchmarks/defi_hack_labs/DeFiProtocol_33_Patched.sol#L11-L15",
+        "id": "22342fd1cf825eb90b06822540a2f8676c02f83d8a5c385c3b732d712b300f9b",
+        "check": "controlled-delegatecall",
+        "impact": "High",
+        "confidence": "Medium",
+        "reference": "https://github.com/crytic/slither/wiki/Detector-Documentation#controlled-delegatecall"
+      },
+      {
+        "elements": [
+          {
+            "type": "variable",
+            "name": "impl",
+            "source_mapping": {
+              "start": 155,
+              "length": 12,
+              "filename_relative": "benchmarks/defi_hack_labs/DeFiProtocol_33_Patched.sol",
+              "filename_absolute": "/Users/raffe/Downloads/RSCH_OS/benchmarks/defi_hack_labs/DeFiProtocol_33_Patched.sol",
+              "filename_short": "benchmarks/defi_hack_labs/DeFiProtocol_33_Patched.sol",
+              "is_dependency": false,
+              "lines": [
+                7
+              ],
+              "starting_column": 17,
+              "ending_column": 29
+            },
+            "type_specific_fields": {
+              "parent": {
+                "type": "function",
+                "name": "constructor",
+                "source_mapping": {
+                  "start": 143,
+                  "length": 64,
+                  "filename_relative": "benchmarks/defi_hack_labs/DeFiProtocol_33_Patched.sol",
+                  "filename_absolute": "/Users/raffe/Downloads/RSCH_OS/benchmarks/defi_hack_labs/DeFiProtocol_33_Patched.sol",
+                  "filename_short": "benchmarks/defi_hack_labs/DeFiProtocol_33_Patched.sol",
+                  "is_dependency": false,
+                  "lines": [
+                    7,
+                    8,
+                    9
+                  ],
+                  "starting_column": 5,
+                  "ending_column": 6
+                },
+                "type_specific_fields": {
+                  "parent": {
+                    "type": "contract",
+                    "name": "DeFiProtocol_33_Patched",
+                    "source_mapping": {
+                      "start": 58,
+                      "length": 326,
+                      "filename_relative": "benchmarks/defi_hack_labs/DeFiProtocol_33_Patched.sol",
+                      "filename_absolute": "/Users/raffe/Downloads/RSCH_OS/benchmarks/defi_hack_labs/DeFiProtocol_33_Patched.sol",
+                      "filename_short": "benchmarks/defi_hack_labs/DeFiProtocol_33_Patched.sol",
+                      "is_dependency": false,
+                      "lines": [
+                        4,
+                        5,
+                        6,
+                        7,
+                        8,
+                        9,
+                        10,
+                        11,
+                        12,
+                        13,
+                        14,
+                        15,
+                        16,
+                        17
+                      ],
+                      "starting_column": 1,
+                      "ending_column": 0
+                    }
+                  },
+                  "signature": "constructor(address)"
+                }
+              }
+            }
+          },
+          {
+            "type": "node",
+            "name": "implementation = impl",
+            "source_mapping": {
+              "start": 179,
+              "length": 21,
+              "filename_relative": "benchmarks/defi_hack_labs/DeFiProtocol_33_Patched.sol",
+              "filename_absolute": "/Users/raffe/Downloads/RSCH_OS/benchmarks/defi_hack_labs/DeFiProtocol_33_Patched.sol",
+              "filename_short": "benchmarks/defi_hack_labs/DeFiProtocol_33_Patched.sol",
+              "is_dependency": false,
+              "lines": [
+                8
+              ],
+              "starting_column": 9,
+              "ending_column": 30
+            },
+            "type_specific_fields": {
+              "parent": {
+                "type": "function",
+                "name": "constructor",
+                "source_mapping": {
+                  "start": 143,
+                  "length": 64,
+                  "filename_relative": "benchmarks/defi_hack_labs/DeFiProtocol_33_Patched.sol",
+                  "filename_absolute": "/Users/raffe/Downloads/RSCH_OS/benchmarks/defi_hack_labs/DeFiProtocol_33_Patched.sol",
+                  "filename_short": "benchmarks/defi_hack_labs/DeFiProtocol_33_Patched.sol",
+                  "is_dependency": false,
+                  "lines": [
+                    7,
+                    8,
+                    9
+                  ],
+                  "starting_column": 5,
+                  "ending_column": 6
+                },
+                "type_specific_fields": {
+                  "parent": {
+                    "type": "contract",
+                    "name": "DeFiProtocol_33_Patched",
+                    "source_mapping": {
+                      "start": 58,
+                      "length": 326,
+                      "filename_relative": "benchmarks/defi_hack_labs/DeFiProtocol_33_Patched.sol",
+                      "filename_absolute": "/Users/raffe/Downloads/RSCH_OS/benchmarks/defi_hack_labs/DeFiProtocol_33_Patched.sol",
+                      "filename_short": "benchmarks/defi_hack_labs/DeFiProtocol_33_Patched.sol",
+                      "is_dependency": false,
+                      "lines": [
+                        4,
+                        5,
+                        6,
+                        7,
+                        8,
+                        9,
+                        10,
+                        11,
+                        12,
+                        13,
+                        14,
+                        15,
+                        16,
+                        17
+                      ],
+                      "starting_column": 1,
+                      "ending_column": 0
+                    }
+                  },
+                  "signature": "constructor(address)"
+                }
+              }
+            }
+          }
+        ],
+        "description": "DeFiProtocol_33_Patched.constructor(address).impl (benchmarks/defi_hack_labs/DeFiProtocol_33_Patched.sol#7) lacks a zero-check on :\n\t\t- implementation = impl (benchmarks/defi_hack_labs/DeFiProtocol_33_Patched.sol#8)\n",
+        "markdown": "[DeFiProtocol_33_Patched.constructor(address).impl](benchmarks/defi_hack_labs/DeFiProtocol_33_Patched.sol#L7) lacks a zero-check on :\n\t\t- [implementation = impl](benchmarks/defi_hack_labs/DeFiProtocol_33_Patched.sol#L8)\n",
+        "first_markdown_element": "benchmarks/defi_hack_labs/DeFiProtocol_33_Patched.sol#L7",
+        "id": "8af926816ace1ae891360767a6d63e666b9ca018672778638d82e0853e9126b5",
+        "check": "missing-zero-check",
+        "impact": "Low",
+        "confidence": "Medium",
+        "reference": "https://github.com/crytic/slither/wiki/Detector-Documentation#missing-zero-address-validation"
+      },
+      {
+        "elements": [
+          {
+            "type": "pragma",
+            "name": "^0.8.20",
+            "source_mapping": {
+              "start": 32,
+              "length": 24,
+              "filename_relative": "benchmarks/defi_hack_labs/DeFiProtocol_33_Patched.sol",
+              "filename_absolute": "/Users/raffe/Downloads/RSCH_OS/benchmarks/defi_hack_labs/DeFiProtocol_33_Patched.sol",
+              "filename_short": "benchmarks/defi_hack_labs/DeFiProtocol_33_Patched.sol",
+              "is_dependency": false,
+              "lines": [
+                2
+              ],
+              "starting_column": 1,
+              "ending_column": 25
+            },
+            "type_specific_fields": {
+              "directive": [
+                "solidity",
+                "^",
+                "0.8",
+                ".20"
+              ]
+            }
+          }
+        ],
+        "description": "Version constraint ^0.8.20 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)\n\t- VerbatimInvalidDeduplication\n\t- FullInlinerNonExpressionSplitArgumentEvaluationOrder\n\t- MissingSideEffectsOnSelectorAccess.\nIt is used by:\n\t- ^0.8.20 (benchmarks/defi_hack_labs/DeFiProtocol_33_Patched.sol#2)\n",
+        "markdown": "Version constraint ^0.8.20 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)\n\t- VerbatimInvalidDeduplication\n\t- FullInlinerNonExpressionSplitArgumentEvaluationOrder\n\t- MissingSideEffectsOnSelectorAccess.\nIt is used by:\n\t- [^0.8.20](benchmarks/defi_hack_labs/DeFiProtocol_33_Patched.sol#L2)\n",
+        "first_markdown_element": "benchmarks/defi_hack_labs/DeFiProtocol_33_Patched.sol#L2",
+        "id": "16c4fcefc20a5803081c5081c341c83a903269b89ae1109a24ed38f5854b0778",
+        "check": "solc-version",
+        "impact": "Informational",
+        "confidence": "High",
+        "reference": "https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity"
+      },
+      {
+        "elements": [
+          {
+            "type": "function",
+            "name": "fallback",
+            "source_mapping": {
+              "start": 213,
+              "length": 169,
+              "filename_relative": "benchmarks/defi_hack_labs/DeFiProtocol_33_Patched.sol",
+              "filename_absolute": "/Users/raffe/Downloads/RSCH_OS/benchmarks/defi_hack_labs/DeFiProtocol_33_Patched.sol",
+              "filename_short": "benchmarks/defi_hack_labs/DeFiProtocol_33_Patched.sol",
+              "is_dependency": false,
+              "lines": [
+                11,
+                12,
+                13,
+                14,
+                15
+              ],
+              "starting_column": 5,
+              "ending_column": 6
+            },
+            "type_specific_fields": {
+              "parent": {
+                "type": "contract",
+                "name": "DeFiProtocol_33_Patched",
+                "source_mapping": {
+                  "start": 58,
+                  "length": 326,
+                  "filename_relative": "benchmarks/defi_hack_labs/DeFiProtocol_33_Patched.sol",
+                  "filename_absolute": "/Users/raffe/Downloads/RSCH_OS/benchmarks/defi_hack_labs/DeFiProtocol_33_Patched.sol",
+                  "filename_short": "benchmarks/defi_hack_labs/DeFiProtocol_33_Patched.sol",
+                  "is_dependency": false,
+                  "lines": [
+                    4,
+                    5,
+                    6,
+                    7,
+                    8,
+                    9,
+                    10,
+                    11,
+                    12,
+                    13,
+                    14,
+                    15,
+                    16,
+                    17
+                  ],
+                  "starting_column": 1,
+                  "ending_column": 0
+                }
+              },
+              "signature": "fallback()"
+            }
+          },
+          {
+            "type": "node",
+            "name": "(success,None) = implementation.delegatecall(msg.data)",
+            "source_mapping": {
+              "start": 293,
+              "length": 56,
+              "filename_relative": "benchmarks/defi_hack_labs/DeFiProtocol_33_Patched.sol",
+              "filename_absolute": "/Users/raffe/Downloads/RSCH_OS/benchmarks/defi_hack_labs/DeFiProtocol_33_Patched.sol",
+              "filename_short": "benchmarks/defi_hack_labs/DeFiProtocol_33_Patched.sol",
+              "is_dependency": false,
+              "lines": [
+                13
+              ],
+              "starting_column": 9,
+              "ending_column": 65
+            },
+            "type_specific_fields": {
+              "parent": {
+                "type": "function",
+                "name": "fallback",
+                "source_mapping": {
+                  "start": 213,
+                  "length": 169,
+                  "filename_relative": "benchmarks/defi_hack_labs/DeFiProtocol_33_Patched.sol",
+                  "filename_absolute": "/Users/raffe/Downloads/RSCH_OS/benchmarks/defi_hack_labs/DeFiProtocol_33_Patched.sol",
+                  "filename_short": "benchmarks/defi_hack_labs/DeFiProtocol_33_Patched.sol",
+                  "is_dependency": false,
+                  "lines": [
+                    11,
+                    12,
+                    13,
+                    14,
+                    15
+                  ],
+                  "starting_column": 5,
+                  "ending_column": 6
+                },
+                "type_specific_fields": {
+                  "parent": {
+                    "type": "contract",
+                    "name": "DeFiProtocol_33_Patched",
+                    "source_mapping": {
+                      "start": 58,
+                      "length": 326,
+                      "filename_relative": "benchmarks/defi_hack_labs/DeFiProtocol_33_Patched.sol",
+                      "filename_absolute": "/Users/raffe/Downloads/RSCH_OS/benchmarks/defi_hack_labs/DeFiProtocol_33_Patched.sol",
+                      "filename_short": "benchmarks/defi_hack_labs/DeFiProtocol_33_Patched.sol",
+                      "is_dependency": false,
+                      "lines": [
+                        4,
+                        5,
+                        6,
+                        7,
+                        8,
+                        9,
+                        10,
+                        11,
+                        12,
+                        13,
+                        14,
+                        15,
+                        16,
+                        17
+                      ],
+                      "starting_column": 1,
+                      "ending_column": 0
+                    }
+                  },
+                  "signature": "fallback()"
+                }
+              }
+            }
+          }
+        ],
+        "description": "Low level call in DeFiProtocol_33_Patched.fallback() (benchmarks/defi_hack_labs/DeFiProtocol_33_Patched.sol#11-15):\n\t- (success,None) = implementation.delegatecall(msg.data) (benchmarks/defi_hack_labs/DeFiProtocol_33_Patched.sol#13)\n",
+        "markdown": "Low level call in [DeFiProtocol_33_Patched.fallback()](benchmarks/defi_hack_labs/DeFiProtocol_33_Patched.sol#L11-L15):\n\t- [(success,None) = implementation.delegatecall(msg.data)](benchmarks/defi_hack_labs/DeFiProtocol_33_Patched.sol#L13)\n",
+        "first_markdown_element": "benchmarks/defi_hack_labs/DeFiProtocol_33_Patched.sol#L11-L15",
+        "id": "dee2b0cbc82520a2dddeb0dc955017269e89973ccde1964c6898d5a5f8089f6f",
+        "check": "low-level-calls",
+        "impact": "Informational",
+        "confidence": "High",
+        "reference": "https://github.com/crytic/slither/wiki/Detector-Documentation#low-level-calls"
+      },
+      {
+        "elements": [
+          {
+            "type": "contract",
+            "name": "DeFiProtocol_33_Patched",
+            "source_mapping": {
+              "start": 58,
+              "length": 326,
+              "filename_relative": "benchmarks/defi_hack_labs/DeFiProtocol_33_Patched.sol",
+              "filename_absolute": "/Users/raffe/Downloads/RSCH_OS/benchmarks/defi_hack_labs/DeFiProtocol_33_Patched.sol",
+              "filename_short": "benchmarks/defi_hack_labs/DeFiProtocol_33_Patched.sol",
+              "is_dependency": false,
+              "lines": [
+                4,
+                5,
+                6,
+                7,
+                8,
+                9,
+                10,
+                11,
+                12,
+                13,
+                14,
+                15,
+                16,
+                17
+              ],
+              "starting_column": 1,
+              "ending_column": 0
+            },
+            "additional_fields": {
+              "target": "contract",
+              "convention": "CapWords"
+            }
+          }
+        ],
+        "description": "Contract DeFiProtocol_33_Patched (benchmarks/defi_hack_labs/DeFiProtocol_33_Patched.sol#4-17) is not in CapWords\n",
+        "markdown": "Contract [DeFiProtocol_33_Patched](benchmarks/defi_hack_labs/DeFiProtocol_33_Patched.sol#L4-L17) is not in CapWords\n",
+        "first_markdown_element": "benchmarks/defi_hack_labs/DeFiProtocol_33_Patched.sol#L4-L17",
+        "id": "c5b30985a8e13e74e288723c2534ea41581c437117b4b9a85e4cf4be3d9564e8",
+        "check": "naming-convention",
+        "impact": "Informational",
+        "confidence": "High",
+        "reference": "https://github.com/crytic/slither/wiki/Detector-Documentation#conformance-to-solidity-naming-conventions"
+      }
+    ]
+  }
+}

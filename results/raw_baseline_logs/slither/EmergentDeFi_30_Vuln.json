@@ -1,0 +1,538 @@
+{
+  "success": true,
+  "error": null,
+  "results": {
+    "detectors": [
+      {
+        "elements": [
+          {
+            "type": "pragma",
+            "name": "^0.8.20",
+            "source_mapping": {
+              "start": 32,
+              "length": 24,
+              "filename_relative": "benchmarks/emergent_defi/EmergentDeFi_30_Vuln.sol",
+              "filename_absolute": "/Users/raffe/Downloads/RSCH_OS/benchmarks/emergent_defi/EmergentDeFi_30_Vuln.sol",
+              "filename_short": "benchmarks/emergent_defi/EmergentDeFi_30_Vuln.sol",
+              "is_dependency": false,
+              "lines": [
+                2
+              ],
+              "starting_column": 1,
+              "ending_column": 25
+            },
+            "type_specific_fields": {
+              "directive": [
+                "solidity",
+                "^",
+                "0.8",
+                ".20"
+              ]
+            }
+          }
+        ],
+        "description": "Version constraint ^0.8.20 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)\n\t- VerbatimInvalidDeduplication\n\t- FullInlinerNonExpressionSplitArgumentEvaluationOrder\n\t- MissingSideEffectsOnSelectorAccess.\nIt is used by:\n\t- ^0.8.20 (benchmarks/emergent_defi/EmergentDeFi_30_Vuln.sol#2)\n",
+        "markdown": "Version constraint ^0.8.20 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)\n\t- VerbatimInvalidDeduplication\n\t- FullInlinerNonExpressionSplitArgumentEvaluationOrder\n\t- MissingSideEffectsOnSelectorAccess.\nIt is used by:\n\t- [^0.8.20](benchmarks/emergent_defi/EmergentDeFi_30_Vuln.sol#L2)\n",
+        "first_markdown_element": "benchmarks/emergent_defi/EmergentDeFi_30_Vuln.sol#L2",
+        "id": "5633c0520cced1d9e0c2202642cbbd417225bf1e12aa7177102e02b28170e186",
+        "check": "solc-version",
+        "impact": "Informational",
+        "confidence": "High",
+        "reference": "https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity"
+      },
+      {
+        "elements": [
+          {
+            "type": "contract",
+            "name": "EmergentDeFi_30_Vuln",
+            "source_mapping": {
+              "start": 58,
+              "length": 490,
+              "filename_relative": "benchmarks/emergent_defi/EmergentDeFi_30_Vuln.sol",
+              "filename_absolute": "/Users/raffe/Downloads/RSCH_OS/benchmarks/emergent_defi/EmergentDeFi_30_Vuln.sol",
+              "filename_short": "benchmarks/emergent_defi/EmergentDeFi_30_Vuln.sol",
+              "is_dependency": false,
+              "lines": [
+                4,
+                5,
+                6,
+                7,
+                8,
+                9,
+                10,
+                11,
+                12,
+                13,
+                14,
+                15,
+                16,
+                17,
+                18
+              ],
+              "starting_column": 1,
+              "ending_column": 0
+            },
+            "additional_fields": {
+              "target": "contract",
+              "convention": "CapWords"
+            }
+          }
+        ],
+        "description": "Contract EmergentDeFi_30_Vuln (benchmarks/emergent_defi/EmergentDeFi_30_Vuln.sol#4-18) is not in CapWords\n",
+        "markdown": "Contract [EmergentDeFi_30_Vuln](benchmarks/emergent_defi/EmergentDeFi_30_Vuln.sol#L4-L18) is not in CapWords\n",
+        "first_markdown_element": "benchmarks/emergent_defi/EmergentDeFi_30_Vuln.sol#L4-L18",
+        "id": "4ea2ec60b6a7035877e3b5a3bf1c1e1d8ae9665e4bbd7e01b6cd0e2c2fec6986",
+        "check": "naming-convention",
+        "impact": "Informational",
+        "confidence": "High",
+        "reference": "https://github.com/crytic/slither/wiki/Detector-Documentation#conformance-to-solidity-naming-conventions"
+      },
+      {
+        "elements": [
+          {
+            "type": "function",
+            "name": "slitherConstructorVariables",
+            "source_mapping": {
+              "start": 58,
+              "length": 490,
+              "filename_relative": "benchmarks/emergent_defi/EmergentDeFi_30_Vuln.sol",
+              "filename_absolute": "/Users/raffe/Downloads/RSCH_OS/benchmarks/emergent_defi/EmergentDeFi_30_Vuln.sol",
+              "filename_short": "benchmarks/emergent_defi/EmergentDeFi_30_Vuln.sol",
+              "is_dependency": false,
+              "lines": [
+                4,
+                5,
+                6,
+                7,
+                8,
+                9,
+                10,
+                11,
+                12,
+                13,
+                14,
+                15,
+                16,
+                17,
+                18
+              ],
+              "starting_column": 1,
+              "ending_column": 0
+            },
+            "type_specific_fields": {
+              "parent": {
+                "type": "contract",
+                "name": "EmergentDeFi_30_Vuln",
+                "source_mapping": {
+                  "start": 58,
+                  "length": 490,
+                  "filename_relative": "benchmarks/emergent_defi/EmergentDeFi_30_Vuln.sol",
+                  "filename_absolute": "/Users/raffe/Downloads/RSCH_OS/benchmarks/emergent_defi/EmergentDeFi_30_Vuln.sol",
+                  "filename_short": "benchmarks/emergent_defi/EmergentDeFi_30_Vuln.sol",
+                  "is_dependency": false,
+                  "lines": [
+                    4,
+                    5,
+                    6,
+                    7,
+                    8,
+                    9,
+                    10,
+                    11,
+                    12,
+                    13,
+                    14,
+                    15,
+                    16,
+                    17,
+                    18
+                  ],
+                  "starting_column": 1,
+                  "ending_column": 0
+                }
+              },
+              "signature": "slitherConstructorVariables()"
+            }
+          },
+          {
+            "type": "node",
+            "name": "reserveX = 10000000e18",
+            "source_mapping": {
+              "start": 94,
+              "length": 37,
+              "filename_relative": "benchmarks/emergent_defi/EmergentDeFi_30_Vuln.sol",
+              "filename_absolute": "/Users/raffe/Downloads/RSCH_OS/benchmarks/emergent_defi/EmergentDeFi_30_Vuln.sol",
+              "filename_short": "benchmarks/emergent_defi/EmergentDeFi_30_Vuln.sol",
+              "is_dependency": false,
+              "lines": [
+                5
+              ],
+              "starting_column": 5,
+              "ending_column": 42
+            },
+            "type_specific_fields": {
+              "parent": {
+                "type": "function",
+                "name": "slitherConstructorVariables",
+                "source_mapping": {
+                  "start": 58,
+                  "length": 490,
+                  "filename_relative": "benchmarks/emergent_defi/EmergentDeFi_30_Vuln.sol",
+                  "filename_absolute": "/Users/raffe/Downloads/RSCH_OS/benchmarks/emergent_defi/EmergentDeFi_30_Vuln.sol",
+                  "filename_short": "benchmarks/emergent_defi/EmergentDeFi_30_Vuln.sol",
+                  "is_dependency": false,
+                  "lines": [
+                    4,
+                    5,
+                    6,
+                    7,
+                    8,
+                    9,
+                    10,
+                    11,
+                    12,
+                    13,
+                    14,
+                    15,
+                    16,
+                    17,
+                    18
+                  ],
+                  "starting_column": 1,
+                  "ending_column": 0
+                },
+                "type_specific_fields": {
+                  "parent": {
+                    "type": "contract",
+                    "name": "EmergentDeFi_30_Vuln",
+                    "source_mapping": {
+                      "start": 58,
+                      "length": 490,
+                      "filename_relative": "benchmarks/emergent_defi/EmergentDeFi_30_Vuln.sol",
+                      "filename_absolute": "/Users/raffe/Downloads/RSCH_OS/benchmarks/emergent_defi/EmergentDeFi_30_Vuln.sol",
+                      "filename_short": "benchmarks/emergent_defi/EmergentDeFi_30_Vuln.sol",
+                      "is_dependency": false,
+                      "lines": [
+                        4,
+                        5,
+                        6,
+                        7,
+                        8,
+                        9,
+                        10,
+                        11,
+                        12,
+                        13,
+                        14,
+                        15,
+                        16,
+                        17,
+                        18
+                      ],
+                      "starting_column": 1,
+                      "ending_column": 0
+                    }
+                  },
+                  "signature": "slitherConstructorVariables()"
+                }
+              }
+            }
+          }
+        ],
+        "description": "EmergentDeFi_30_Vuln.slitherConstructorVariables() (benchmarks/emergent_defi/EmergentDeFi_30_Vuln.sol#4-18) uses literals with too many digits:\n\t- reserveX = 10000000e18 (benchmarks/emergent_defi/EmergentDeFi_30_Vuln.sol#5)\n",
+        "markdown": "[EmergentDeFi_30_Vuln.slitherConstructorVariables()](benchmarks/emergent_defi/EmergentDeFi_30_Vuln.sol#L4-L18) uses literals with too many digits:\n\t- [reserveX = 10000000e18](benchmarks/emergent_defi/EmergentDeFi_30_Vuln.sol#L5)\n",
+        "first_markdown_element": "benchmarks/emergent_defi/EmergentDeFi_30_Vuln.sol#L4-L18",
+        "id": "04bfdd07e146b92deb676c13d99145e0f0b71a5d2bed3eb6fadb1b59c4401c30",
+        "check": "too-many-digits",
+        "impact": "Informational",
+        "confidence": "Medium",
+        "reference": "https://github.com/crytic/slither/wiki/Detector-Documentation#too-many-digits"
+      },
+      {
+        "elements": [
+          {
+            "type": "function",
+            "name": "slitherConstructorVariables",
+            "source_mapping": {
+              "start": 58,
+              "length": 490,
+              "filename_relative": "benchmarks/emergent_defi/EmergentDeFi_30_Vuln.sol",
+              "filename_absolute": "/Users/raffe/Downloads/RSCH_OS/benchmarks/emergent_defi/EmergentDeFi_30_Vuln.sol",
+              "filename_short": "benchmarks/emergent_defi/EmergentDeFi_30_Vuln.sol",
+              "is_dependency": false,
+              "lines": [
+                4,
+                5,
+                6,
+                7,
+                8,
+                9,
+                10,
+                11,
+                12,
+                13,
+                14,
+                15,
+                16,
+                17,
+                18
+              ],
+              "starting_column": 1,
+              "ending_column": 0
+            },
+            "type_specific_fields": {
+              "parent": {
+                "type": "contract",
+                "name": "EmergentDeFi_30_Vuln",
+                "source_mapping": {
+                  "start": 58,
+                  "length": 490,
+                  "filename_relative": "benchmarks/emergent_defi/EmergentDeFi_30_Vuln.sol",
+                  "filename_absolute": "/Users/raffe/Downloads/RSCH_OS/benchmarks/emergent_defi/EmergentDeFi_30_Vuln.sol",
+                  "filename_short": "benchmarks/emergent_defi/EmergentDeFi_30_Vuln.sol",
+                  "is_dependency": false,
+                  "lines": [
+                    4,
+                    5,
+                    6,
+                    7,
+                    8,
+                    9,
+                    10,
+                    11,
+                    12,
+                    13,
+                    14,
+                    15,
+                    16,
+                    17,
+                    18
+                  ],
+                  "starting_column": 1,
+                  "ending_column": 0
+                }
+              },
+              "signature": "slitherConstructorVariables()"
+            }
+          },
+          {
+            "type": "node",
+            "name": "reserveY = 10000000e18",
+            "source_mapping": {
+              "start": 137,
+              "length": 37,
+              "filename_relative": "benchmarks/emergent_defi/EmergentDeFi_30_Vuln.sol",
+              "filename_absolute": "/Users/raffe/Downloads/RSCH_OS/benchmarks/emergent_defi/EmergentDeFi_30_Vuln.sol",
+              "filename_short": "benchmarks/emergent_defi/EmergentDeFi_30_Vuln.sol",
+              "is_dependency": false,
+              "lines": [
+                6
+              ],
+              "starting_column": 5,
+              "ending_column": 42
+            },
+            "type_specific_fields": {
+              "parent": {
+                "type": "function",
+                "name": "slitherConstructorVariables",
+                "source_mapping": {
+                  "start": 58,
+                  "length": 490,
+                  "filename_relative": "benchmarks/emergent_defi/EmergentDeFi_30_Vuln.sol",
+                  "filename_absolute": "/Users/raffe/Downloads/RSCH_OS/benchmarks/emergent_defi/EmergentDeFi_30_Vuln.sol",
+                  "filename_short": "benchmarks/emergent_defi/EmergentDeFi_30_Vuln.sol",
+                  "is_dependency": false,
+                  "lines": [
+                    4,
+                    5,
+                    6,
+                    7,
+                    8,
+                    9,
+                    10,
+                    11,
+                    12,
+                    13,
+                    14,
+                    15,
+                    16,
+                    17,
+                    18
+                  ],
+                  "starting_column": 1,
+                  "ending_column": 0
+                },
+                "type_specific_fields": {
+                  "parent": {
+                    "type": "contract",
+                    "name": "EmergentDeFi_30_Vuln",
+                    "source_mapping": {
+                      "start": 58,
+                      "length": 490,
+                      "filename_relative": "benchmarks/emergent_defi/EmergentDeFi_30_Vuln.sol",
+                      "filename_absolute": "/Users/raffe/Downloads/RSCH_OS/benchmarks/emergent_defi/EmergentDeFi_30_Vuln.sol",
+                      "filename_short": "benchmarks/emergent_defi/EmergentDeFi_30_Vuln.sol",
+                      "is_dependency": false,
+                      "lines": [
+                        4,
+                        5,
+                        6,
+                        7,
+                        8,
+                        9,
+                        10,
+                        11,
+                        12,
+                        13,
+                        14,
+                        15,
+                        16,
+                        17,
+                        18
+                      ],
+                      "starting_column": 1,
+                      "ending_column": 0
+                    }
+                  },
+                  "signature": "slitherConstructorVariables()"
+                }
+              }
+            }
+          }
+        ],
+        "description": "EmergentDeFi_30_Vuln.slitherConstructorVariables() (benchmarks/emergent_defi/EmergentDeFi_30_Vuln.sol#4-18) uses literals with too many digits:\n\t- reserveY = 10000000e18 (benchmarks/emergent_defi/EmergentDeFi_30_Vuln.sol#6)\n",
+        "markdown": "[EmergentDeFi_30_Vuln.slitherConstructorVariables()](benchmarks/emergent_defi/EmergentDeFi_30_Vuln.sol#L4-L18) uses literals with too many digits:\n\t- [reserveY = 10000000e18](benchmarks/emergent_defi/EmergentDeFi_30_Vuln.sol#L6)\n",
+        "first_markdown_element": "benchmarks/emergent_defi/EmergentDeFi_30_Vuln.sol#L4-L18",
+        "id": "638d9baa1e22596c8fa4302d25d5920d85cfd0bb54c6827c666a8887b4c12d0b",
+        "check": "too-many-digits",
+        "impact": "Informational",
+        "confidence": "Medium",
+        "reference": "https://github.com/crytic/slither/wiki/Detector-Documentation#too-many-digits"
+      },
+      {
+        "elements": [
+          {
+            "type": "variable",
+            "name": "reserveY",
+            "source_mapping": {
+              "start": 137,
+              "length": 37,
+              "filename_relative": "benchmarks/emergent_defi/EmergentDeFi_30_Vuln.sol",
+              "filename_absolute": "/Users/raffe/Downloads/RSCH_OS/benchmarks/emergent_defi/EmergentDeFi_30_Vuln.sol",
+              "filename_short": "benchmarks/emergent_defi/EmergentDeFi_30_Vuln.sol",
+              "is_dependency": false,
+              "lines": [
+                6
+              ],
+              "starting_column": 5,
+              "ending_column": 42
+            },
+            "type_specific_fields": {
+              "parent": {
+                "type": "contract",
+                "name": "EmergentDeFi_30_Vuln",
+                "source_mapping": {
+                  "start": 58,
+                  "length": 490,
+                  "filename_relative": "benchmarks/emergent_defi/EmergentDeFi_30_Vuln.sol",
+                  "filename_absolute": "/Users/raffe/Downloads/RSCH_OS/benchmarks/emergent_defi/EmergentDeFi_30_Vuln.sol",
+                  "filename_short": "benchmarks/emergent_defi/EmergentDeFi_30_Vuln.sol",
+                  "is_dependency": false,
+                  "lines": [
+                    4,
+                    5,
+                    6,
+                    7,
+                    8,
+                    9,
+                    10,
+                    11,
+                    12,
+                    13,
+                    14,
+                    15,
+                    16,
+                    17,
+                    18
+                  ],
+                  "starting_column": 1,
+                  "ending_column": 0
+                }
+              }
+            }
+          }
+        ],
+        "description": "EmergentDeFi_30_Vuln.reserveY (benchmarks/emergent_defi/EmergentDeFi_30_Vuln.sol#6) should be constant \n",
+        "markdown": "[EmergentDeFi_30_Vuln.reserveY](benchmarks/emergent_defi/EmergentDeFi_30_Vuln.sol#L6) should be constant \n",
+        "first_markdown_element": "benchmarks/emergent_defi/EmergentDeFi_30_Vuln.sol#L6",
+        "id": "0c6789113231899e58f9a3dcc4bc1946d45a9fc1cf8ca3453c21ecd75437cd4b",
+        "check": "constable-states",
+        "impact": "Optimization",
+        "confidence": "High",
+        "reference": "https://github.com/crytic/slither/wiki/Detector-Documentation#state-variables-that-could-be-declared-constant"
+      },
+      {
+        "elements": [
+          {
+            "type": "variable",
+            "name": "reserveX",
+            "source_mapping": {
+              "start": 94,
+              "length": 37,
+              "filename_relative": "benchmarks/emergent_defi/EmergentDeFi_30_Vuln.sol",
+              "filename_absolute": "/Users/raffe/Downloads/RSCH_OS/benchmarks/emergent_defi/EmergentDeFi_30_Vuln.sol",
+              "filename_short": "benchmarks/emergent_defi/EmergentDeFi_30_Vuln.sol",
+              "is_dependency": false,
+              "lines": [
+                5
+              ],
+              "starting_column": 5,
+              "ending_column": 42
+            },
+            "type_specific_fields": {
+              "parent": {
+                "type": "contract",
+                "name": "EmergentDeFi_30_Vuln",
+                "source_mapping": {
+                  "start": 58,
+                  "length": 490,
+                  "filename_relative": "benchmarks/emergent_defi/EmergentDeFi_30_Vuln.sol",
+                  "filename_absolute": "/Users/raffe/Downloads/RSCH_OS/benchmarks/emergent_defi/EmergentDeFi_30_Vuln.sol",
+                  "filename_short": "benchmarks/emergent_defi/EmergentDeFi_30_Vuln.sol",
+                  "is_dependency": false,
+                  "lines": [
+                    4,
+                    5,
+                    6,
+                    7,
+                    8,
+                    9,
+                    10,
+                    11,
+                    12,
+                    13,
+                    14,
+                    15,
+                    16,
+                    17,
+                    18
+                  ],
+                  "starting_column": 1,
+                  "ending_column": 0
+                }
+              }
+            }
+          }
+        ],
+        "description": "EmergentDeFi_30_Vuln.reserveX (benchmarks/emergent_defi/EmergentDeFi_30_Vuln.sol#5) should be constant \n",
+        "markdown": "[EmergentDeFi_30_Vuln.reserveX](benchmarks/emergent_defi/EmergentDeFi_30_Vuln.sol#L5) should be constant \n",
+        "first_markdown_element": "benchmarks/emergent_defi/EmergentDeFi_30_Vuln.sol#L5",
+        "id": "d78501f43948de55e37b79b227f42819d9b54ff6a127c45ac9f35ebf821acf66",
+        "check": "constable-states",
+        "impact": "Optimization",
+        "confidence": "High",
+        "reference": "https://github.com/crytic/slither/wiki/Detector-Documentation#state-variables-that-could-be-declared-constant"
+      }
+    ]
+  }
+}

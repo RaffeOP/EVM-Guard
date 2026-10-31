@@ -1,0 +1,125 @@
+{
+  "evm_guard": {
+    "reentrancy": {
+      "tp": 30,
+      "fp": 60,
+      "fn": 0,
+      "tn": 120,
+      "recall": 1.0,
+      "recall_ci95": [
+        0.8843,
+        1.0
+      ],
+      "precision": 0.3333,
+      "precision_ci95": [
+        0.2374,
+        0.4405
+      ],
+      "fpr": 0.3333,
+      "fpr_ci95": [
+        0.265,
+        0.4073
+      ]
+    },
+    "denial_of_service": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 30,
+      "tn": 180,
+      "recall": 0.0,
+      "recall_ci95": [
+        0.0,
+        0.1157
+      ],
+      "precision": null,
+      "precision_ci95": null,
+      "fpr": 0.0,
+      "fpr_ci95": [
+        0.0,
+        0.0203
+      ]
+    }
+  },
+  "slither": {
+    "reentrancy": {
+      "tp": 30,
+      "fp": 60,
+      "fn": 0,
+      "tn": 120,
+      "recall": 1.0,
+      "recall_ci95": [
+        0.8843,
+        1.0
+      ],
+      "precision": 0.3333,
+      "precision_ci95": [
+        0.2374,
+        0.4405
+      ],
+      "fpr": 0.3333,
+      "fpr_ci95": [
+        0.265,
+        0.4073
+      ]
+    },
+    "denial_of_service": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 30,
+      "tn": 180,
+      "recall": 0.0,
+      "recall_ci95": [
+        0.0,
+        0.1157
+      ],
+      "precision": null,
+      "precision_ci95": null,
+      "fpr": 0.0,
+      "fpr_ci95": [
+        0.0,
+        0.0203
+      ]
+    }
+  },
+  "mythril": {
+    "reentrancy": {
+      "tp": 30,
+      "fp": 60,
+      "fn": 0,
+      "tn": 120,
+      "recall": 1.0,
+      "recall_ci95": [
+        0.8843,
+        1.0
+      ],
+      "precision": 0.3333,
+      "precision_ci95": [
+        0.2374,
+        0.4405
+      ],
+      "fpr": 0.3333,
+      "fpr_ci95": [
+        0.265,
+        0.4073
+      ]
+    },
+    "denial_of_service": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 30,
+      "tn": 180,
+      "recall": 0.0,
+      "recall_ci95": [
+        0.0,
+        0.1157
+      ],
+      "precision": null,
+      "precision_ci95": null,
+      "fpr": 0.0,
+      "fpr_ci95": [
+        0.0,
+        0.0203
+      ]
+    }
+  }
+}

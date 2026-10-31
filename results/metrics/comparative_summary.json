@@ -1,0 +1,39 @@
+{
+  "benchmark_contracts_count": 11,
+  "evm_guard": {
+    "tp": 7,
+    "fp": 0,
+    "fn": 0,
+    "tn": 4,
+    "precision": 100.0,
+    "recall": 100.0,
+    "fpr": 0.0,
+    "f1": 100.0
+  },
+  "slither": {
+    "tp": 5,
+    "fp": 2,
+    "fn": 2,
+    "tn": 2,
+    "precision": 71.43,
+    "recall": 71.43,
+    "fpr": 50.0,
+    "f1": 71.43
+  },
+  "mythril": {
+    "tp": 5,
+    "fp": 0,
+    "fn": 2,
+    "tn": 4,
+    "precision": 100.0,
+    "recall": 71.43,
+    "fpr": 0.0,
+    "f1": 83.33
+  },
+  "mean_latency_ms": {
+    "evm_guard": 23.38,
+    "slither": 102.0,
+    "mythril": 5650.0
+  },
+  "counterexample_synthesis_rate": 100.0
+}

@@ -1,0 +1,538 @@
+{
+  "success": true,
+  "error": null,
+  "results": {
+    "detectors": [
+      {
+        "elements": [
+          {
+            "type": "pragma",
+            "name": "^0.8.20",
+            "source_mapping": {
+              "start": 32,
+              "length": 24,
+              "filename_relative": "benchmarks/defi_hack_labs/Beanstalk_FlashGovernance.sol",
+              "filename_absolute": "/Users/raffe/Downloads/RSCH_OS/benchmarks/defi_hack_labs/Beanstalk_FlashGovernance.sol",
+              "filename_short": "benchmarks/defi_hack_labs/Beanstalk_FlashGovernance.sol",
+              "is_dependency": false,
+              "lines": [
+                2
+              ],
+              "starting_column": 1,
+              "ending_column": 25
+            },
+            "type_specific_fields": {
+              "directive": [
+                "solidity",
+                "^",
+                "0.8",
+                ".20"
+              ]
+            }
+          }
+        ],
+        "description": "Version constraint ^0.8.20 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)\n\t- VerbatimInvalidDeduplication\n\t- FullInlinerNonExpressionSplitArgumentEvaluationOrder\n\t- MissingSideEffectsOnSelectorAccess.\nIt is used by:\n\t- ^0.8.20 (benchmarks/defi_hack_labs/Beanstalk_FlashGovernance.sol#2)\n",
+        "markdown": "Version constraint ^0.8.20 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)\n\t- VerbatimInvalidDeduplication\n\t- FullInlinerNonExpressionSplitArgumentEvaluationOrder\n\t- MissingSideEffectsOnSelectorAccess.\nIt is used by:\n\t- [^0.8.20](benchmarks/defi_hack_labs/Beanstalk_FlashGovernance.sol#L2)\n",
+        "first_markdown_element": "benchmarks/defi_hack_labs/Beanstalk_FlashGovernance.sol#L2",
+        "id": "6bb4d1e0295d9af618381d90992a7f650e9837a92ba7e8385b25f6a4e95509a7",
+        "check": "solc-version",
+        "impact": "Informational",
+        "confidence": "High",
+        "reference": "https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity"
+      },
+      {
+        "elements": [
+          {
+            "type": "contract",
+            "name": "Beanstalk_FlashGovernance",
+            "source_mapping": {
+              "start": 58,
+              "length": 495,
+              "filename_relative": "benchmarks/defi_hack_labs/Beanstalk_FlashGovernance.sol",
+              "filename_absolute": "/Users/raffe/Downloads/RSCH_OS/benchmarks/defi_hack_labs/Beanstalk_FlashGovernance.sol",
+              "filename_short": "benchmarks/defi_hack_labs/Beanstalk_FlashGovernance.sol",
+              "is_dependency": false,
+              "lines": [
+                4,
+                5,
+                6,
+                7,
+                8,
+                9,
+                10,
+                11,
+                12,
+                13,
+                14,
+                15,
+                16,
+                17,
+                18
+              ],
+              "starting_column": 1,
+              "ending_column": 0
+            },
+            "additional_fields": {
+              "target": "contract",
+              "convention": "CapWords"
+            }
+          }
+        ],
+        "description": "Contract Beanstalk_FlashGovernance (benchmarks/defi_hack_labs/Beanstalk_FlashGovernance.sol#4-18) is not in CapWords\n",
+        "markdown": "Contract [Beanstalk_FlashGovernance](benchmarks/defi_hack_labs/Beanstalk_FlashGovernance.sol#L4-L18) is not in CapWords\n",
+        "first_markdown_element": "benchmarks/defi_hack_labs/Beanstalk_FlashGovernance.sol#L4-L18",
+        "id": "0ce26eb5c4e7b6a4c28aafc116c9581ea72667c9dd6c4796dc90031fd77703c8",
+        "check": "naming-convention",
+        "impact": "Informational",
+        "confidence": "High",
+        "reference": "https://github.com/crytic/slither/wiki/Detector-Documentation#conformance-to-solidity-naming-conventions"
+      },
+      {
+        "elements": [
+          {
+            "type": "function",
+            "name": "slitherConstructorVariables",
+            "source_mapping": {
+              "start": 58,
+              "length": 495,
+              "filename_relative": "benchmarks/defi_hack_labs/Beanstalk_FlashGovernance.sol",
+              "filename_absolute": "/Users/raffe/Downloads/RSCH_OS/benchmarks/defi_hack_labs/Beanstalk_FlashGovernance.sol",
+              "filename_short": "benchmarks/defi_hack_labs/Beanstalk_FlashGovernance.sol",
+              "is_dependency": false,
+              "lines": [
+                4,
+                5,
+                6,
+                7,
+                8,
+                9,
+                10,
+                11,
+                12,
+                13,
+                14,
+                15,
+                16,
+                17,
+                18
+              ],
+              "starting_column": 1,
+              "ending_column": 0
+            },
+            "type_specific_fields": {
+              "parent": {
+                "type": "contract",
+                "name": "Beanstalk_FlashGovernance",
+                "source_mapping": {
+                  "start": 58,
+                  "length": 495,
+                  "filename_relative": "benchmarks/defi_hack_labs/Beanstalk_FlashGovernance.sol",
+                  "filename_absolute": "/Users/raffe/Downloads/RSCH_OS/benchmarks/defi_hack_labs/Beanstalk_FlashGovernance.sol",
+                  "filename_short": "benchmarks/defi_hack_labs/Beanstalk_FlashGovernance.sol",
+                  "is_dependency": false,
+                  "lines": [
+                    4,
+                    5,
+                    6,
+                    7,
+                    8,
+                    9,
+                    10,
+                    11,
+                    12,
+                    13,
+                    14,
+                    15,
+                    16,
+                    17,
+                    18
+                  ],
+                  "starting_column": 1,
+                  "ending_column": 0
+                }
+              },
+              "signature": "slitherConstructorVariables()"
+            }
+          },
+          {
+            "type": "node",
+            "name": "reserveX = 10000000e18",
+            "source_mapping": {
+              "start": 99,
+              "length": 37,
+              "filename_relative": "benchmarks/defi_hack_labs/Beanstalk_FlashGovernance.sol",
+              "filename_absolute": "/Users/raffe/Downloads/RSCH_OS/benchmarks/defi_hack_labs/Beanstalk_FlashGovernance.sol",
+              "filename_short": "benchmarks/defi_hack_labs/Beanstalk_FlashGovernance.sol",
+              "is_dependency": false,
+              "lines": [
+                5
+              ],
+              "starting_column": 5,
+              "ending_column": 42
+            },
+            "type_specific_fields": {
+              "parent": {
+                "type": "function",
+                "name": "slitherConstructorVariables",
+                "source_mapping": {
+                  "start": 58,
+                  "length": 495,
+                  "filename_relative": "benchmarks/defi_hack_labs/Beanstalk_FlashGovernance.sol",
+                  "filename_absolute": "/Users/raffe/Downloads/RSCH_OS/benchmarks/defi_hack_labs/Beanstalk_FlashGovernance.sol",
+                  "filename_short": "benchmarks/defi_hack_labs/Beanstalk_FlashGovernance.sol",
+                  "is_dependency": false,
+                  "lines": [
+                    4,
+                    5,
+                    6,
+                    7,
+                    8,
+                    9,
+                    10,
+                    11,
+                    12,
+                    13,
+                    14,
+                    15,
+                    16,
+                    17,
+                    18
+                  ],
+                  "starting_column": 1,
+                  "ending_column": 0
+                },
+                "type_specific_fields": {
+                  "parent": {
+                    "type": "contract",
+                    "name": "Beanstalk_FlashGovernance",
+                    "source_mapping": {
+                      "start": 58,
+                      "length": 495,
+                      "filename_relative": "benchmarks/defi_hack_labs/Beanstalk_FlashGovernance.sol",
+                      "filename_absolute": "/Users/raffe/Downloads/RSCH_OS/benchmarks/defi_hack_labs/Beanstalk_FlashGovernance.sol",
+                      "filename_short": "benchmarks/defi_hack_labs/Beanstalk_FlashGovernance.sol",
+                      "is_dependency": false,
+                      "lines": [
+                        4,
+                        5,
+                        6,
+                        7,
+                        8,
+                        9,
+                        10,
+                        11,
+                        12,
+                        13,
+                        14,
+                        15,
+                        16,
+                        17,
+                        18
+                      ],
+                      "starting_column": 1,
+                      "ending_column": 0
+                    }
+                  },
+                  "signature": "slitherConstructorVariables()"
+                }
+              }
+            }
+          }
+        ],
+        "description": "Beanstalk_FlashGovernance.slitherConstructorVariables() (benchmarks/defi_hack_labs/Beanstalk_FlashGovernance.sol#4-18) uses literals with too many digits:\n\t- reserveX = 10000000e18 (benchmarks/defi_hack_labs/Beanstalk_FlashGovernance.sol#5)\n",
+        "markdown": "[Beanstalk_FlashGovernance.slitherConstructorVariables()](benchmarks/defi_hack_labs/Beanstalk_FlashGovernance.sol#L4-L18) uses literals with too many digits:\n\t- [reserveX = 10000000e18](benchmarks/defi_hack_labs/Beanstalk_FlashGovernance.sol#L5)\n",
+        "first_markdown_element": "benchmarks/defi_hack_labs/Beanstalk_FlashGovernance.sol#L4-L18",
+        "id": "83b2f4bc7a374fd1513158cd2c411840fea1e7099e2515488d4754613de28741",
+        "check": "too-many-digits",
+        "impact": "Informational",
+        "confidence": "Medium",
+        "reference": "https://github.com/crytic/slither/wiki/Detector-Documentation#too-many-digits"
+      },
+      {
+        "elements": [
+          {
+            "type": "function",
+            "name": "slitherConstructorVariables",
+            "source_mapping": {
+              "start": 58,
+              "length": 495,
+              "filename_relative": "benchmarks/defi_hack_labs/Beanstalk_FlashGovernance.sol",
+              "filename_absolute": "/Users/raffe/Downloads/RSCH_OS/benchmarks/defi_hack_labs/Beanstalk_FlashGovernance.sol",
+              "filename_short": "benchmarks/defi_hack_labs/Beanstalk_FlashGovernance.sol",
+              "is_dependency": false,
+              "lines": [
+                4,
+                5,
+                6,
+                7,
+                8,
+                9,
+                10,
+                11,
+                12,
+                13,
+                14,
+                15,
+                16,
+                17,
+                18
+              ],
+              "starting_column": 1,
+              "ending_column": 0
+            },
+            "type_specific_fields": {
+              "parent": {
+                "type": "contract",
+                "name": "Beanstalk_FlashGovernance",
+                "source_mapping": {
+                  "start": 58,
+                  "length": 495,
+                  "filename_relative": "benchmarks/defi_hack_labs/Beanstalk_FlashGovernance.sol",
+                  "filename_absolute": "/Users/raffe/Downloads/RSCH_OS/benchmarks/defi_hack_labs/Beanstalk_FlashGovernance.sol",
+                  "filename_short": "benchmarks/defi_hack_labs/Beanstalk_FlashGovernance.sol",
+                  "is_dependency": false,
+                  "lines": [
+                    4,
+                    5,
+                    6,
+                    7,
+                    8,
+                    9,
+                    10,
+                    11,
+                    12,
+                    13,
+                    14,
+                    15,
+                    16,
+                    17,
+                    18
+                  ],
+                  "starting_column": 1,
+                  "ending_column": 0
+                }
+              },
+              "signature": "slitherConstructorVariables()"
+            }
+          },
+          {
+            "type": "node",
+            "name": "reserveY = 10000000e18",
+            "source_mapping": {
+              "start": 142,
+              "length": 37,
+              "filename_relative": "benchmarks/defi_hack_labs/Beanstalk_FlashGovernance.sol",
+              "filename_absolute": "/Users/raffe/Downloads/RSCH_OS/benchmarks/defi_hack_labs/Beanstalk_FlashGovernance.sol",
+              "filename_short": "benchmarks/defi_hack_labs/Beanstalk_FlashGovernance.sol",
+              "is_dependency": false,
+              "lines": [
+                6
+              ],
+              "starting_column": 5,
+              "ending_column": 42
+            },
+            "type_specific_fields": {
+              "parent": {
+                "type": "function",
+                "name": "slitherConstructorVariables",
+                "source_mapping": {
+                  "start": 58,
+                  "length": 495,
+                  "filename_relative": "benchmarks/defi_hack_labs/Beanstalk_FlashGovernance.sol",
+                  "filename_absolute": "/Users/raffe/Downloads/RSCH_OS/benchmarks/defi_hack_labs/Beanstalk_FlashGovernance.sol",
+                  "filename_short": "benchmarks/defi_hack_labs/Beanstalk_FlashGovernance.sol",
+                  "is_dependency": false,
+                  "lines": [
+                    4,
+                    5,
+                    6,
+                    7,
+                    8,
+                    9,
+                    10,
+                    11,
+                    12,
+                    13,
+                    14,
+                    15,
+                    16,
+                    17,
+                    18
+                  ],
+                  "starting_column": 1,
+                  "ending_column": 0
+                },
+                "type_specific_fields": {
+                  "parent": {
+                    "type": "contract",
+                    "name": "Beanstalk_FlashGovernance",
+                    "source_mapping": {
+                      "start": 58,
+                      "length": 495,
+                      "filename_relative": "benchmarks/defi_hack_labs/Beanstalk_FlashGovernance.sol",
+                      "filename_absolute": "/Users/raffe/Downloads/RSCH_OS/benchmarks/defi_hack_labs/Beanstalk_FlashGovernance.sol",
+                      "filename_short": "benchmarks/defi_hack_labs/Beanstalk_FlashGovernance.sol",
+                      "is_dependency": false,
+                      "lines": [
+                        4,
+                        5,
+                        6,
+                        7,
+                        8,
+                        9,
+                        10,
+                        11,
+                        12,
+                        13,
+                        14,
+                        15,
+                        16,
+                        17,
+                        18
+                      ],
+                      "starting_column": 1,
+                      "ending_column": 0
+                    }
+                  },
+                  "signature": "slitherConstructorVariables()"
+                }
+              }
+            }
+          }
+        ],
+        "description": "Beanstalk_FlashGovernance.slitherConstructorVariables() (benchmarks/defi_hack_labs/Beanstalk_FlashGovernance.sol#4-18) uses literals with too many digits:\n\t- reserveY = 10000000e18 (benchmarks/defi_hack_labs/Beanstalk_FlashGovernance.sol#6)\n",
+        "markdown": "[Beanstalk_FlashGovernance.slitherConstructorVariables()](benchmarks/defi_hack_labs/Beanstalk_FlashGovernance.sol#L4-L18) uses literals with too many digits:\n\t- [reserveY = 10000000e18](benchmarks/defi_hack_labs/Beanstalk_FlashGovernance.sol#L6)\n",
+        "first_markdown_element": "benchmarks/defi_hack_labs/Beanstalk_FlashGovernance.sol#L4-L18",
+        "id": "b1a8b0b0f18e24d3722227e302e109df02e0e9e5815663fcbb73722f9178cafc",
+        "check": "too-many-digits",
+        "impact": "Informational",
+        "confidence": "Medium",
+        "reference": "https://github.com/crytic/slither/wiki/Detector-Documentation#too-many-digits"
+      },
+      {
+        "elements": [
+          {
+            "type": "variable",
+            "name": "reserveY",
+            "source_mapping": {
+              "start": 142,
+              "length": 37,
+              "filename_relative": "benchmarks/defi_hack_labs/Beanstalk_FlashGovernance.sol",
+              "filename_absolute": "/Users/raffe/Downloads/RSCH_OS/benchmarks/defi_hack_labs/Beanstalk_FlashGovernance.sol",
+              "filename_short": "benchmarks/defi_hack_labs/Beanstalk_FlashGovernance.sol",
+              "is_dependency": false,
+              "lines": [
+                6
+              ],
+              "starting_column": 5,
+              "ending_column": 42
+            },
+            "type_specific_fields": {
+              "parent": {
+                "type": "contract",
+                "name": "Beanstalk_FlashGovernance",
+                "source_mapping": {
+                  "start": 58,
+                  "length": 495,
+                  "filename_relative": "benchmarks/defi_hack_labs/Beanstalk_FlashGovernance.sol",
+                  "filename_absolute": "/Users/raffe/Downloads/RSCH_OS/benchmarks/defi_hack_labs/Beanstalk_FlashGovernance.sol",
+                  "filename_short": "benchmarks/defi_hack_labs/Beanstalk_FlashGovernance.sol",
+                  "is_dependency": false,
+                  "lines": [
+                    4,
+                    5,
+                    6,
+                    7,
+                    8,
+                    9,
+                    10,
+                    11,
+                    12,
+                    13,
+                    14,
+                    15,
+                    16,
+                    17,
+                    18
+                  ],
+                  "starting_column": 1,
+                  "ending_column": 0
+                }
+              }
+            }
+          }
+        ],
+        "description": "Beanstalk_FlashGovernance.reserveY (benchmarks/defi_hack_labs/Beanstalk_FlashGovernance.sol#6) should be constant \n",
+        "markdown": "[Beanstalk_FlashGovernance.reserveY](benchmarks/defi_hack_labs/Beanstalk_FlashGovernance.sol#L6) should be constant \n",
+        "first_markdown_element": "benchmarks/defi_hack_labs/Beanstalk_FlashGovernance.sol#L6",
+        "id": "a19d9ad5a26f3536117c3c6c090480f618b7450b8965d7fdddfa436db73bf258",
+        "check": "constable-states",
+        "impact": "Optimization",
+        "confidence": "High",
+        "reference": "https://github.com/crytic/slither/wiki/Detector-Documentation#state-variables-that-could-be-declared-constant"
+      },
+      {
+        "elements": [
+          {
+            "type": "variable",
+            "name": "reserveX",
+            "source_mapping": {
+              "start": 99,
+              "length": 37,
+              "filename_relative": "benchmarks/defi_hack_labs/Beanstalk_FlashGovernance.sol",
+              "filename_absolute": "/Users/raffe/Downloads/RSCH_OS/benchmarks/defi_hack_labs/Beanstalk_FlashGovernance.sol",
+              "filename_short": "benchmarks/defi_hack_labs/Beanstalk_FlashGovernance.sol",
+              "is_dependency": false,
+              "lines": [
+                5
+              ],
+              "starting_column": 5,
+              "ending_column": 42
+            },
+            "type_specific_fields": {
+              "parent": {
+                "type": "contract",
+                "name": "Beanstalk_FlashGovernance",
+                "source_mapping": {
+                  "start": 58,
+                  "length": 495,
+                  "filename_relative": "benchmarks/defi_hack_labs/Beanstalk_FlashGovernance.sol",
+                  "filename_absolute": "/Users/raffe/Downloads/RSCH_OS/benchmarks/defi_hack_labs/Beanstalk_FlashGovernance.sol",
+                  "filename_short": "benchmarks/defi_hack_labs/Beanstalk_FlashGovernance.sol",
+                  "is_dependency": false,
+                  "lines": [
+                    4,
+                    5,
+                    6,
+                    7,
+                    8,
+                    9,
+                    10,
+                    11,
+                    12,
+                    13,
+                    14,
+                    15,
+                    16,
+                    17,
+                    18
+                  ],
+                  "starting_column": 1,
+                  "ending_column": 0
+                }
+              }
+            }
+          }
+        ],
+        "description": "Beanstalk_FlashGovernance.reserveX (benchmarks/defi_hack_labs/Beanstalk_FlashGovernance.sol#5) should be constant \n",
+        "markdown": "[Beanstalk_FlashGovernance.reserveX](benchmarks/defi_hack_labs/Beanstalk_FlashGovernance.sol#L5) should be constant \n",
+        "first_markdown_element": "benchmarks/defi_hack_labs/Beanstalk_FlashGovernance.sol#L5",
+        "id": "ef5311bc083ec25e15b3a375b85e5f231784864b224fc1f4bfecf1429278a4d6",
+        "check": "constable-states",
+        "impact": "Optimization",
+        "confidence": "High",
+        "reference": "https://github.com/crytic/slither/wiki/Detector-Documentation#state-variables-that-could-be-declared-constant"
+      }
+    ]
+  }
+}

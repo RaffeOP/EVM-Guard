@@ -1,0 +1,94 @@
+{
+  "rubric": "A file is PRESENT if some function makes a re-entrant-capable call (CALL/CALLCODE/DELEGATECALL, .call, .call.value, .send with gas above 2300, or an external contract call) and writes storage after that call in the same function. .transfer alone (2300 stipend) does not count. A write before the call with nothing after it does not count. Full-gas CALLs are checked in bytecode with the engine's gas bound (bound above 2300 or unknown). Where bytecode shows a full-gas CALL that the source does not show, the file is UNRESOLVED.",
+  "method_note": "First-pass ratings grepped only for low-level calls and missed token-interface calls (buggy_33, buggy_42). Corrected in this file. BitCash was viewed with the engine's SWC-107 finding in hand, so its rating is not blinded.",
+  "seed": 2026,
+  "population": 58,
+  "sample_size": 20,
+  "ratings": {
+    "TOD__BitCash": {
+      "rating": "UNRESOLVED",
+      "reason": "Source shows only .transfer calls, but the bytecode has one full-gas CALL with an EXTCODESIZE guard and no matching call in the source text. Not resolved; v3 does not flag this file."
+    },
+    "TOD__HotDollarsToken": {
+      "rating": "ABSENT",
+      "reason": "Only .transfer calls; no re-entrant call."
+    },
+    "TOD__buggy_1": {
+      "rating": "ABSENT",
+      "reason": "Only .transfer calls; no re-entrant call."
+    },
+    "TOD__buggy_10": {
+      "rating": "ABSENT",
+      "reason": "Only .transfer calls; no re-entrant call."
+    },
+    "TOD__buggy_17": {
+      "rating": "UNRESOLVED",
+      "reason": "Same pattern as BitCash: one full-gas CALL in bytecode, no external call found in source. v3 does not flag this file."
+    },
+    "TOD__buggy_18": {
+      "rating": "ABSENT",
+      "reason": "approveAndCall writes the allowance before the external receiveApproval call and nothing after it. transferAnyERC20Token makes its external call last, with no later write."
+    },
+    "TOD__buggy_22": {
+      "rating": "PRESENT",
+      "reason": "tallyProposal: p.recipient.call.value(p.amount) at full gas, followed by p.proposalPassed = true. A state write after the call that the callee can observe."
+    },
+    "TOD__buggy_28": {
+      "rating": "ABSENT",
+      "reason": "Only .transfer calls; no re-entrant call."
+    },
+    "TOD__buggy_3": {
+      "rating": "ABSENT",
+      "reason": "Only .transfer calls; no re-entrant call."
+    },
+    "TOD__buggy_32": {
+      "rating": "ABSENT",
+      "reason": "Only .transfer calls; no re-entrant call."
+    },
+    "TOD__buggy_33": {
+      "rating": "PRESENT",
+      "reason": "redeem(): token.transfer and token.transferFrom run before staker.redeem and staker.tokens are written; the require guard is checked only before the calls. Corrects the first-pass ABSENT, which missed the token calls."
+    },
+    "TOD__buggy_36": {
+      "rating": "PRESENT",
+      "reason": "Same tallyProposal template as buggy_22: full-gas .call.value followed by a write to p.proposalPassed."
+    },
+    "TOD__buggy_37": {
+      "rating": "ABSENT",
+      "reason": "approveAndCall writes the allowance before the external call and nothing after it."
+    },
+    "TOD__buggy_38": {
+      "rating": "ABSENT",
+      "reason": "Only .transfer calls; no re-entrant call."
+    },
+    "TOD__buggy_39": {
+      "rating": "ABSENT",
+      "reason": "Only .transfer calls; no re-entrant call."
+    },
+    "TOD__buggy_4": {
+      "rating": "ABSENT",
+      "reason": "Only .transfer calls; no re-entrant call."
+    },
+    "TOD__buggy_41": {
+      "rating": "UNRESOLVED",
+      "reason": "Same pattern as BitCash: one full-gas CALL in bytecode, no external call found in source. v3 does not flag this file."
+    },
+    "TOD__buggy_48": {
+      "rating": "ABSENT",
+      "reason": "approveAndCall writes the allowance before the external call and nothing after it."
+    },
+    "TOD__buggy_49": {
+      "rating": "ABSENT",
+      "reason": "Only .transfer calls; no re-entrant call."
+    },
+    "TOD__buggy_9": {
+      "rating": "ABSENT",
+      "reason": "Only .transfer calls; no re-entrant call."
+    }
+  },
+  "counts": {
+    "UNRESOLVED": 3,
+    "ABSENT": 14,
+    "PRESENT": 3
+  }
+}

@@ -1,0 +1,69 @@
+{
+  "status": {
+    "timeout": 229,
+    "ok": 145,
+    "error": 15
+  },
+  "flagged_any": {
+    "reentrancy": {
+      "tp": 14,
+      "fp": 33,
+      "fn": 67,
+      "tn": 275,
+      "recall": 0.1728,
+      "recall_ci95": [
+        0.0978,
+        0.273
+      ],
+      "precision": 0.2979,
+      "precision_ci95": [
+        0.1734,
+        0.4489
+      ],
+      "fpr": 0.1071,
+      "fpr_ci95": [
+        0.0749,
+        0.1472
+      ]
+    },
+    "arithmetic": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 65,
+      "tn": 324,
+      "recall": 0.0,
+      "recall_ci95": [
+        0.0,
+        0.0552
+      ],
+      "precision": null,
+      "precision_ci95": null,
+      "fpr": 0.0,
+      "fpr_ci95": [
+        0.0,
+        0.0113
+      ]
+    },
+    "access_control": {
+      "tp": 13,
+      "fp": 25,
+      "fn": 20,
+      "tn": 331,
+      "recall": 0.3939,
+      "recall_ci95": [
+        0.2291,
+        0.5786
+      ],
+      "precision": 0.3421,
+      "precision_ci95": [
+        0.1963,
+        0.5135
+      ],
+      "fpr": 0.0702,
+      "fpr_ci95": [
+        0.046,
+        0.1019
+      ]
+    }
+  }
+}

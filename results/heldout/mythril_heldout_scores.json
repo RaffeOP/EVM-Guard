@@ -1,0 +1,53 @@
+{
+  "files": 400,
+  "flagged_any": {
+    "reentrancy": {
+      "tp": 2,
+      "fp": 7,
+      "fn": 48,
+      "tn": 343,
+      "recall": 0.04,
+      "recall_ci95": [
+        0.0049,
+        0.1371
+      ],
+      "precision": 0.2222,
+      "precision_ci95": [
+        0.0281,
+        0.6001
+      ],
+      "fpr": 0.02,
+      "fpr_ci95": [
+        0.0081,
+        0.0408
+      ]
+    },
+    "arithmetic": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 50,
+      "tn": 350,
+      "recall": 0.0,
+      "recall_ci95": [
+        0.0,
+        0.0711
+      ],
+      "precision": null,
+      "precision_ci95": null,
+      "fpr": 0.0,
+      "fpr_ci95": [
+        0.0,
+        0.0105
+      ]
+    }
+  },
+  "latency_ms_per_file": {
+    "mean": 56947.181,
+    "median": 60000.0
+  },
+  "status": {
+    "error": 8,
+    "ok": 84,
+    "timeout": 308
+  }
+}

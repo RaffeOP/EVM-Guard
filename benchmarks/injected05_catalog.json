@@ -1,0 +1,2852 @@
+[
+  {
+    "contract_id": "reentrancy_injected__00",
+    "group": "reentrancy_injected",
+    "labels": [
+      "reentrancy"
+    ],
+    "source_path": "benchmarks/injected05/reentrancy_injected__00.sol",
+    "source_sha256": "550f35ac695b9b1820389553b53f51e55f66f61575978d9944deebb1ec6fb9ac",
+    "sloc": 20,
+    "solc_version": "0.5.12",
+    "compile_error": "",
+    "runtime_bytecode_paths": {
+      "Fund3210": "benchmarks/injected05/reentrancy_injected__00__Fund3210.bin-runtime"
+    }
+  },
+  {
+    "contract_id": "reentrancy_injected__01",
+    "group": "reentrancy_injected",
+    "labels": [
+      "reentrancy"
+    ],
+    "source_path": "benchmarks/injected05/reentrancy_injected__01.sol",
+    "source_sha256": "fd8700dedc9d58434a18607b14e73bb1e22b392128bb17f3ae86fdd5768ed345",
+    "sloc": 19,
+    "solc_version": "0.5.12",
+    "compile_error": "",
+    "runtime_bytecode_paths": {
+      "Fund2919": "benchmarks/injected05/reentrancy_injected__01__Fund2919.bin-runtime"
+    }
+  },
+  {
+    "contract_id": "reentrancy_injected__02",
+    "group": "reentrancy_injected",
+    "labels": [
+      "reentrancy"
+    ],
+    "source_path": "benchmarks/injected05/reentrancy_injected__02.sol",
+    "source_sha256": "f6c94876922403df0067b5329450242a23fee2aa488be72016cb56474f870237",
+    "sloc": 19,
+    "solc_version": "0.5.12",
+    "compile_error": "",
+    "runtime_bytecode_paths": {
+      "Vault2320": "benchmarks/injected05/reentrancy_injected__02__Vault2320.bin-runtime"
+    }
+  },
+  {
+    "contract_id": "reentrancy_injected__03",
+    "group": "reentrancy_injected",
+    "labels": [
+      "reentrancy"
+    ],
+    "source_path": "benchmarks/injected05/reentrancy_injected__03.sol",
+    "source_sha256": "749263e021502474014b9e3ce70df13b7195f936ffef6dd68fcf950e67058846",
+    "sloc": 19,
+    "solc_version": "0.5.12",
+    "compile_error": "",
+    "runtime_bytecode_paths": {
+      "Pool4713": "benchmarks/injected05/reentrancy_injected__03__Pool4713.bin-runtime"
+    }
+  },
+  {
+    "contract_id": "reentrancy_injected__04",
+    "group": "reentrancy_injected",
+    "labels": [
+      "reentrancy"
+    ],
+    "source_path": "benchmarks/injected05/reentrancy_injected__04.sol",
+    "source_sha256": "a48ba21543620c2bb1e8c7955e0c8d14c1ffd99a969c9ff1b3f255836b2aef91",
+    "sloc": 19,
+    "solc_version": "0.5.12",
+    "compile_error": "",
+    "runtime_bytecode_paths": {
+      "Safe5967": "benchmarks/injected05/reentrancy_injected__04__Safe5967.bin-runtime"
+    }
+  },
+  {
+    "contract_id": "reentrancy_injected__05",
+    "group": "reentrancy_injected",
+    "labels": [
+      "reentrancy"
+    ],
+    "source_path": "benchmarks/injected05/reentrancy_injected__05.sol",
+    "source_sha256": "f84b6cdd1582d944a15c1b81c2a5602fa79111e3a13bc8a04a6b1668ab4f267b",
+    "sloc": 19,
+    "solc_version": "0.5.12",
+    "compile_error": "",
+    "runtime_bytecode_paths": {
+      "Wallet8685": "benchmarks/injected05/reentrancy_injected__05__Wallet8685.bin-runtime"
+    }
+  },
+  {
+    "contract_id": "reentrancy_injected__06",
+    "group": "reentrancy_injected",
+    "labels": [
+      "reentrancy"
+    ],
+    "source_path": "benchmarks/injected05/reentrancy_injected__06.sol",
+    "source_sha256": "b82e20f2ab31cf95448cee199b3a5985b9bc47dd060d2db191bbe834b028d8d6",
+    "sloc": 18,
+    "solc_version": "0.5.12",
+    "compile_error": "",
+    "runtime_bytecode_paths": {
+      "Locker2607": "benchmarks/injected05/reentrancy_injected__06__Locker2607.bin-runtime"
+    }
+  },
+  {
+    "contract_id": "reentrancy_injected__07",
+    "group": "reentrancy_injected",
+    "labels": [
+      "reentrancy"
+    ],
+    "source_path": "benchmarks/injected05/reentrancy_injected__07.sol",
+    "source_sha256": "4d4fc7c97c90431872c5e62d07615aef9d57201d9830d67dc871989643839936",
+    "sloc": 20,
+    "solc_version": "0.5.12",
+    "compile_error": "",
+    "runtime_bytecode_paths": {
+      "Ledger5787": "benchmarks/injected05/reentrancy_injected__07__Ledger5787.bin-runtime"
+    }
+  },
+  {
+    "contract_id": "reentrancy_injected__08",
+    "group": "reentrancy_injected",
+    "labels": [
+      "reentrancy"
+    ],
+    "source_path": "benchmarks/injected05/reentrancy_injected__08.sol",
+    "source_sha256": "ff01a6e7f965669c7927fda8d3463b6971ad4b48f6ffd92c90bd07e3062273d4",
+    "sloc": 18,
+    "solc_version": "0.5.12",
+    "compile_error": "",
+    "runtime_bytecode_paths": {
+      "Escrow1574": "benchmarks/injected05/reentrancy_injected__08__Escrow1574.bin-runtime"
+    }
+  },
+  {
+    "contract_id": "reentrancy_injected__09",
+    "group": "reentrancy_injected",
+    "labels": [
+      "reentrancy"
+    ],
+    "source_path": "benchmarks/injected05/reentrancy_injected__09.sol",
+    "source_sha256": "ff8e8fb6dcf506f4d47b8d76498f6fcc533f03834864a1aac645047e7ad587a1",
+    "sloc": 19,
+    "solc_version": "0.5.12",
+    "compile_error": "",
+    "runtime_bytecode_paths": {
+      "Treasury7313": "benchmarks/injected05/reentrancy_injected__09__Treasury7313.bin-runtime"
+    }
+  },
+  {
+    "contract_id": "reentrancy_injected__10",
+    "group": "reentrancy_injected",
+    "labels": [
+      "reentrancy"
+    ],
+    "source_path": "benchmarks/injected05/reentrancy_injected__10.sol",
+    "source_sha256": "f7787e464df55d676312b944014787d7a2654f720f9151bac97cd28019447a48",
+    "sloc": 20,
+    "solc_version": "0.5.12",
+    "compile_error": "",
+    "runtime_bytecode_paths": {
+      "Treasury5823": "benchmarks/injected05/reentrancy_injected__10__Treasury5823.bin-runtime"
+    }
+  },
+  {
+    "contract_id": "reentrancy_injected__11",
+    "group": "reentrancy_injected",
+    "labels": [
+      "reentrancy"
+    ],
+    "source_path": "benchmarks/injected05/reentrancy_injected__11.sol",
+    "source_sha256": "5a15375541ec408747afb21570c1b78ab92475de35e01e34f8c29538207fa5a1",
+    "sloc": 20,
+    "solc_version": "0.5.12",
+    "compile_error": "",
+    "runtime_bytecode_paths": {
+      "Bank2871": "benchmarks/injected05/reentrancy_injected__11__Bank2871.bin-runtime"
+    }
+  },
+  {
+    "contract_id": "reentrancy_injected__12",
+    "group": "reentrancy_injected",
+    "labels": [
+      "reentrancy"
+    ],
+    "source_path": "benchmarks/injected05/reentrancy_injected__12.sol",
+    "source_sha256": "0c075e0060c5f9462d78f030d7cad254280f9275f3e4cf1fe58f8d924109a6f5",
+    "sloc": 18,
+    "solc_version": "0.5.12",
+    "compile_error": "",
+    "runtime_bytecode_paths": {
+      "Escrow4052": "benchmarks/injected05/reentrancy_injected__12__Escrow4052.bin-runtime"
+    }
+  },
+  {
+    "contract_id": "reentrancy_injected__13",
+    "group": "reentrancy_injected",
+    "labels": [
+      "reentrancy"
+    ],
+    "source_path": "benchmarks/injected05/reentrancy_injected__13.sol",
+    "source_sha256": "1d357ee9967f1da177ea86c0fb169b14cf144ff3e66049b0dcdf6547b447a9b6",
+    "sloc": 19,
+    "solc_version": "0.5.12",
+    "compile_error": "",
+    "runtime_bytecode_paths": {
+      "Pool8317": "benchmarks/injected05/reentrancy_injected__13__Pool8317.bin-runtime"
+    }
+  },
+  {
+    "contract_id": "reentrancy_injected__14",
+    "group": "reentrancy_injected",
+    "labels": [
+      "reentrancy"
+    ],
+    "source_path": "benchmarks/injected05/reentrancy_injected__14.sol",
+    "source_sha256": "7d2db2422d44307ffe02a27df1f443134f1cd8ea2998e6a50ec020e465bccd23",
+    "sloc": 19,
+    "solc_version": "0.5.12",
+    "compile_error": "",
+    "runtime_bytecode_paths": {
+      "Escrow4482": "benchmarks/injected05/reentrancy_injected__14__Escrow4482.bin-runtime"
+    }
+  },
+  {
+    "contract_id": "reentrancy_injected__15",
+    "group": "reentrancy_injected",
+    "labels": [
+      "reentrancy"
+    ],
+    "source_path": "benchmarks/injected05/reentrancy_injected__15.sol",
+    "source_sha256": "5489201a47a91b3ab1fe6e1cf0d70a3267309e4422fd098aa5f49665bb64648c",
+    "sloc": 19,
+    "solc_version": "0.5.12",
+    "compile_error": "",
+    "runtime_bytecode_paths": {
+      "Safe6027": "benchmarks/injected05/reentrancy_injected__15__Safe6027.bin-runtime"
+    }
+  },
+  {
+    "contract_id": "reentrancy_injected__16",
+    "group": "reentrancy_injected",
+    "labels": [
+      "reentrancy"
+    ],
+    "source_path": "benchmarks/injected05/reentrancy_injected__16.sol",
+    "source_sha256": "d237f844fee25a7544b20f654861b9651ad8f76a82d5cf12c8586ee270c8b6f2",
+    "sloc": 20,
+    "solc_version": "0.5.12",
+    "compile_error": "",
+    "runtime_bytecode_paths": {
+      "Ledger6166": "benchmarks/injected05/reentrancy_injected__16__Ledger6166.bin-runtime"
+    }
+  },
+  {
+    "contract_id": "reentrancy_injected__17",
+    "group": "reentrancy_injected",
+    "labels": [
+      "reentrancy"
+    ],
+    "source_path": "benchmarks/injected05/reentrancy_injected__17.sol",
+    "source_sha256": "79e99defc2bdfffcdda98fc36702338e8551f1cdb5725d74a9d223b336c979b9",
+    "sloc": 20,
+    "solc_version": "0.5.12",
+    "compile_error": "",
+    "runtime_bytecode_paths": {
+      "Locker6586": "benchmarks/injected05/reentrancy_injected__17__Locker6586.bin-runtime"
+    }
+  },
+  {
+    "contract_id": "reentrancy_injected__18",
+    "group": "reentrancy_injected",
+    "labels": [
+      "reentrancy"
+    ],
+    "source_path": "benchmarks/injected05/reentrancy_injected__18.sol",
+    "source_sha256": "c3f99c2dc915462b14006fdc4101675f5635bf4cc11b2fab45aa2f982de3a41b",
+    "sloc": 19,
+    "solc_version": "0.5.12",
+    "compile_error": "",
+    "runtime_bytecode_paths": {
+      "Bank2311": "benchmarks/injected05/reentrancy_injected__18__Bank2311.bin-runtime"
+    }
+  },
+  {
+    "contract_id": "reentrancy_injected__19",
+    "group": "reentrancy_injected",
+    "labels": [
+      "reentrancy"
+    ],
+    "source_path": "benchmarks/injected05/reentrancy_injected__19.sol",
+    "source_sha256": "5d65a185c259660c501873bfe860bf280641430e37f47e15458643c5a8924006",
+    "sloc": 18,
+    "solc_version": "0.5.12",
+    "compile_error": "",
+    "runtime_bytecode_paths": {
+      "Escrow4971": "benchmarks/injected05/reentrancy_injected__19__Escrow4971.bin-runtime"
+    }
+  },
+  {
+    "contract_id": "reentrancy_injected__20",
+    "group": "reentrancy_injected",
+    "labels": [
+      "reentrancy"
+    ],
+    "source_path": "benchmarks/injected05/reentrancy_injected__20.sol",
+    "source_sha256": "32d7c4a320592af8666b88d0155ca37be8847124c6c148bada23d4c4c06ed8d6",
+    "sloc": 18,
+    "solc_version": "0.5.12",
+    "compile_error": "",
+    "runtime_bytecode_paths": {
+      "Safe3964": "benchmarks/injected05/reentrancy_injected__20__Safe3964.bin-runtime"
+    }
+  },
+  {
+    "contract_id": "reentrancy_injected__21",
+    "group": "reentrancy_injected",
+    "labels": [
+      "reentrancy"
+    ],
+    "source_path": "benchmarks/injected05/reentrancy_injected__21.sol",
+    "source_sha256": "2dec1c4aa66108fbc258949de26b63bf934645217c3b534999634d8a8623ac02",
+    "sloc": 20,
+    "solc_version": "0.5.12",
+    "compile_error": "",
+    "runtime_bytecode_paths": {
+      "Pool4626": "benchmarks/injected05/reentrancy_injected__21__Pool4626.bin-runtime"
+    }
+  },
+  {
+    "contract_id": "reentrancy_injected__22",
+    "group": "reentrancy_injected",
+    "labels": [
+      "reentrancy"
+    ],
+    "source_path": "benchmarks/injected05/reentrancy_injected__22.sol",
+    "source_sha256": "b9357b6f89d89e90e274baca50bf681db61b779f98f733f4293e8dc3a9cf5316",
+    "sloc": 19,
+    "solc_version": "0.5.12",
+    "compile_error": "",
+    "runtime_bytecode_paths": {
+      "Locker2233": "benchmarks/injected05/reentrancy_injected__22__Locker2233.bin-runtime"
+    }
+  },
+  {
+    "contract_id": "reentrancy_injected__23",
+    "group": "reentrancy_injected",
+    "labels": [
+      "reentrancy"
+    ],
+    "source_path": "benchmarks/injected05/reentrancy_injected__23.sol",
+    "source_sha256": "d9aca20676cba98d6db320a60eda25ac2e3cbc5269a706bae6fde614ef0fd32b",
+    "sloc": 20,
+    "solc_version": "0.5.12",
+    "compile_error": "",
+    "runtime_bytecode_paths": {
+      "Wallet3407": "benchmarks/injected05/reentrancy_injected__23__Wallet3407.bin-runtime"
+    }
+  },
+  {
+    "contract_id": "reentrancy_injected__24",
+    "group": "reentrancy_injected",
+    "labels": [
+      "reentrancy"
+    ],
+    "source_path": "benchmarks/injected05/reentrancy_injected__24.sol",
+    "source_sha256": "d0f51ce0daefcb618182c9d1736337d12a554c3d06ec243975ff8563084f0bc5",
+    "sloc": 18,
+    "solc_version": "0.5.12",
+    "compile_error": "",
+    "runtime_bytecode_paths": {
+      "Pool8067": "benchmarks/injected05/reentrancy_injected__24__Pool8067.bin-runtime"
+    }
+  },
+  {
+    "contract_id": "reentrancy_injected__25",
+    "group": "reentrancy_injected",
+    "labels": [
+      "reentrancy"
+    ],
+    "source_path": "benchmarks/injected05/reentrancy_injected__25.sol",
+    "source_sha256": "f4cc06f959ccc8fa354198fa52fd93e23a3bc3c4c94eff96486cffe17102d5e4",
+    "sloc": 18,
+    "solc_version": "0.5.12",
+    "compile_error": "",
+    "runtime_bytecode_paths": {
+      "Escrow6763": "benchmarks/injected05/reentrancy_injected__25__Escrow6763.bin-runtime"
+    }
+  },
+  {
+    "contract_id": "reentrancy_injected__26",
+    "group": "reentrancy_injected",
+    "labels": [
+      "reentrancy"
+    ],
+    "source_path": "benchmarks/injected05/reentrancy_injected__26.sol",
+    "source_sha256": "d296728c72e09b6e084efa4904d2f0db1d4090466c8568d6bc68502fa80b665e",
+    "sloc": 20,
+    "solc_version": "0.5.12",
+    "compile_error": "",
+    "runtime_bytecode_paths": {
+      "Safe5581": "benchmarks/injected05/reentrancy_injected__26__Safe5581.bin-runtime"
+    }
+  },
+  {
+    "contract_id": "reentrancy_injected__27",
+    "group": "reentrancy_injected",
+    "labels": [
+      "reentrancy"
+    ],
+    "source_path": "benchmarks/injected05/reentrancy_injected__27.sol",
+    "source_sha256": "b6154ab90ec995f4a80b0a66253162abe68214ff6bfd6215bd31a70d14be0add",
+    "sloc": 18,
+    "solc_version": "0.5.12",
+    "compile_error": "",
+    "runtime_bytecode_paths": {
+      "Safe9375": "benchmarks/injected05/reentrancy_injected__27__Safe9375.bin-runtime"
+    }
+  },
+  {
+    "contract_id": "reentrancy_injected__28",
+    "group": "reentrancy_injected",
+    "labels": [
+      "reentrancy"
+    ],
+    "source_path": "benchmarks/injected05/reentrancy_injected__28.sol",
+    "source_sha256": "279cbd322fadd3c3bc8a855338c207717bf2290408f5f9bc97b9918463ba3397",
+    "sloc": 20,
+    "solc_version": "0.5.12",
+    "compile_error": "",
+    "runtime_bytecode_paths": {
+      "Ledger6880": "benchmarks/injected05/reentrancy_injected__28__Ledger6880.bin-runtime"
+    }
+  },
+  {
+    "contract_id": "reentrancy_injected__29",
+    "group": "reentrancy_injected",
+    "labels": [
+      "reentrancy"
+    ],
+    "source_path": "benchmarks/injected05/reentrancy_injected__29.sol",
+    "source_sha256": "380dc5ecc5f81879080a24cc9aecd277176834dccaee24c5a6e93b495e0a7253",
+    "sloc": 20,
+    "solc_version": "0.5.12",
+    "compile_error": "",
+    "runtime_bytecode_paths": {
+      "Vault2628": "benchmarks/injected05/reentrancy_injected__29__Vault2628.bin-runtime"
+    }
+  },
+  {
+    "contract_id": "dos_injected__00",
+    "group": "dos_injected",
+    "labels": [
+      "denial_of_service"
+    ],
+    "source_path": "benchmarks/injected05/dos_injected__00.sol",
+    "source_sha256": "47b5622c7a0a721ce7eac07169571acda986a5c1f6d230a219444ad814d6703e",
+    "sloc": 20,
+    "solc_version": "0.5.12",
+    "compile_error": "",
+    "runtime_bytecode_paths": {
+      "Pool3710": "benchmarks/injected05/dos_injected__00__Pool3710.bin-runtime"
+    }
+  },
+  {
+    "contract_id": "dos_injected__01",
+    "group": "dos_injected",
+    "labels": [
+      "denial_of_service"
+    ],
+    "source_path": "benchmarks/injected05/dos_injected__01.sol",
+    "source_sha256": "422adcf889bc914871e7cd46b4d310d186cd241aa11798983f54268df35126f5",
+    "sloc": 20,
+    "solc_version": "0.5.12",
+    "compile_error": "",
+    "runtime_bytecode_paths": {
+      "Locker7311": "benchmarks/injected05/dos_injected__01__Locker7311.bin-runtime"
+    }
+  },
+  {
+    "contract_id": "dos_injected__02",
+    "group": "dos_injected",
+    "labels": [
+      "denial_of_service"
+    ],
+    "source_path": "benchmarks/injected05/dos_injected__02.sol",
+    "source_sha256": "0fc2986c5d2a26e72ce8a6329ad1a1f1b68bf7fb5e0b8e06205c066d413dfd6f",
+    "sloc": 22,
+    "solc_version": "0.5.12",
+    "compile_error": "",
+    "runtime_bytecode_paths": {
+      "Fund8177": "benchmarks/injected05/dos_injected__02__Fund8177.bin-runtime"
+    }
+  },
+  {
+    "contract_id": "dos_injected__03",
+    "group": "dos_injected",
+    "labels": [
+      "denial_of_service"
+    ],
+    "source_path": "benchmarks/injected05/dos_injected__03.sol",
+    "source_sha256": "18f4e2ce9f9190c1eb503cf0558b028c6b903ece1d0f256fbfdbd8a0402f30ac",
+    "sloc": 22,
+    "solc_version": "0.5.12",
+    "compile_error": "",
+    "runtime_bytecode_paths": {
+      "Wallet8084": "benchmarks/injected05/dos_injected__03__Wallet8084.bin-runtime"
+    }
+  },
+  {
+    "contract_id": "dos_injected__04",
+    "group": "dos_injected",
+    "labels": [
+      "denial_of_service"
+    ],
+    "source_path": "benchmarks/injected05/dos_injected__04.sol",
+    "source_sha256": "069874734271b9ae2fc270d26245ff4662f40a9631a1633a2240bdd68f2497cc",
+    "sloc": 21,
+    "solc_version": "0.5.12",
+    "compile_error": "",
+    "runtime_bytecode_paths": {
+      "Vault4307": "benchmarks/injected05/dos_injected__04__Vault4307.bin-runtime"
+    }
+  },
+  {
+    "contract_id": "dos_injected__05",
+    "group": "dos_injected",
+    "labels": [
+      "denial_of_service"
+    ],
+    "source_path": "benchmarks/injected05/dos_injected__05.sol",
+    "source_sha256": "5324fe581835195fb101253327b5278f23b4538f72e5d9fda61bddca88dfec14",
+    "sloc": 20,
+    "solc_version": "0.5.12",
+    "compile_error": "",
+    "runtime_bytecode_paths": {
+      "Pool9463": "benchmarks/injected05/dos_injected__05__Pool9463.bin-runtime"
+    }
+  },
+  {
+    "contract_id": "dos_injected__06",
+    "group": "dos_injected",
+    "labels": [
+      "denial_of_service"
+    ],
+    "source_path": "benchmarks/injected05/dos_injected__06.sol",
+    "source_sha256": "8b363661669457279c846fc1624edc0cd867e3336b26cf62721e997b524431d2",
+    "sloc": 22,
+    "solc_version": "0.5.12",
+    "compile_error": "",
+    "runtime_bytecode_paths": {
+      "Vault8312": "benchmarks/injected05/dos_injected__06__Vault8312.bin-runtime"
+    }
+  },
+  {
+    "contract_id": "dos_injected__07",
+    "group": "dos_injected",
+    "labels": [
+      "denial_of_service"
+    ],
+    "source_path": "benchmarks/injected05/dos_injected__07.sol",
+    "source_sha256": "5b362afcc0a5ff7d1f6e879864ccce70683280b6aafb7ce18b9cf1687a837758",
+    "sloc": 22,
+    "solc_version": "0.5.12",
+    "compile_error": "",
+    "runtime_bytecode_paths": {
+      "Bank8335": "benchmarks/injected05/dos_injected__07__Bank8335.bin-runtime"
+    }
+  },
+  {
+    "contract_id": "dos_injected__08",
+    "group": "dos_injected",
+    "labels": [
+      "denial_of_service"
+    ],
+    "source_path": "benchmarks/injected05/dos_injected__08.sol",
+    "source_sha256": "6c1eef0a86b7b60e739cdff7e6445527426a5b2a599a7acb9fd25a7998a09328",
+    "sloc": 20,
+    "solc_version": "0.5.12",
+    "compile_error": "",
+    "runtime_bytecode_paths": {
+      "Bank6359": "benchmarks/injected05/dos_injected__08__Bank6359.bin-runtime"
+    }
+  },
+  {
+    "contract_id": "dos_injected__09",
+    "group": "dos_injected",
+    "labels": [
+      "denial_of_service"
+    ],
+    "source_path": "benchmarks/injected05/dos_injected__09.sol",
+    "source_sha256": "24b01899e73919ab5e53d596bc1a4791917cb6ae4a72a7261f8982645c513a3d",
+    "sloc": 22,
+    "solc_version": "0.5.12",
+    "compile_error": "",
+    "runtime_bytecode_paths": {
+      "Locker6062": "benchmarks/injected05/dos_injected__09__Locker6062.bin-runtime"
+    }
+  },
+  {
+    "contract_id": "dos_injected__10",
+    "group": "dos_injected",
+    "labels": [
+      "denial_of_service"
+    ],
+    "source_path": "benchmarks/injected05/dos_injected__10.sol",
+    "source_sha256": "78f6254489d3a6a8e1a6a33a7e0ea97f83ff7cd272a2db8d07dd88c1bf1c39d0",
+    "sloc": 22,
+    "solc_version": "0.5.12",
+    "compile_error": "",
+    "runtime_bytecode_paths": {
+      "Pool6615": "benchmarks/injected05/dos_injected__10__Pool6615.bin-runtime"
+    }
+  },
+  {
+    "contract_id": "dos_injected__11",
+    "group": "dos_injected",
+    "labels": [
+      "denial_of_service"
+    ],
+    "source_path": "benchmarks/injected05/dos_injected__11.sol",
+    "source_sha256": "a0db0146c3522e860652ad944939e5508aa7fc3bd6f29cd765b771161ab7d2cf",
+    "sloc": 22,
+    "solc_version": "0.5.12",
+    "compile_error": "",
+    "runtime_bytecode_paths": {
+      "Fund5188": "benchmarks/injected05/dos_injected__11__Fund5188.bin-runtime"
+    }
+  },
+  {
+    "contract_id": "dos_injected__12",
+    "group": "dos_injected",
+    "labels": [
+      "denial_of_service"
+    ],
+    "source_path": "benchmarks/injected05/dos_injected__12.sol",
+    "source_sha256": "44b3044e6456cb0395c8e04093e20517dfa3fe516879c5ca7dd07201d79a4c20",
+    "sloc": 21,
+    "solc_version": "0.5.12",
+    "compile_error": "",
+    "runtime_bytecode_paths": {
+      "Safe9644": "benchmarks/injected05/dos_injected__12__Safe9644.bin-runtime"
+    }
+  },
+  {
+    "contract_id": "dos_injected__13",
+    "group": "dos_injected",
+    "labels": [
+      "denial_of_service"
+    ],
+    "source_path": "benchmarks/injected05/dos_injected__13.sol",
+    "source_sha256": "0053807e8256115e933534fc230d806b0400d4870fa4c4f65da4d97c6e6bc5b6",
+    "sloc": 21,
+    "solc_version": "0.5.12",
+    "compile_error": "",
+    "runtime_bytecode_paths": {
+      "Vault6576": "benchmarks/injected05/dos_injected__13__Vault6576.bin-runtime"
+    }
+  },
+  {
+    "contract_id": "dos_injected__14",
+    "group": "dos_injected",
+    "labels": [
+      "denial_of_service"
+    ],
+    "source_path": "benchmarks/injected05/dos_injected__14.sol",
+    "source_sha256": "9f9121ff817eb3ed007d1eb4b99540a7c4acae7decd1c36da86f28e226d3831f",
+    "sloc": 22,
+    "solc_version": "0.5.12",
+    "compile_error": "",
+    "runtime_bytecode_paths": {
+      "Escrow8977": "benchmarks/injected05/dos_injected__14__Escrow8977.bin-runtime"
+    }
+  },
+  {
+    "contract_id": "dos_injected__15",
+    "group": "dos_injected",
+    "labels": [
+      "denial_of_service"
+    ],
+    "source_path": "benchmarks/injected05/dos_injected__15.sol",
+    "source_sha256": "2dffdacfb15418ff5e430dba39674da133a4bab6eafe9d9fba5763c57c603722",
+    "sloc": 21,
+    "solc_version": "0.5.12",
+    "compile_error": "",
+    "runtime_bytecode_paths": {
+      "Vault8756": "benchmarks/injected05/dos_injected__15__Vault8756.bin-runtime"
+    }
+  },
+  {
+    "contract_id": "dos_injected__16",
+    "group": "dos_injected",
+    "labels": [
+      "denial_of_service"
+    ],
+    "source_path": "benchmarks/injected05/dos_injected__16.sol",
+    "source_sha256": "86ba69829f4487c955c1c490700cd62a916b211196989d5f3a41fd7b49e6412b",
+    "sloc": 22,
+    "solc_version": "0.5.12",
+    "compile_error": "",
+    "runtime_bytecode_paths": {
+      "Vault3168": "benchmarks/injected05/dos_injected__16__Vault3168.bin-runtime"
+    }
+  },
+  {
+    "contract_id": "dos_injected__17",
+    "group": "dos_injected",
+    "labels": [
+      "denial_of_service"
+    ],
+    "source_path": "benchmarks/injected05/dos_injected__17.sol",
+    "source_sha256": "1dd21b00f5af547fa0b593cc3d2f59cac02db7b2c0a80fa205ac36df759c64a6",
+    "sloc": 22,
+    "solc_version": "0.5.12",
+    "compile_error": "",
+    "runtime_bytecode_paths": {
+      "Pool6284": "benchmarks/injected05/dos_injected__17__Pool6284.bin-runtime"
+    }
+  },
+  {
+    "contract_id": "dos_injected__18",
+    "group": "dos_injected",
+    "labels": [
+      "denial_of_service"
+    ],
+    "source_path": "benchmarks/injected05/dos_injected__18.sol",
+    "source_sha256": "1ba645deb06f0fb3d1a6018894cf167fef7188d24b254d868fb98a743ffe7e3b",
+    "sloc": 22,
+    "solc_version": "0.5.12",
+    "compile_error": "",
+    "runtime_bytecode_paths": {
+      "Pool4229": "benchmarks/injected05/dos_injected__18__Pool4229.bin-runtime"
+    }
+  },
+  {
+    "contract_id": "dos_injected__19",
+    "group": "dos_injected",
+    "labels": [
+      "denial_of_service"
+    ],
+    "source_path": "benchmarks/injected05/dos_injected__19.sol",
+    "source_sha256": "abef2c36b7ecae70c49cd4b637b9482252887ec7ed21b69152dca3d921eef066",
+    "sloc": 20,
+    "solc_version": "0.5.12",
+    "compile_error": "",
+    "runtime_bytecode_paths": {
+      "Safe2836": "benchmarks/injected05/dos_injected__19__Safe2836.bin-runtime"
+    }
+  },
+  {
+    "contract_id": "dos_injected__20",
+    "group": "dos_injected",
+    "labels": [
+      "denial_of_service"
+    ],
+    "source_path": "benchmarks/injected05/dos_injected__20.sol",
+    "source_sha256": "5f3e68f6bbbf7671eaa5aec50067eb9e4920726827208d074b8611b50c9fab09",
+    "sloc": 21,
+    "solc_version": "0.5.12",
+    "compile_error": "",
+    "runtime_bytecode_paths": {
+      "Fund7409": "benchmarks/injected05/dos_injected__20__Fund7409.bin-runtime"
+    }
+  },
+  {
+    "contract_id": "dos_injected__21",
+    "group": "dos_injected",
+    "labels": [
+      "denial_of_service"
+    ],
+    "source_path": "benchmarks/injected05/dos_injected__21.sol",
+    "source_sha256": "1e8946d419c8d4b24c678752c011b22a9ad8db6fd4e555461d6193754a524ab8",
+    "sloc": 20,
+    "solc_version": "0.5.12",
+    "compile_error": "",
+    "runtime_bytecode_paths": {
+      "Locker4376": "benchmarks/injected05/dos_injected__21__Locker4376.bin-runtime"
+    }
+  },
+  {
+    "contract_id": "dos_injected__22",
+    "group": "dos_injected",
+    "labels": [
+      "denial_of_service"
+    ],
+    "source_path": "benchmarks/injected05/dos_injected__22.sol",
+    "source_sha256": "e6f6d5898694b92aed8ac97bb20242b015777df615ad9d982e569d8cf89359cb",
+    "sloc": 20,
+    "solc_version": "0.5.12",
+    "compile_error": "",
+    "runtime_bytecode_paths": {
+      "Ledger7381": "benchmarks/injected05/dos_injected__22__Ledger7381.bin-runtime"
+    }
+  },
+  {
+    "contract_id": "dos_injected__23",
+    "group": "dos_injected",
+    "labels": [
+      "denial_of_service"
+    ],
+    "source_path": "benchmarks/injected05/dos_injected__23.sol",
+    "source_sha256": "e71d30880bdee9bc0a1b641eef1484ed7da90d6bee0de13111daa10e0b2aefbc",
+    "sloc": 20,
+    "solc_version": "0.5.12",
+    "compile_error": "",
+    "runtime_bytecode_paths": {
+      "Bank1427": "benchmarks/injected05/dos_injected__23__Bank1427.bin-runtime"
+    }
+  },
+  {
+    "contract_id": "dos_injected__24",
+    "group": "dos_injected",
+    "labels": [
+      "denial_of_service"
+    ],
+    "source_path": "benchmarks/injected05/dos_injected__24.sol",
+    "source_sha256": "df25e1613f35ed17d2d2342e50aba5d5e51b52ce675d07d17a1addd48bf2a729",
+    "sloc": 21,
+    "solc_version": "0.5.12",
+    "compile_error": "",
+    "runtime_bytecode_paths": {
+      "Bank4337": "benchmarks/injected05/dos_injected__24__Bank4337.bin-runtime"
+    }
+  },
+  {
+    "contract_id": "dos_injected__25",
+    "group": "dos_injected",
+    "labels": [
+      "denial_of_service"
+    ],
+    "source_path": "benchmarks/injected05/dos_injected__25.sol",
+    "source_sha256": "5507b674681f98d3147534cd0416dbf3591e3525df266eb3b0f449be7e4fc2b6",
+    "sloc": 22,
+    "solc_version": "0.5.12",
+    "compile_error": "",
+    "runtime_bytecode_paths": {
+      "Vault4940": "benchmarks/injected05/dos_injected__25__Vault4940.bin-runtime"
+    }
+  },
+  {
+    "contract_id": "dos_injected__26",
+    "group": "dos_injected",
+    "labels": [
+      "denial_of_service"
+    ],
+    "source_path": "benchmarks/injected05/dos_injected__26.sol",
+    "source_sha256": "1e5001b45ae9cba5b6981162a9c28b9ec3de41d2e62b4c13a45288cf83793859",
+    "sloc": 22,
+    "solc_version": "0.5.12",
+    "compile_error": "",
+    "runtime_bytecode_paths": {
+      "Safe8626": "benchmarks/injected05/dos_injected__26__Safe8626.bin-runtime"
+    }
+  },
+  {
+    "contract_id": "dos_injected__27",
+    "group": "dos_injected",
+    "labels": [
+      "denial_of_service"
+    ],
+    "source_path": "benchmarks/injected05/dos_injected__27.sol",
+    "source_sha256": "038cf63848efc9b46108a3e89c05a56bb486c7315b1d900058219f467a362362",
+    "sloc": 20,
+    "solc_version": "0.5.12",
+    "compile_error": "",
+    "runtime_bytecode_paths": {
+      "Locker8715": "benchmarks/injected05/dos_injected__27__Locker8715.bin-runtime"
+    }
+  },
+  {
+    "contract_id": "dos_injected__28",
+    "group": "dos_injected",
+    "labels": [
+      "denial_of_service"
+    ],
+    "source_path": "benchmarks/injected05/dos_injected__28.sol",
+    "source_sha256": "7fbca2d283e9a321062a5f8aec1152dc81c453e267d8189fa7ea536966060644",
+    "sloc": 22,
+    "solc_version": "0.5.12",
+    "compile_error": "",
+    "runtime_bytecode_paths": {
+      "Ledger4967": "benchmarks/injected05/dos_injected__28__Ledger4967.bin-runtime"
+    }
+  },
+  {
+    "contract_id": "dos_injected__29",
+    "group": "dos_injected",
+    "labels": [
+      "denial_of_service"
+    ],
+    "source_path": "benchmarks/injected05/dos_injected__29.sol",
+    "source_sha256": "9f657c6538be6b68033e9aded377fafcf1bd695fcf767413fb1dd12dfcb25611",
+    "sloc": 21,
+    "solc_version": "0.5.12",
+    "compile_error": "",
+    "runtime_bytecode_paths": {
+      "Safe5498": "benchmarks/injected05/dos_injected__29__Safe5498.bin-runtime"
+    }
+  },
+  {
+    "contract_id": "neg_cei__00",
+    "group": "neg_cei",
+    "labels": [],
+    "source_path": "benchmarks/injected05/neg_cei__00.sol",
+    "source_sha256": "9cbeea886e93ae0a984ad96ad4ecd2c9b8323bbb61619a77cff10a1316c10226",
+    "sloc": 20,
+    "solc_version": "0.5.12",
+    "compile_error": "",
+    "runtime_bytecode_paths": {
+      "Vault9247": "benchmarks/injected05/neg_cei__00__Vault9247.bin-runtime"
+    }
+  },
+  {
+    "contract_id": "neg_cei__01",
+    "group": "neg_cei",
+    "labels": [],
+    "source_path": "benchmarks/injected05/neg_cei__01.sol",
+    "source_sha256": "32cba1fd1b3916d302861bc0c2105a4486a7d227ed297393d94b769a6dd22362",
+    "sloc": 19,
+    "solc_version": "0.5.12",
+    "compile_error": "",
+    "runtime_bytecode_paths": {
+      "Ledger2042": "benchmarks/injected05/neg_cei__01__Ledger2042.bin-runtime"
+    }
+  },
+  {
+    "contract_id": "neg_cei__02",
+    "group": "neg_cei",
+    "labels": [],
+    "source_path": "benchmarks/injected05/neg_cei__02.sol",
+    "source_sha256": "f44feb90c2bff78e68ee084039b1b3c38bfea77151419c9fa23202e618b22080",
+    "sloc": 18,
+    "solc_version": "0.5.12",
+    "compile_error": "",
+    "runtime_bytecode_paths": {
+      "Locker5410": "benchmarks/injected05/neg_cei__02__Locker5410.bin-runtime"
+    }
+  },
+  {
+    "contract_id": "neg_cei__03",
+    "group": "neg_cei",
+    "labels": [],
+    "source_path": "benchmarks/injected05/neg_cei__03.sol",
+    "source_sha256": "c02075de39e7886fd213e0e130e195dc524b1b46583b2ef56a48593466a54b8e",
+    "sloc": 18,
+    "solc_version": "0.5.12",
+    "compile_error": "",
+    "runtime_bytecode_paths": {
+      "Bank1160": "benchmarks/injected05/neg_cei__03__Bank1160.bin-runtime"
+    }
+  },
+  {
+    "contract_id": "neg_cei__04",
+    "group": "neg_cei",
+    "labels": [],
+    "source_path": "benchmarks/injected05/neg_cei__04.sol",
+    "source_sha256": "c0cc498dc08e9f2fa1de036f1aa746fc7f999dc97c4afcc57fcdfb8e54af4135",
+    "sloc": 18,
+    "solc_version": "0.5.12",
+    "compile_error": "",
+    "runtime_bytecode_paths": {
+      "Escrow6174": "benchmarks/injected05/neg_cei__04__Escrow6174.bin-runtime"
+    }
+  },
+  {
+    "contract_id": "neg_cei__05",
+    "group": "neg_cei",
+    "labels": [],
+    "source_path": "benchmarks/injected05/neg_cei__05.sol",
+    "source_sha256": "dd294f3f61c11d59c2a7c8378a19ceebb6948a7270bea18170fb104fac4fa0a4",
+    "sloc": 18,
+    "solc_version": "0.5.12",
+    "compile_error": "",
+    "runtime_bytecode_paths": {
+      "Treasury8920": "benchmarks/injected05/neg_cei__05__Treasury8920.bin-runtime"
+    }
+  },
+  {
+    "contract_id": "neg_cei__06",
+    "group": "neg_cei",
+    "labels": [],
+    "source_path": "benchmarks/injected05/neg_cei__06.sol",
+    "source_sha256": "681431d36c556a96ae5367221dcedb11dcb632b9416e1138a3510a55ddcaf588",
+    "sloc": 18,
+    "solc_version": "0.5.12",
+    "compile_error": "",
+    "runtime_bytecode_paths": {
+      "Wallet8614": "benchmarks/injected05/neg_cei__06__Wallet8614.bin-runtime"
+    }
+  },
+  {
+    "contract_id": "neg_cei__07",
+    "group": "neg_cei",
+    "labels": [],
+    "source_path": "benchmarks/injected05/neg_cei__07.sol",
+    "source_sha256": "92425d5d0c2079226a149f1f35dc7ca74de7724ec160ce2f98ebf97f0e00de26",
+    "sloc": 20,
+    "solc_version": "0.5.12",
+    "compile_error": "",
+    "runtime_bytecode_paths": {
+      "Safe6427": "benchmarks/injected05/neg_cei__07__Safe6427.bin-runtime"
+    }
+  },
+  {
+    "contract_id": "neg_cei__08",
+    "group": "neg_cei",
+    "labels": [],
+    "source_path": "benchmarks/injected05/neg_cei__08.sol",
+    "source_sha256": "3d4f0114d3680e60ea2755f07868acb3f7859031aaeb45359eceeeb32ff9329d",
+    "sloc": 18,
+    "solc_version": "0.5.12",
+    "compile_error": "",
+    "runtime_bytecode_paths": {
+      "Fund4214": "benchmarks/injected05/neg_cei__08__Fund4214.bin-runtime"
+    }
+  },
+  {
+    "contract_id": "neg_cei__09",
+    "group": "neg_cei",
+    "labels": [],
+    "source_path": "benchmarks/injected05/neg_cei__09.sol",
+    "source_sha256": "16f6a3bebbfde241f3925c1530af5dc12c3d090be7a37b73eb6f6ff827c1e32c",
+    "sloc": 19,
+    "solc_version": "0.5.12",
+    "compile_error": "",
+    "runtime_bytecode_paths": {
+      "Bank3932": "benchmarks/injected05/neg_cei__09__Bank3932.bin-runtime"
+    }
+  },
+  {
+    "contract_id": "neg_cei__10",
+    "group": "neg_cei",
+    "labels": [],
+    "source_path": "benchmarks/injected05/neg_cei__10.sol",
+    "source_sha256": "ff45a06122783cfd69248c3878cc5fe29f14e2cc6261ca9c078d7b2baa402c1b",
+    "sloc": 20,
+    "solc_version": "0.5.12",
+    "compile_error": "",
+    "runtime_bytecode_paths": {
+      "Wallet9395": "benchmarks/injected05/neg_cei__10__Wallet9395.bin-runtime"
+    }
+  },
+  {
+    "contract_id": "neg_cei__11",
+    "group": "neg_cei",
+    "labels": [],
+    "source_path": "benchmarks/injected05/neg_cei__11.sol",
+    "source_sha256": "7423bf9e5aa1d45ee8a3f26aa60aafbbb85bb849c49f3461182dd52677c6714e",
+    "sloc": 19,
+    "solc_version": "0.5.12",
+    "compile_error": "",
+    "runtime_bytecode_paths": {
+      "Safe1494": "benchmarks/injected05/neg_cei__11__Safe1494.bin-runtime"
+    }
+  },
+  {
+    "contract_id": "neg_cei__12",
+    "group": "neg_cei",
+    "labels": [],
+    "source_path": "benchmarks/injected05/neg_cei__12.sol",
+    "source_sha256": "fdc79e37b53f5132eeab05a124eb112ad6550d2e832b785a4783b386c3763b5f",
+    "sloc": 20,
+    "solc_version": "0.5.12",
+    "compile_error": "",
+    "runtime_bytecode_paths": {
+      "Safe4578": "benchmarks/injected05/neg_cei__12__Safe4578.bin-runtime"
+    }
+  },
+  {
+    "contract_id": "neg_cei__13",
+    "group": "neg_cei",
+    "labels": [],
+    "source_path": "benchmarks/injected05/neg_cei__13.sol",
+    "source_sha256": "7e7e58a2b2d144c7224eb3ce73b9603edfcd460b313483f2dd6b3e2728045f60",
+    "sloc": 19,
+    "solc_version": "0.5.12",
+    "compile_error": "",
+    "runtime_bytecode_paths": {
+      "Ledger9540": "benchmarks/injected05/neg_cei__13__Ledger9540.bin-runtime"
+    }
+  },
+  {
+    "contract_id": "neg_cei__14",
+    "group": "neg_cei",
+    "labels": [],
+    "source_path": "benchmarks/injected05/neg_cei__14.sol",
+    "source_sha256": "446822053cb243b13f2c6c45b6c7942de68bcd1ecaed4fbf793fc329015068e2",
+    "sloc": 19,
+    "solc_version": "0.5.12",
+    "compile_error": "",
+    "runtime_bytecode_paths": {
+      "Safe9443": "benchmarks/injected05/neg_cei__14__Safe9443.bin-runtime"
+    }
+  },
+  {
+    "contract_id": "neg_cei__15",
+    "group": "neg_cei",
+    "labels": [],
+    "source_path": "benchmarks/injected05/neg_cei__15.sol",
+    "source_sha256": "dfc5b371fe743fb59f79cc0be74db18b2f0c42895bceb0a50d1d891e63cf6824",
+    "sloc": 20,
+    "solc_version": "0.5.12",
+    "compile_error": "",
+    "runtime_bytecode_paths": {
+      "Fund5047": "benchmarks/injected05/neg_cei__15__Fund5047.bin-runtime"
+    }
+  },
+  {
+    "contract_id": "neg_cei__16",
+    "group": "neg_cei",
+    "labels": [],
+    "source_path": "benchmarks/injected05/neg_cei__16.sol",
+    "source_sha256": "3081fc8e7fdbbba57d0497bec9dd0906e9c8c196785b1a158fb1aa781271edd9",
+    "sloc": 20,
+    "solc_version": "0.5.12",
+    "compile_error": "",
+    "runtime_bytecode_paths": {
+      "Safe4997": "benchmarks/injected05/neg_cei__16__Safe4997.bin-runtime"
+    }
+  },
+  {
+    "contract_id": "neg_cei__17",
+    "group": "neg_cei",
+    "labels": [],
+    "source_path": "benchmarks/injected05/neg_cei__17.sol",
+    "source_sha256": "d5c7985eff28afd1f5343941bc7f7421738f6405e8217bbb3bf3a49731e25484",
+    "sloc": 19,
+    "solc_version": "0.5.12",
+    "compile_error": "",
+    "runtime_bytecode_paths": {
+      "Bank8779": "benchmarks/injected05/neg_cei__17__Bank8779.bin-runtime"
+    }
+  },
+  {
+    "contract_id": "neg_cei__18",
+    "group": "neg_cei",
+    "labels": [],
+    "source_path": "benchmarks/injected05/neg_cei__18.sol",
+    "source_sha256": "ceb0cfed76ffa643cd0820ae56188136e777b01c0b266cc6898d45a1377ee637",
+    "sloc": 18,
+    "solc_version": "0.5.12",
+    "compile_error": "",
+    "runtime_bytecode_paths": {
+      "Fund4242": "benchmarks/injected05/neg_cei__18__Fund4242.bin-runtime"
+    }
+  },
+  {
+    "contract_id": "neg_cei__19",
+    "group": "neg_cei",
+    "labels": [],
+    "source_path": "benchmarks/injected05/neg_cei__19.sol",
+    "source_sha256": "00d42a37fe05be105bb45e43a7a2b9ade04a3c33faf6415ef0c795ae47e16890",
+    "sloc": 20,
+    "solc_version": "0.5.12",
+    "compile_error": "",
+    "runtime_bytecode_paths": {
+      "Wallet8090": "benchmarks/injected05/neg_cei__19__Wallet8090.bin-runtime"
+    }
+  },
+  {
+    "contract_id": "neg_cei__20",
+    "group": "neg_cei",
+    "labels": [],
+    "source_path": "benchmarks/injected05/neg_cei__20.sol",
+    "source_sha256": "fe187b89f1d1db599c0736947b038b87a22034b2115e3bc34ca6ba82cb4e1a23",
+    "sloc": 20,
+    "solc_version": "0.5.12",
+    "compile_error": "",
+    "runtime_bytecode_paths": {
+      "Vault4513": "benchmarks/injected05/neg_cei__20__Vault4513.bin-runtime"
+    }
+  },
+  {
+    "contract_id": "neg_cei__21",
+    "group": "neg_cei",
+    "labels": [],
+    "source_path": "benchmarks/injected05/neg_cei__21.sol",
+    "source_sha256": "1bdc243c9c50b5f1333aaef62623f5d6b98ed2c8bd65d46c46a25a36e99f29bd",
+    "sloc": 18,
+    "solc_version": "0.5.12",
+    "compile_error": "",
+    "runtime_bytecode_paths": {
+      "Fund4677": "benchmarks/injected05/neg_cei__21__Fund4677.bin-runtime"
+    }
+  },
+  {
+    "contract_id": "neg_cei__22",
+    "group": "neg_cei",
+    "labels": [],
+    "source_path": "benchmarks/injected05/neg_cei__22.sol",
+    "source_sha256": "794905f8ead7825bf79883e69b050f7d1a2da012ed6ca35ae4c0afcd7d20d7f8",
+    "sloc": 20,
+    "solc_version": "0.5.12",
+    "compile_error": "",
+    "runtime_bytecode_paths": {
+      "Locker2106": "benchmarks/injected05/neg_cei__22__Locker2106.bin-runtime"
+    }
+  },
+  {
+    "contract_id": "neg_cei__23",
+    "group": "neg_cei",
+    "labels": [],
+    "source_path": "benchmarks/injected05/neg_cei__23.sol",
+    "source_sha256": "70de54713e7ae8f8333a0264c5ea65ab154871ce5b210b53821e5b93591882ee",
+    "sloc": 20,
+    "solc_version": "0.5.12",
+    "compile_error": "",
+    "runtime_bytecode_paths": {
+      "Bank3512": "benchmarks/injected05/neg_cei__23__Bank3512.bin-runtime"
+    }
+  },
+  {
+    "contract_id": "neg_cei__24",
+    "group": "neg_cei",
+    "labels": [],
+    "source_path": "benchmarks/injected05/neg_cei__24.sol",
+    "source_sha256": "a5dec5e1a13c89f6a808c6061f3d18366475b292f34464fcaf832ec3834a5c20",
+    "sloc": 20,
+    "solc_version": "0.5.12",
+    "compile_error": "",
+    "runtime_bytecode_paths": {
+      "Vault2655": "benchmarks/injected05/neg_cei__24__Vault2655.bin-runtime"
+    }
+  },
+  {
+    "contract_id": "neg_cei__25",
+    "group": "neg_cei",
+    "labels": [],
+    "source_path": "benchmarks/injected05/neg_cei__25.sol",
+    "source_sha256": "579103b4c5588d93b177662a1d41b9466d2dd3a38bafa64d0e55e4041cac4e2f",
+    "sloc": 18,
+    "solc_version": "0.5.12",
+    "compile_error": "",
+    "runtime_bytecode_paths": {
+      "Safe9018": "benchmarks/injected05/neg_cei__25__Safe9018.bin-runtime"
+    }
+  },
+  {
+    "contract_id": "neg_cei__26",
+    "group": "neg_cei",
+    "labels": [],
+    "source_path": "benchmarks/injected05/neg_cei__26.sol",
+    "source_sha256": "db03e4e92e066e848c23b906986cd4ace107c5f17cb7a5b2de28a82fc41316e3",
+    "sloc": 19,
+    "solc_version": "0.5.12",
+    "compile_error": "",
+    "runtime_bytecode_paths": {
+      "Vault5924": "benchmarks/injected05/neg_cei__26__Vault5924.bin-runtime"
+    }
+  },
+  {
+    "contract_id": "neg_cei__27",
+    "group": "neg_cei",
+    "labels": [],
+    "source_path": "benchmarks/injected05/neg_cei__27.sol",
+    "source_sha256": "24ba9c525c843fa72eb6272dfda0c78c7d696ff7baf6b8cc9ba6c53974eb6a8a",
+    "sloc": 20,
+    "solc_version": "0.5.12",
+    "compile_error": "",
+    "runtime_bytecode_paths": {
+      "Escrow3855": "benchmarks/injected05/neg_cei__27__Escrow3855.bin-runtime"
+    }
+  },
+  {
+    "contract_id": "neg_cei__28",
+    "group": "neg_cei",
+    "labels": [],
+    "source_path": "benchmarks/injected05/neg_cei__28.sol",
+    "source_sha256": "8020a804ee6628183679add99cc0d4d48ee5c2fba71b53fc1337c6112967fefa",
+    "sloc": 20,
+    "solc_version": "0.5.12",
+    "compile_error": "",
+    "runtime_bytecode_paths": {
+      "Wallet2443": "benchmarks/injected05/neg_cei__28__Wallet2443.bin-runtime"
+    }
+  },
+  {
+    "contract_id": "neg_cei__29",
+    "group": "neg_cei",
+    "labels": [],
+    "source_path": "benchmarks/injected05/neg_cei__29.sol",
+    "source_sha256": "5b0fddb93e6219d74882cb26083a1db1209a228a4c5ab7027f36813d814d2b36",
+    "sloc": 19,
+    "solc_version": "0.5.12",
+    "compile_error": "",
+    "runtime_bytecode_paths": {
+      "Locker4804": "benchmarks/injected05/neg_cei__29__Locker4804.bin-runtime"
+    }
+  },
+  {
+    "contract_id": "neg_mutex__00",
+    "group": "neg_mutex",
+    "labels": [],
+    "source_path": "benchmarks/injected05/neg_mutex__00.sol",
+    "source_sha256": "008087c376b98efe6158edffd8a8750bbd58a12bb65782e53c588653f81710d9",
+    "sloc": 24,
+    "solc_version": "0.5.12",
+    "compile_error": "",
+    "runtime_bytecode_paths": {
+      "Vault7819": "benchmarks/injected05/neg_mutex__00__Vault7819.bin-runtime"
+    }
+  },
+  {
+    "contract_id": "neg_mutex__01",
+    "group": "neg_mutex",
+    "labels": [],
+    "source_path": "benchmarks/injected05/neg_mutex__01.sol",
+    "source_sha256": "503f65083fb5e47ca147792dcd8105ac9090975ba872a403f05792711f0aa0bd",
+    "sloc": 24,
+    "solc_version": "0.5.12",
+    "compile_error": "",
+    "runtime_bytecode_paths": {
+      "Wallet1396": "benchmarks/injected05/neg_mutex__01__Wallet1396.bin-runtime"
+    }
+  },
+  {
+    "contract_id": "neg_mutex__02",
+    "group": "neg_mutex",
+    "labels": [],
+    "source_path": "benchmarks/injected05/neg_mutex__02.sol",
+    "source_sha256": "7d16c0cdb9cefb8ecd565eba1d59c92e78d55726b6cfc653caf450e744a9e31a",
+    "sloc": 23,
+    "solc_version": "0.5.12",
+    "compile_error": "",
+    "runtime_bytecode_paths": {
+      "Safe7968": "benchmarks/injected05/neg_mutex__02__Safe7968.bin-runtime"
+    }
+  },
+  {
+    "contract_id": "neg_mutex__03",
+    "group": "neg_mutex",
+    "labels": [],
+    "source_path": "benchmarks/injected05/neg_mutex__03.sol",
+    "source_sha256": "f244c495c8f9118dbd47c910fb483975de9b7d578c4f08656c9a6b91ecf21fb6",
+    "sloc": 24,
+    "solc_version": "0.5.12",
+    "compile_error": "",
+    "runtime_bytecode_paths": {
+      "Wallet5553": "benchmarks/injected05/neg_mutex__03__Wallet5553.bin-runtime"
+    }
+  },
+  {
+    "contract_id": "neg_mutex__04",
+    "group": "neg_mutex",
+    "labels": [],
+    "source_path": "benchmarks/injected05/neg_mutex__04.sol",
+    "source_sha256": "114b58161d07a787cf05714da0edf3358bf93486eac898c93e4159df435079f7",
+    "sloc": 24,
+    "solc_version": "0.5.12",
+    "compile_error": "",
+    "runtime_bytecode_paths": {
+      "Vault7515": "benchmarks/injected05/neg_mutex__04__Vault7515.bin-runtime"
+    }
+  },
+  {
+    "contract_id": "neg_mutex__05",
+    "group": "neg_mutex",
+    "labels": [],
+    "source_path": "benchmarks/injected05/neg_mutex__05.sol",
+    "source_sha256": "9930b1c6b0921101b163399984ae8e7715083b4c2b1d1e543c35710cc1d92a62",
+    "sloc": 24,
+    "solc_version": "0.5.12",
+    "compile_error": "",
+    "runtime_bytecode_paths": {
+      "Vault5990": "benchmarks/injected05/neg_mutex__05__Vault5990.bin-runtime"
+    }
+  },
+  {
+    "contract_id": "neg_mutex__06",
+    "group": "neg_mutex",
+    "labels": [],
+    "source_path": "benchmarks/injected05/neg_mutex__06.sol",
+    "source_sha256": "8ad0866a0170b609b09f660e3f8fd568379f189d88c9ee3055822db73c03a0da",
+    "sloc": 24,
+    "solc_version": "0.5.12",
+    "compile_error": "",
+    "runtime_bytecode_paths": {
+      "Ledger7144": "benchmarks/injected05/neg_mutex__06__Ledger7144.bin-runtime"
+    }
+  },
+  {
+    "contract_id": "neg_mutex__07",
+    "group": "neg_mutex",
+    "labels": [],
+    "source_path": "benchmarks/injected05/neg_mutex__07.sol",
+    "source_sha256": "a3596b5e85d37c48226a8f0b3bbc978aa56cf50aa5a02d7bd71ba1f6028ceed3",
+    "sloc": 23,
+    "solc_version": "0.5.12",
+    "compile_error": "",
+    "runtime_bytecode_paths": {
+      "Wallet5823": "benchmarks/injected05/neg_mutex__07__Wallet5823.bin-runtime"
+    }
+  },
+  {
+    "contract_id": "neg_mutex__08",
+    "group": "neg_mutex",
+    "labels": [],
+    "source_path": "benchmarks/injected05/neg_mutex__08.sol",
+    "source_sha256": "ad2ed63a93c5d23920438117e904fa5c835c93895ec3936ef82db4eacdc21163",
+    "sloc": 22,
+    "solc_version": "0.5.12",
+    "compile_error": "",
+    "runtime_bytecode_paths": {
+      "Locker9168": "benchmarks/injected05/neg_mutex__08__Locker9168.bin-runtime"
+    }
+  },
+  {
+    "contract_id": "neg_mutex__09",
+    "group": "neg_mutex",
+    "labels": [],
+    "source_path": "benchmarks/injected05/neg_mutex__09.sol",
+    "source_sha256": "32ef9c111bef4ba7508ea3dd020bce8161ef8cd21016537502805ee7dd3e0b5f",
+    "sloc": 22,
+    "solc_version": "0.5.12",
+    "compile_error": "",
+    "runtime_bytecode_paths": {
+      "Pool5292": "benchmarks/injected05/neg_mutex__09__Pool5292.bin-runtime"
+    }
+  },
+  {
+    "contract_id": "neg_mutex__10",
+    "group": "neg_mutex",
+    "labels": [],
+    "source_path": "benchmarks/injected05/neg_mutex__10.sol",
+    "source_sha256": "ad4931dd9fa031879f4dfa48fdf7f73008dd465721d32a57c7ce4d6009708bd9",
+    "sloc": 24,
+    "solc_version": "0.5.12",
+    "compile_error": "",
+    "runtime_bytecode_paths": {
+      "Vault8999": "benchmarks/injected05/neg_mutex__10__Vault8999.bin-runtime"
+    }
+  },
+  {
+    "contract_id": "neg_mutex__11",
+    "group": "neg_mutex",
+    "labels": [],
+    "source_path": "benchmarks/injected05/neg_mutex__11.sol",
+    "source_sha256": "af27a7390b77cefdfbb4d0d2287f7936966d767ab721860cab4dd9e7cb888ed8",
+    "sloc": 23,
+    "solc_version": "0.5.12",
+    "compile_error": "",
+    "runtime_bytecode_paths": {
+      "Safe7927": "benchmarks/injected05/neg_mutex__11__Safe7927.bin-runtime"
+    }
+  },
+  {
+    "contract_id": "neg_mutex__12",
+    "group": "neg_mutex",
+    "labels": [],
+    "source_path": "benchmarks/injected05/neg_mutex__12.sol",
+    "source_sha256": "95ed4f4fafd503fba3bb027e15b4223349e9b1d2894e931b277185ddd28ff136",
+    "sloc": 22,
+    "solc_version": "0.5.12",
+    "compile_error": "",
+    "runtime_bytecode_paths": {
+      "Escrow1880": "benchmarks/injected05/neg_mutex__12__Escrow1880.bin-runtime"
+    }
+  },
+  {
+    "contract_id": "neg_mutex__13",
+    "group": "neg_mutex",
+    "labels": [],
+    "source_path": "benchmarks/injected05/neg_mutex__13.sol",
+    "source_sha256": "29439d9a5a54b77ba99b67e8377154fce36364fb09679330ceaf6c13e8205226",
+    "sloc": 22,
+    "solc_version": "0.5.12",
+    "compile_error": "",
+    "runtime_bytecode_paths": {
+      "Treasury2465": "benchmarks/injected05/neg_mutex__13__Treasury2465.bin-runtime"
+    }
+  },
+  {
+    "contract_id": "neg_mutex__14",
+    "group": "neg_mutex",
+    "labels": [],
+    "source_path": "benchmarks/injected05/neg_mutex__14.sol",
+    "source_sha256": "79fb9a2aa8ab214f02dc745b11d3459f68b1af653a52ab7a0b14640bb483d241",
+    "sloc": 22,
+    "solc_version": "0.5.12",
+    "compile_error": "",
+    "runtime_bytecode_paths": {
+      "Fund6225": "benchmarks/injected05/neg_mutex__14__Fund6225.bin-runtime"
+    }
+  },
+  {
+    "contract_id": "neg_mutex__15",
+    "group": "neg_mutex",
+    "labels": [],
+    "source_path": "benchmarks/injected05/neg_mutex__15.sol",
+    "source_sha256": "56c68be80a009ae9abf012827ae02a360c4ad8c04923de70ec9a19eaccb6f9d1",
+    "sloc": 24,
+    "solc_version": "0.5.12",
+    "compile_error": "",
+    "runtime_bytecode_paths": {
+      "Treasury8239": "benchmarks/injected05/neg_mutex__15__Treasury8239.bin-runtime"
+    }
+  },
+  {
+    "contract_id": "neg_mutex__16",
+    "group": "neg_mutex",
+    "labels": [],
+    "source_path": "benchmarks/injected05/neg_mutex__16.sol",
+    "source_sha256": "24136c4bf199d886dedf5e9ad662707bbb7aaa2ef2acc26d3a0604d2b86afcc7",
+    "sloc": 24,
+    "solc_version": "0.5.12",
+    "compile_error": "",
+    "runtime_bytecode_paths": {
+      "Safe1380": "benchmarks/injected05/neg_mutex__16__Safe1380.bin-runtime"
+    }
+  },
+  {
+    "contract_id": "neg_mutex__17",
+    "group": "neg_mutex",
+    "labels": [],
+    "source_path": "benchmarks/injected05/neg_mutex__17.sol",
+    "source_sha256": "c5a93efa125264d7775fb2f6cc6e069a649a6083a3b6d1e60bc86394eec84afc",
+    "sloc": 22,
+    "solc_version": "0.5.12",
+    "compile_error": "",
+    "runtime_bytecode_paths": {
+      "Fund5991": "benchmarks/injected05/neg_mutex__17__Fund5991.bin-runtime"
+    }
+  },
+  {
+    "contract_id": "neg_mutex__18",
+    "group": "neg_mutex",
+    "labels": [],
+    "source_path": "benchmarks/injected05/neg_mutex__18.sol",
+    "source_sha256": "fd4751123d400b90dc1b38102d23464a6325435294347722a4030a3053b57035",
+    "sloc": 22,
+    "solc_version": "0.5.12",
+    "compile_error": "",
+    "runtime_bytecode_paths": {
+      "Fund4889": "benchmarks/injected05/neg_mutex__18__Fund4889.bin-runtime"
+    }
+  },
+  {
+    "contract_id": "neg_mutex__19",
+    "group": "neg_mutex",
+    "labels": [],
+    "source_path": "benchmarks/injected05/neg_mutex__19.sol",
+    "source_sha256": "041f7fa933d916304e2c4a769bef2d90d236636e0dcc13be5895022ac4349849",
+    "sloc": 23,
+    "solc_version": "0.5.12",
+    "compile_error": "",
+    "runtime_bytecode_paths": {
+      "Pool9131": "benchmarks/injected05/neg_mutex__19__Pool9131.bin-runtime"
+    }
+  },
+  {
+    "contract_id": "neg_mutex__20",
+    "group": "neg_mutex",
+    "labels": [],
+    "source_path": "benchmarks/injected05/neg_mutex__20.sol",
+    "source_sha256": "ae9a3baff2dcacbefd01fd25c4ccbde6a225819ac271e7c514900547c5ede922",
+    "sloc": 23,
+    "solc_version": "0.5.12",
+    "compile_error": "",
+    "runtime_bytecode_paths": {
+      "Pool9758": "benchmarks/injected05/neg_mutex__20__Pool9758.bin-runtime"
+    }
+  },
+  {
+    "contract_id": "neg_mutex__21",
+    "group": "neg_mutex",
+    "labels": [],
+    "source_path": "benchmarks/injected05/neg_mutex__21.sol",
+    "source_sha256": "19d75d108503c79e7845bde97a663bb4b4ccd94737624b704635fb3910799fbc",
+    "sloc": 24,
+    "solc_version": "0.5.12",
+    "compile_error": "",
+    "runtime_bytecode_paths": {
+      "Wallet3803": "benchmarks/injected05/neg_mutex__21__Wallet3803.bin-runtime"
+    }
+  },
+  {
+    "contract_id": "neg_mutex__22",
+    "group": "neg_mutex",
+    "labels": [],
+    "source_path": "benchmarks/injected05/neg_mutex__22.sol",
+    "source_sha256": "e5ea7592a51d6d30b784d65611c53cfd8f608727a6227c0e66210e38be794969",
+    "sloc": 24,
+    "solc_version": "0.5.12",
+    "compile_error": "",
+    "runtime_bytecode_paths": {
+      "Locker4968": "benchmarks/injected05/neg_mutex__22__Locker4968.bin-runtime"
+    }
+  },
+  {
+    "contract_id": "neg_mutex__23",
+    "group": "neg_mutex",
+    "labels": [],
+    "source_path": "benchmarks/injected05/neg_mutex__23.sol",
+    "source_sha256": "03a629ba2139ee96d149d905dfe781727cec62d9b2ae0689f7e5956cefdfc5e9",
+    "sloc": 23,
+    "solc_version": "0.5.12",
+    "compile_error": "",
+    "runtime_bytecode_paths": {
+      "Fund4815": "benchmarks/injected05/neg_mutex__23__Fund4815.bin-runtime"
+    }
+  },
+  {
+    "contract_id": "neg_mutex__24",
+    "group": "neg_mutex",
+    "labels": [],
+    "source_path": "benchmarks/injected05/neg_mutex__24.sol",
+    "source_sha256": "58df91f9e35330f3eeb16b323caa98a6e9b8886a8bc607bde46f7e1ae9abfe49",
+    "sloc": 22,
+    "solc_version": "0.5.12",
+    "compile_error": "",
+    "runtime_bytecode_paths": {
+      "Escrow6520": "benchmarks/injected05/neg_mutex__24__Escrow6520.bin-runtime"
+    }
+  },
+  {
+    "contract_id": "neg_mutex__25",
+    "group": "neg_mutex",
+    "labels": [],
+    "source_path": "benchmarks/injected05/neg_mutex__25.sol",
+    "source_sha256": "af47e9b6a358e64187a5fc28c2d05978623a4aab6f7de44e5d30a1477570c92f",
+    "sloc": 23,
+    "solc_version": "0.5.12",
+    "compile_error": "",
+    "runtime_bytecode_paths": {
+      "Pool1098": "benchmarks/injected05/neg_mutex__25__Pool1098.bin-runtime"
+    }
+  },
+  {
+    "contract_id": "neg_mutex__26",
+    "group": "neg_mutex",
+    "labels": [],
+    "source_path": "benchmarks/injected05/neg_mutex__26.sol",
+    "source_sha256": "2647530c345334aa0d0d7b03d537ca77105a7fad02f9c866a36a580ac5ce225d",
+    "sloc": 23,
+    "solc_version": "0.5.12",
+    "compile_error": "",
+    "runtime_bytecode_paths": {
+      "Fund5156": "benchmarks/injected05/neg_mutex__26__Fund5156.bin-runtime"
+    }
+  },
+  {
+    "contract_id": "neg_mutex__27",
+    "group": "neg_mutex",
+    "labels": [],
+    "source_path": "benchmarks/injected05/neg_mutex__27.sol",
+    "source_sha256": "1844e25af4b8c8253df6530af5f1a2e4e908c0b3b11cea1069e95e24e14f8f5b",
+    "sloc": 24,
+    "solc_version": "0.5.12",
+    "compile_error": "",
+    "runtime_bytecode_paths": {
+      "Wallet4203": "benchmarks/injected05/neg_mutex__27__Wallet4203.bin-runtime"
+    }
+  },
+  {
+    "contract_id": "neg_mutex__28",
+    "group": "neg_mutex",
+    "labels": [],
+    "source_path": "benchmarks/injected05/neg_mutex__28.sol",
+    "source_sha256": "ad603662ca877c927ef5f59f465620f59872817ddbf9b8075785f33b71b52d77",
+    "sloc": 22,
+    "solc_version": "0.5.12",
+    "compile_error": "",
+    "runtime_bytecode_paths": {
+      "Locker9616": "benchmarks/injected05/neg_mutex__28__Locker9616.bin-runtime"
+    }
+  },
+  {
+    "contract_id": "neg_mutex__29",
+    "group": "neg_mutex",
+    "labels": [],
+    "source_path": "benchmarks/injected05/neg_mutex__29.sol",
+    "source_sha256": "c9710c7e854680f0d5b108ee8ae081766e4f710d5c6a9b33886768d0f241a701",
+    "sloc": 22,
+    "solc_version": "0.5.12",
+    "compile_error": "",
+    "runtime_bytecode_paths": {
+      "Vault6117": "benchmarks/injected05/neg_mutex__29__Vault6117.bin-runtime"
+    }
+  },
+  {
+    "contract_id": "neg_transfer__00",
+    "group": "neg_transfer",
+    "labels": [],
+    "source_path": "benchmarks/injected05/neg_transfer__00.sol",
+    "source_sha256": "2ac42273a83884882e555fa21ffa153806b9ac4a475c0334c594a2631d5c0711",
+    "sloc": 18,
+    "solc_version": "0.5.12",
+    "compile_error": "",
+    "runtime_bytecode_paths": {
+      "Escrow4882": "benchmarks/injected05/neg_transfer__00__Escrow4882.bin-runtime"
+    }
+  },
+  {
+    "contract_id": "neg_transfer__01",
+    "group": "neg_transfer",
+    "labels": [],
+    "source_path": "benchmarks/injected05/neg_transfer__01.sol",
+    "source_sha256": "f48685cfa4989e4cf5b8264253a5b4579eccc1eca7fac0ecf7b6e79d5959387b",
+    "sloc": 19,
+    "solc_version": "0.5.12",
+    "compile_error": "",
+    "runtime_bytecode_paths": {
+      "Fund4752": "benchmarks/injected05/neg_transfer__01__Fund4752.bin-runtime"
+    }
+  },
+  {
+    "contract_id": "neg_transfer__02",
+    "group": "neg_transfer",
+    "labels": [],
+    "source_path": "benchmarks/injected05/neg_transfer__02.sol",
+    "source_sha256": "d0de7d79d57d66910ed361d4e0c601327da702ac1073d10f77cc04390011aea9",
+    "sloc": 17,
+    "solc_version": "0.5.12",
+    "compile_error": "",
+    "runtime_bytecode_paths": {
+      "Treasury1988": "benchmarks/injected05/neg_transfer__02__Treasury1988.bin-runtime"
+    }
+  },
+  {
+    "contract_id": "neg_transfer__03",
+    "group": "neg_transfer",
+    "labels": [],
+    "source_path": "benchmarks/injected05/neg_transfer__03.sol",
+    "source_sha256": "fdd560989e75b80e05816143ec9807b9790140bf1398c81ec5a6af7ea67f80f3",
+    "sloc": 17,
+    "solc_version": "0.5.12",
+    "compile_error": "",
+    "runtime_bytecode_paths": {
+      "Safe6116": "benchmarks/injected05/neg_transfer__03__Safe6116.bin-runtime"
+    }
+  },
+  {
+    "contract_id": "neg_transfer__04",
+    "group": "neg_transfer",
+    "labels": [],
+    "source_path": "benchmarks/injected05/neg_transfer__04.sol",
+    "source_sha256": "6b91c31bf7d32367d45ec3c22f2a6f885344b573c1005d59fc270b6af425b233",
+    "sloc": 19,
+    "solc_version": "0.5.12",
+    "compile_error": "",
+    "runtime_bytecode_paths": {
+      "Wallet1994": "benchmarks/injected05/neg_transfer__04__Wallet1994.bin-runtime"
+    }
+  },
+  {
+    "contract_id": "neg_transfer__05",
+    "group": "neg_transfer",
+    "labels": [],
+    "source_path": "benchmarks/injected05/neg_transfer__05.sol",
+    "source_sha256": "ebf13ff0a4d1cfcb47ed0650f5fe556397d4114cc868f8276a4731f5636334c0",
+    "sloc": 17,
+    "solc_version": "0.5.12",
+    "compile_error": "",
+    "runtime_bytecode_paths": {
+      "Treasury9808": "benchmarks/injected05/neg_transfer__05__Treasury9808.bin-runtime"
+    }
+  },
+  {
+    "contract_id": "neg_transfer__06",
+    "group": "neg_transfer",
+    "labels": [],
+    "source_path": "benchmarks/injected05/neg_transfer__06.sol",
+    "source_sha256": "f7eeff4de6a98647128d7de55bb2ff0210bf27a55565883672ac53d6d3af3027",
+    "sloc": 18,
+    "solc_version": "0.5.12",
+    "compile_error": "",
+    "runtime_bytecode_paths": {
+      "Treasury5688": "benchmarks/injected05/neg_transfer__06__Treasury5688.bin-runtime"
+    }
+  },
+  {
+    "contract_id": "neg_transfer__07",
+    "group": "neg_transfer",
+    "labels": [],
+    "source_path": "benchmarks/injected05/neg_transfer__07.sol",
+    "source_sha256": "d1e1d7efb3dd468b463d3d33d62e311e5ed1e5dc5bc5fd059521335fdc333661",
+    "sloc": 17,
+    "solc_version": "0.5.12",
+    "compile_error": "",
+    "runtime_bytecode_paths": {
+      "Escrow8624": "benchmarks/injected05/neg_transfer__07__Escrow8624.bin-runtime"
+    }
+  },
+  {
+    "contract_id": "neg_transfer__08",
+    "group": "neg_transfer",
+    "labels": [],
+    "source_path": "benchmarks/injected05/neg_transfer__08.sol",
+    "source_sha256": "d9057f5c78b720aa3a33f55205f166e4191aa34ffd49f4fe66ef71a3ec5b3da2",
+    "sloc": 18,
+    "solc_version": "0.5.12",
+    "compile_error": "",
+    "runtime_bytecode_paths": {
+      "Fund5209": "benchmarks/injected05/neg_transfer__08__Fund5209.bin-runtime"
+    }
+  },
+  {
+    "contract_id": "neg_transfer__09",
+    "group": "neg_transfer",
+    "labels": [],
+    "source_path": "benchmarks/injected05/neg_transfer__09.sol",
+    "source_sha256": "171155efcbe723ea5930a06d5d9d4b4cc93a5038caf5e00aa86b2c4e4e7e2b1c",
+    "sloc": 17,
+    "solc_version": "0.5.12",
+    "compile_error": "",
+    "runtime_bytecode_paths": {
+      "Vault1609": "benchmarks/injected05/neg_transfer__09__Vault1609.bin-runtime"
+    }
+  },
+  {
+    "contract_id": "neg_transfer__10",
+    "group": "neg_transfer",
+    "labels": [],
+    "source_path": "benchmarks/injected05/neg_transfer__10.sol",
+    "source_sha256": "765ece641800d3c47d1ef57d079902009a5201ae694817076e817c6b43f81fb4",
+    "sloc": 19,
+    "solc_version": "0.5.12",
+    "compile_error": "",
+    "runtime_bytecode_paths": {
+      "Treasury5514": "benchmarks/injected05/neg_transfer__10__Treasury5514.bin-runtime"
+    }
+  },
+  {
+    "contract_id": "neg_transfer__11",
+    "group": "neg_transfer",
+    "labels": [],
+    "source_path": "benchmarks/injected05/neg_transfer__11.sol",
+    "source_sha256": "d6560b5cb06a3155ccb4b18b70e047e81406f362575e9fe99b22eb25e0a0e1b4",
+    "sloc": 18,
+    "solc_version": "0.5.12",
+    "compile_error": "",
+    "runtime_bytecode_paths": {
+      "Treasury2524": "benchmarks/injected05/neg_transfer__11__Treasury2524.bin-runtime"
+    }
+  },
+  {
+    "contract_id": "neg_transfer__12",
+    "group": "neg_transfer",
+    "labels": [],
+    "source_path": "benchmarks/injected05/neg_transfer__12.sol",
+    "source_sha256": "a7b6cd13de2a0922b8b72655ed0ca5a5f3f13342fa4758fa1b71529c38d74ea3",
+    "sloc": 18,
+    "solc_version": "0.5.12",
+    "compile_error": "",
+    "runtime_bytecode_paths": {
+      "Bank3320": "benchmarks/injected05/neg_transfer__12__Bank3320.bin-runtime"
+    }
+  },
+  {
+    "contract_id": "neg_transfer__13",
+    "group": "neg_transfer",
+    "labels": [],
+    "source_path": "benchmarks/injected05/neg_transfer__13.sol",
+    "source_sha256": "3e728675204647faede859eb9d6f4416af8c98fae2a2ff9d37e8f84fd212236c",
+    "sloc": 18,
+    "solc_version": "0.5.12",
+    "compile_error": "",
+    "runtime_bytecode_paths": {
+      "Pool7072": "benchmarks/injected05/neg_transfer__13__Pool7072.bin-runtime"
+    }
+  },
+  {
+    "contract_id": "neg_transfer__14",
+    "group": "neg_transfer",
+    "labels": [],
+    "source_path": "benchmarks/injected05/neg_transfer__14.sol",
+    "source_sha256": "cd7db8b38b543e5e549207bf2244792c41f5c7fb6a54da8a88de0ef26bd9bb35",
+    "sloc": 19,
+    "solc_version": "0.5.12",
+    "compile_error": "",
+    "runtime_bytecode_paths": {
+      "Escrow2947": "benchmarks/injected05/neg_transfer__14__Escrow2947.bin-runtime"
+    }
+  },
+  {
+    "contract_id": "neg_transfer__15",
+    "group": "neg_transfer",
+    "labels": [],
+    "source_path": "benchmarks/injected05/neg_transfer__15.sol",
+    "source_sha256": "f54fe11bcaa258e42ef96d53dd9c7b7cf2de5bde2ddf852f56544224415c9f27",
+    "sloc": 18,
+    "solc_version": "0.5.12",
+    "compile_error": "",
+    "runtime_bytecode_paths": {
+      "Locker2831": "benchmarks/injected05/neg_transfer__15__Locker2831.bin-runtime"
+    }
+  },
+  {
+    "contract_id": "neg_transfer__16",
+    "group": "neg_transfer",
+    "labels": [],
+    "source_path": "benchmarks/injected05/neg_transfer__16.sol",
+    "source_sha256": "c5a894908acf658e2019981baea3b6eaaed447fd007e238a660b19473a9e9be7",
+    "sloc": 18,
+    "solc_version": "0.5.12",
+    "compile_error": "",
+    "runtime_bytecode_paths": {
+      "Wallet1864": "benchmarks/injected05/neg_transfer__16__Wallet1864.bin-runtime"
+    }
+  },
+  {
+    "contract_id": "neg_transfer__17",
+    "group": "neg_transfer",
+    "labels": [],
+    "source_path": "benchmarks/injected05/neg_transfer__17.sol",
+    "source_sha256": "1c6765cb56f881ea442410359d4c979a3ec8e38e8b3a2f423078ee8ab7d66281",
+    "sloc": 18,
+    "solc_version": "0.5.12",
+    "compile_error": "",
+    "runtime_bytecode_paths": {
+      "Treasury5480": "benchmarks/injected05/neg_transfer__17__Treasury5480.bin-runtime"
+    }
+  },
+  {
+    "contract_id": "neg_transfer__18",
+    "group": "neg_transfer",
+    "labels": [],
+    "source_path": "benchmarks/injected05/neg_transfer__18.sol",
+    "source_sha256": "77c5cce3351abe259694fc919265b62ddad87498d029ced8d0277e885c6335ae",
+    "sloc": 19,
+    "solc_version": "0.5.12",
+    "compile_error": "",
+    "runtime_bytecode_paths": {
+      "Treasury7956": "benchmarks/injected05/neg_transfer__18__Treasury7956.bin-runtime"
+    }
+  },
+  {
+    "contract_id": "neg_transfer__19",
+    "group": "neg_transfer",
+    "labels": [],
+    "source_path": "benchmarks/injected05/neg_transfer__19.sol",
+    "source_sha256": "1be944dd09280433d31e3660d07cb5d3d88afef90917c4882b584c855874e0e3",
+    "sloc": 18,
+    "solc_version": "0.5.12",
+    "compile_error": "",
+    "runtime_bytecode_paths": {
+      "Bank1418": "benchmarks/injected05/neg_transfer__19__Bank1418.bin-runtime"
+    }
+  },
+  {
+    "contract_id": "neg_transfer__20",
+    "group": "neg_transfer",
+    "labels": [],
+    "source_path": "benchmarks/injected05/neg_transfer__20.sol",
+    "source_sha256": "0bdd75ccfef5c21c86d6f966760ae62344f0dddb90a9d7d48a071b0c2f6f0b2d",
+    "sloc": 19,
+    "solc_version": "0.5.12",
+    "compile_error": "",
+    "runtime_bytecode_paths": {
+      "Bank2127": "benchmarks/injected05/neg_transfer__20__Bank2127.bin-runtime"
+    }
+  },
+  {
+    "contract_id": "neg_transfer__21",
+    "group": "neg_transfer",
+    "labels": [],
+    "source_path": "benchmarks/injected05/neg_transfer__21.sol",
+    "source_sha256": "565e3ae82c5e248300f909591413bc8d1a46490f5d5ae15039445503092ab707",
+    "sloc": 18,
+    "solc_version": "0.5.12",
+    "compile_error": "",
+    "runtime_bytecode_paths": {
+      "Bank2036": "benchmarks/injected05/neg_transfer__21__Bank2036.bin-runtime"
+    }
+  },
+  {
+    "contract_id": "neg_transfer__22",
+    "group": "neg_transfer",
+    "labels": [],
+    "source_path": "benchmarks/injected05/neg_transfer__22.sol",
+    "source_sha256": "81b95950a2f459989fd952f49c1697d13464510976967498a1f9987d864b83b6",
+    "sloc": 19,
+    "solc_version": "0.5.12",
+    "compile_error": "",
+    "runtime_bytecode_paths": {
+      "Fund1147": "benchmarks/injected05/neg_transfer__22__Fund1147.bin-runtime"
+    }
+  },
+  {
+    "contract_id": "neg_transfer__23",
+    "group": "neg_transfer",
+    "labels": [],
+    "source_path": "benchmarks/injected05/neg_transfer__23.sol",
+    "source_sha256": "d93c30cff9bae7e0844a3ced16b45bddc85479b848422bc2168e6baaf0fff637",
+    "sloc": 18,
+    "solc_version": "0.5.12",
+    "compile_error": "",
+    "runtime_bytecode_paths": {
+      "Fund7171": "benchmarks/injected05/neg_transfer__23__Fund7171.bin-runtime"
+    }
+  },
+  {
+    "contract_id": "neg_transfer__24",
+    "group": "neg_transfer",
+    "labels": [],
+    "source_path": "benchmarks/injected05/neg_transfer__24.sol",
+    "source_sha256": "ed46c0e5e672464da55d6548fee3af29fcab3ac3cf00535330ae130049d6903c",
+    "sloc": 17,
+    "solc_version": "0.5.12",
+    "compile_error": "",
+    "runtime_bytecode_paths": {
+      "Ledger2514": "benchmarks/injected05/neg_transfer__24__Ledger2514.bin-runtime"
+    }
+  },
+  {
+    "contract_id": "neg_transfer__25",
+    "group": "neg_transfer",
+    "labels": [],
+    "source_path": "benchmarks/injected05/neg_transfer__25.sol",
+    "source_sha256": "a9a151ae7dd9acf53dd16c6410251f76637f4fbc0cbe5450b881db018d454272",
+    "sloc": 17,
+    "solc_version": "0.5.12",
+    "compile_error": "",
+    "runtime_bytecode_paths": {
+      "Safe8340": "benchmarks/injected05/neg_transfer__25__Safe8340.bin-runtime"
+    }
+  },
+  {
+    "contract_id": "neg_transfer__26",
+    "group": "neg_transfer",
+    "labels": [],
+    "source_path": "benchmarks/injected05/neg_transfer__26.sol",
+    "source_sha256": "af8e267e09b616f6b844d77ad853f0f56cbe2fb51b6741089f764195d01843ed",
+    "sloc": 17,
+    "solc_version": "0.5.12",
+    "compile_error": "",
+    "runtime_bytecode_paths": {
+      "Safe2308": "benchmarks/injected05/neg_transfer__26__Safe2308.bin-runtime"
+    }
+  },
+  {
+    "contract_id": "neg_transfer__27",
+    "group": "neg_transfer",
+    "labels": [],
+    "source_path": "benchmarks/injected05/neg_transfer__27.sol",
+    "source_sha256": "6b5d89fbf5d261090ce17d3b2de9a567f6a84c90eb5801778c187d54e596000d",
+    "sloc": 18,
+    "solc_version": "0.5.12",
+    "compile_error": "",
+    "runtime_bytecode_paths": {
+      "Escrow4080": "benchmarks/injected05/neg_transfer__27__Escrow4080.bin-runtime"
+    }
+  },
+  {
+    "contract_id": "neg_transfer__28",
+    "group": "neg_transfer",
+    "labels": [],
+    "source_path": "benchmarks/injected05/neg_transfer__28.sol",
+    "source_sha256": "7a50e16f8fe9b5876492f0efd8e640acbc4e08cb71dcf344aa03d16c287b1828",
+    "sloc": 17,
+    "solc_version": "0.5.12",
+    "compile_error": "",
+    "runtime_bytecode_paths": {
+      "Treasury7486": "benchmarks/injected05/neg_transfer__28__Treasury7486.bin-runtime"
+    }
+  },
+  {
+    "contract_id": "neg_transfer__29",
+    "group": "neg_transfer",
+    "labels": [],
+    "source_path": "benchmarks/injected05/neg_transfer__29.sol",
+    "source_sha256": "5a34459e81c51593a09a67ea41b4484fe78481b39188e76ff05aaa083b9f700b",
+    "sloc": 18,
+    "solc_version": "0.5.12",
+    "compile_error": "",
+    "runtime_bytecode_paths": {
+      "Ledger6988": "benchmarks/injected05/neg_transfer__29__Ledger6988.bin-runtime"
+    }
+  },
+  {
+    "contract_id": "neg_bounded_loop__00",
+    "group": "neg_bounded_loop",
+    "labels": [],
+    "source_path": "benchmarks/injected05/neg_bounded_loop__00.sol",
+    "source_sha256": "8791dc75b15c3cdad96a33e250fa5da5812c6aea75a7fa8d6c6a31b1dd924a84",
+    "sloc": 22,
+    "solc_version": "0.5.12",
+    "compile_error": "",
+    "runtime_bytecode_paths": {
+      "Ledger5366": "benchmarks/injected05/neg_bounded_loop__00__Ledger5366.bin-runtime"
+    }
+  },
+  {
+    "contract_id": "neg_bounded_loop__01",
+    "group": "neg_bounded_loop",
+    "labels": [],
+    "source_path": "benchmarks/injected05/neg_bounded_loop__01.sol",
+    "source_sha256": "488a48da5e19209792782dc7c17bf79a90909aae74d41b1a23763c9b4dc3d608",
+    "sloc": 20,
+    "solc_version": "0.5.12",
+    "compile_error": "",
+    "runtime_bytecode_paths": {
+      "Ledger2546": "benchmarks/injected05/neg_bounded_loop__01__Ledger2546.bin-runtime"
+    }
+  },
+  {
+    "contract_id": "neg_bounded_loop__02",
+    "group": "neg_bounded_loop",
+    "labels": [],
+    "source_path": "benchmarks/injected05/neg_bounded_loop__02.sol",
+    "source_sha256": "72f20115c9c56fb57f9407ee0e997d269c8c5fc2029b88ae585ea447d1d10ba1",
+    "sloc": 21,
+    "solc_version": "0.5.12",
+    "compile_error": "",
+    "runtime_bytecode_paths": {
+      "Bank4720": "benchmarks/injected05/neg_bounded_loop__02__Bank4720.bin-runtime"
+    }
+  },
+  {
+    "contract_id": "neg_bounded_loop__03",
+    "group": "neg_bounded_loop",
+    "labels": [],
+    "source_path": "benchmarks/injected05/neg_bounded_loop__03.sol",
+    "source_sha256": "f16fc4634a1894846e801239ec7877e3ace1747513a8f5052106003fa8d1ced0",
+    "sloc": 22,
+    "solc_version": "0.5.12",
+    "compile_error": "",
+    "runtime_bytecode_paths": {
+      "Wallet4949": "benchmarks/injected05/neg_bounded_loop__03__Wallet4949.bin-runtime"
+    }
+  },
+  {
+    "contract_id": "neg_bounded_loop__04",
+    "group": "neg_bounded_loop",
+    "labels": [],
+    "source_path": "benchmarks/injected05/neg_bounded_loop__04.sol",
+    "source_sha256": "fab0801a894e3286b9f6efc857713562c1128f11ca7d2d3be9da91dfc9cd426b",
+    "sloc": 21,
+    "solc_version": "0.5.12",
+    "compile_error": "",
+    "runtime_bytecode_paths": {
+      "Fund2418": "benchmarks/injected05/neg_bounded_loop__04__Fund2418.bin-runtime"
+    }
+  },
+  {
+    "contract_id": "neg_bounded_loop__05",
+    "group": "neg_bounded_loop",
+    "labels": [],
+    "source_path": "benchmarks/injected05/neg_bounded_loop__05.sol",
+    "source_sha256": "29b5b044a2808d2f66757e563de01fa12d22454de4e412f05c7a4ec082926ed2",
+    "sloc": 21,
+    "solc_version": "0.5.12",
+    "compile_error": "",
+    "runtime_bytecode_paths": {
+      "Escrow7914": "benchmarks/injected05/neg_bounded_loop__05__Escrow7914.bin-runtime"
+    }
+  },
+  {
+    "contract_id": "neg_bounded_loop__06",
+    "group": "neg_bounded_loop",
+    "labels": [],
+    "source_path": "benchmarks/injected05/neg_bounded_loop__06.sol",
+    "source_sha256": "b5fbfde675c1107c8f507375a8093c12120c698e8a2a30e089bd4a4705c778ec",
+    "sloc": 21,
+    "solc_version": "0.5.12",
+    "compile_error": "",
+    "runtime_bytecode_paths": {
+      "Fund2586": "benchmarks/injected05/neg_bounded_loop__06__Fund2586.bin-runtime"
+    }
+  },
+  {
+    "contract_id": "neg_bounded_loop__07",
+    "group": "neg_bounded_loop",
+    "labels": [],
+    "source_path": "benchmarks/injected05/neg_bounded_loop__07.sol",
+    "source_sha256": "9c337ac6ded98025638c29bee010865053160afed187cc6c96a7117568f34058",
+    "sloc": 20,
+    "solc_version": "0.5.12",
+    "compile_error": "",
+    "runtime_bytecode_paths": {
+      "Safe2317": "benchmarks/injected05/neg_bounded_loop__07__Safe2317.bin-runtime"
+    }
+  },
+  {
+    "contract_id": "neg_bounded_loop__08",
+    "group": "neg_bounded_loop",
+    "labels": [],
+    "source_path": "benchmarks/injected05/neg_bounded_loop__08.sol",
+    "source_sha256": "d5d78afa08505f4da77c849e0bd5d415a55224c7482ddfad475c21aa5141b4a3",
+    "sloc": 21,
+    "solc_version": "0.5.12",
+    "compile_error": "",
+    "runtime_bytecode_paths": {
+      "Bank3198": "benchmarks/injected05/neg_bounded_loop__08__Bank3198.bin-runtime"
+    }
+  },
+  {
+    "contract_id": "neg_bounded_loop__09",
+    "group": "neg_bounded_loop",
+    "labels": [],
+    "source_path": "benchmarks/injected05/neg_bounded_loop__09.sol",
+    "source_sha256": "e27a21728d889819e53207ad22a4fb22fb6e5db16b1a91b621ba6de3e78904be",
+    "sloc": 20,
+    "solc_version": "0.5.12",
+    "compile_error": "",
+    "runtime_bytecode_paths": {
+      "Wallet1706": "benchmarks/injected05/neg_bounded_loop__09__Wallet1706.bin-runtime"
+    }
+  },
+  {
+    "contract_id": "neg_bounded_loop__10",
+    "group": "neg_bounded_loop",
+    "labels": [],
+    "source_path": "benchmarks/injected05/neg_bounded_loop__10.sol",
+    "source_sha256": "325e571f198feef1540b51e5b8632e81b5c0b70b4f5c5a1324bd016394cf68c7",
+    "sloc": 21,
+    "solc_version": "0.5.12",
+    "compile_error": "",
+    "runtime_bytecode_paths": {
+      "Escrow7757": "benchmarks/injected05/neg_bounded_loop__10__Escrow7757.bin-runtime"
+    }
+  },
+  {
+    "contract_id": "neg_bounded_loop__11",
+    "group": "neg_bounded_loop",
+    "labels": [],
+    "source_path": "benchmarks/injected05/neg_bounded_loop__11.sol",
+    "source_sha256": "899009b0cc711ac9dc995a9d6d65dc69546b382ad9eeed071f4be5a7b8262617",
+    "sloc": 21,
+    "solc_version": "0.5.12",
+    "compile_error": "",
+    "runtime_bytecode_paths": {
+      "Vault1319": "benchmarks/injected05/neg_bounded_loop__11__Vault1319.bin-runtime"
+    }
+  },
+  {
+    "contract_id": "neg_bounded_loop__12",
+    "group": "neg_bounded_loop",
+    "labels": [],
+    "source_path": "benchmarks/injected05/neg_bounded_loop__12.sol",
+    "source_sha256": "fb4f359e84baf1aa54ce9d74094e47955198a8d9ee6cd235d7df7417cd5945bc",
+    "sloc": 22,
+    "solc_version": "0.5.12",
+    "compile_error": "",
+    "runtime_bytecode_paths": {
+      "Bank5609": "benchmarks/injected05/neg_bounded_loop__12__Bank5609.bin-runtime"
+    }
+  },
+  {
+    "contract_id": "neg_bounded_loop__13",
+    "group": "neg_bounded_loop",
+    "labels": [],
+    "source_path": "benchmarks/injected05/neg_bounded_loop__13.sol",
+    "source_sha256": "ba7782475086294b6fdd620000a91f960529b0e4f2032b0c76e9f16d2a3863ba",
+    "sloc": 20,
+    "solc_version": "0.5.12",
+    "compile_error": "",
+    "runtime_bytecode_paths": {
+      "Pool7574": "benchmarks/injected05/neg_bounded_loop__13__Pool7574.bin-runtime"
+    }
+  },
+  {
+    "contract_id": "neg_bounded_loop__14",
+    "group": "neg_bounded_loop",
+    "labels": [],
+    "source_path": "benchmarks/injected05/neg_bounded_loop__14.sol",
+    "source_sha256": "284f9c30546ec57799aacd323bea5d6563ab0d93e5f6baab43e79f3377f59bce",
+    "sloc": 21,
+    "solc_version": "0.5.12",
+    "compile_error": "",
+    "runtime_bytecode_paths": {
+      "Fund3306": "benchmarks/injected05/neg_bounded_loop__14__Fund3306.bin-runtime"
+    }
+  },
+  {
+    "contract_id": "neg_bounded_loop__15",
+    "group": "neg_bounded_loop",
+    "labels": [],
+    "source_path": "benchmarks/injected05/neg_bounded_loop__15.sol",
+    "source_sha256": "41e9f500058da07406e2be23c5d24f8ac1b8414821eda2b670aac006dc2d9df8",
+    "sloc": 21,
+    "solc_version": "0.5.12",
+    "compile_error": "",
+    "runtime_bytecode_paths": {
+      "Wallet7125": "benchmarks/injected05/neg_bounded_loop__15__Wallet7125.bin-runtime"
+    }
+  },
+  {
+    "contract_id": "neg_bounded_loop__16",
+    "group": "neg_bounded_loop",
+    "labels": [],
+    "source_path": "benchmarks/injected05/neg_bounded_loop__16.sol",
+    "source_sha256": "ecaf4d54a75aff4daa0745fd2f4d4c1ee1991647dd2e2c599138225a44f2132f",
+    "sloc": 22,
+    "solc_version": "0.5.12",
+    "compile_error": "",
+    "runtime_bytecode_paths": {
+      "Ledger5086": "benchmarks/injected05/neg_bounded_loop__16__Ledger5086.bin-runtime"
+    }
+  },
+  {
+    "contract_id": "neg_bounded_loop__17",
+    "group": "neg_bounded_loop",
+    "labels": [],
+    "source_path": "benchmarks/injected05/neg_bounded_loop__17.sol",
+    "source_sha256": "89a08bafb66d40ffe28fcae20d0ee768eacddb7d2816f3bf6895e81ddea87405",
+    "sloc": 20,
+    "solc_version": "0.5.12",
+    "compile_error": "",
+    "runtime_bytecode_paths": {
+      "Safe8760": "benchmarks/injected05/neg_bounded_loop__17__Safe8760.bin-runtime"
+    }
+  },
+  {
+    "contract_id": "neg_bounded_loop__18",
+    "group": "neg_bounded_loop",
+    "labels": [],
+    "source_path": "benchmarks/injected05/neg_bounded_loop__18.sol",
+    "source_sha256": "fd62d93843d76b39b8585e7965e67e44c55bb70107b50ce0541da81610f66c9e",
+    "sloc": 22,
+    "solc_version": "0.5.12",
+    "compile_error": "",
+    "runtime_bytecode_paths": {
+      "Pool4075": "benchmarks/injected05/neg_bounded_loop__18__Pool4075.bin-runtime"
+    }
+  },
+  {
+    "contract_id": "neg_bounded_loop__19",
+    "group": "neg_bounded_loop",
+    "labels": [],
+    "source_path": "benchmarks/injected05/neg_bounded_loop__19.sol",
+    "source_sha256": "f859001c52072a80d2e2e833d65d338f02fe8f812442b2b28ea617d77967e3dc",
+    "sloc": 20,
+    "solc_version": "0.5.12",
+    "compile_error": "",
+    "runtime_bytecode_paths": {
+      "Escrow9755": "benchmarks/injected05/neg_bounded_loop__19__Escrow9755.bin-runtime"
+    }
+  },
+  {
+    "contract_id": "neg_bounded_loop__20",
+    "group": "neg_bounded_loop",
+    "labels": [],
+    "source_path": "benchmarks/injected05/neg_bounded_loop__20.sol",
+    "source_sha256": "8fa9e43d97a598a8f4b9ea893c4db89569a07f1434858ddbe525b8d52c5be966",
+    "sloc": 21,
+    "solc_version": "0.5.12",
+    "compile_error": "",
+    "runtime_bytecode_paths": {
+      "Wallet5338": "benchmarks/injected05/neg_bounded_loop__20__Wallet5338.bin-runtime"
+    }
+  },
+  {
+    "contract_id": "neg_bounded_loop__21",
+    "group": "neg_bounded_loop",
+    "labels": [],
+    "source_path": "benchmarks/injected05/neg_bounded_loop__21.sol",
+    "source_sha256": "f92125e6f1c7471ca62fb3f2b9d4f75f6909ba7e3822597623059da79c3b0230",
+    "sloc": 20,
+    "solc_version": "0.5.12",
+    "compile_error": "",
+    "runtime_bytecode_paths": {
+      "Escrow9748": "benchmarks/injected05/neg_bounded_loop__21__Escrow9748.bin-runtime"
+    }
+  },
+  {
+    "contract_id": "neg_bounded_loop__22",
+    "group": "neg_bounded_loop",
+    "labels": [],
+    "source_path": "benchmarks/injected05/neg_bounded_loop__22.sol",
+    "source_sha256": "d6671f8b45db05db9b9897c52d09a12bb14ed085f7f03a30b109ef8094d8b23c",
+    "sloc": 22,
+    "solc_version": "0.5.12",
+    "compile_error": "",
+    "runtime_bytecode_paths": {
+      "Bank4283": "benchmarks/injected05/neg_bounded_loop__22__Bank4283.bin-runtime"
+    }
+  },
+  {
+    "contract_id": "neg_bounded_loop__23",
+    "group": "neg_bounded_loop",
+    "labels": [],
+    "source_path": "benchmarks/injected05/neg_bounded_loop__23.sol",
+    "source_sha256": "7cdfd3e12392c3ad472d93794f1d7a5c03dfe6fff8215704f4e9f8079bcdd4ba",
+    "sloc": 21,
+    "solc_version": "0.5.12",
+    "compile_error": "",
+    "runtime_bytecode_paths": {
+      "Fund2976": "benchmarks/injected05/neg_bounded_loop__23__Fund2976.bin-runtime"
+    }
+  },
+  {
+    "contract_id": "neg_bounded_loop__24",
+    "group": "neg_bounded_loop",
+    "labels": [],
+    "source_path": "benchmarks/injected05/neg_bounded_loop__24.sol",
+    "source_sha256": "faafeff98baf596f1451dbfa6da2818b572fab1071b282b57606b16ed99f66d7",
+    "sloc": 21,
+    "solc_version": "0.5.12",
+    "compile_error": "",
+    "runtime_bytecode_paths": {
+      "Bank2001": "benchmarks/injected05/neg_bounded_loop__24__Bank2001.bin-runtime"
+    }
+  },
+  {
+    "contract_id": "neg_bounded_loop__25",
+    "group": "neg_bounded_loop",
+    "labels": [],
+    "source_path": "benchmarks/injected05/neg_bounded_loop__25.sol",
+    "source_sha256": "874f71f0b9a07fb3e2193905e91dc1d4e61ce5ebb9f5bacc53d17beda0e0f8d2",
+    "sloc": 21,
+    "solc_version": "0.5.12",
+    "compile_error": "",
+    "runtime_bytecode_paths": {
+      "Locker8871": "benchmarks/injected05/neg_bounded_loop__25__Locker8871.bin-runtime"
+    }
+  },
+  {
+    "contract_id": "neg_bounded_loop__26",
+    "group": "neg_bounded_loop",
+    "labels": [],
+    "source_path": "benchmarks/injected05/neg_bounded_loop__26.sol",
+    "source_sha256": "6076b1ce68c42da6d34a42d6727cd7419c353f06bee0192a414acba99b27c3d6",
+    "sloc": 20,
+    "solc_version": "0.5.12",
+    "compile_error": "",
+    "runtime_bytecode_paths": {
+      "Fund1195": "benchmarks/injected05/neg_bounded_loop__26__Fund1195.bin-runtime"
+    }
+  },
+  {
+    "contract_id": "neg_bounded_loop__27",
+    "group": "neg_bounded_loop",
+    "labels": [],
+    "source_path": "benchmarks/injected05/neg_bounded_loop__27.sol",
+    "source_sha256": "bb356070a7743979490c4e5116b7eaab4cfdc2cc1f592187f50f5cfbf71d28c1",
+    "sloc": 21,
+    "solc_version": "0.5.12",
+    "compile_error": "",
+    "runtime_bytecode_paths": {
+      "Escrow2294": "benchmarks/injected05/neg_bounded_loop__27__Escrow2294.bin-runtime"
+    }
+  },
+  {
+    "contract_id": "neg_bounded_loop__28",
+    "group": "neg_bounded_loop",
+    "labels": [],
+    "source_path": "benchmarks/injected05/neg_bounded_loop__28.sol",
+    "source_sha256": "5c3a2971c17b97fc0a020eba2a984d64898eaf710962d9c3d1f0a1f050ff018a",
+    "sloc": 21,
+    "solc_version": "0.5.12",
+    "compile_error": "",
+    "runtime_bytecode_paths": {
+      "Safe5868": "benchmarks/injected05/neg_bounded_loop__28__Safe5868.bin-runtime"
+    }
+  },
+  {
+    "contract_id": "neg_bounded_loop__29",
+    "group": "neg_bounded_loop",
+    "labels": [],
+    "source_path": "benchmarks/injected05/neg_bounded_loop__29.sol",
+    "source_sha256": "0627b4039860f8ac35f04123ce5281efa3fe5ba9cace766fb56b39e3b5c89017",
+    "sloc": 20,
+    "solc_version": "0.5.12",
+    "compile_error": "",
+    "runtime_bytecode_paths": {
+      "Vault2025": "benchmarks/injected05/neg_bounded_loop__29__Vault2025.bin-runtime"
+    }
+  },
+  {
+    "contract_id": "neg_clean__00",
+    "group": "neg_clean",
+    "labels": [],
+    "source_path": "benchmarks/injected05/neg_clean__00.sol",
+    "source_sha256": "e8970483521f1921bbd932832321aded6ab094f18e4b7198e118497bd8d56a8e",
+    "sloc": 12,
+    "solc_version": "0.5.12",
+    "compile_error": "",
+    "runtime_bytecode_paths": {
+      "Vault1200": "benchmarks/injected05/neg_clean__00__Vault1200.bin-runtime"
+    }
+  },
+  {
+    "contract_id": "neg_clean__01",
+    "group": "neg_clean",
+    "labels": [],
+    "source_path": "benchmarks/injected05/neg_clean__01.sol",
+    "source_sha256": "1849b8e94efcb3d9b345a6bde28bb4ab61368d00e4b5ec3ba071e229ce8d359f",
+    "sloc": 11,
+    "solc_version": "0.5.12",
+    "compile_error": "",
+    "runtime_bytecode_paths": {
+      "Bank1344": "benchmarks/injected05/neg_clean__01__Bank1344.bin-runtime"
+    }
+  },
+  {
+    "contract_id": "neg_clean__02",
+    "group": "neg_clean",
+    "labels": [],
+    "source_path": "benchmarks/injected05/neg_clean__02.sol",
+    "source_sha256": "e65e785a2a9d636f3b8eb97dc009ae503917457e62fcc4d1ac92159dff8e7d8b",
+    "sloc": 13,
+    "solc_version": "0.5.12",
+    "compile_error": "",
+    "runtime_bytecode_paths": {
+      "Fund1972": "benchmarks/injected05/neg_clean__02__Fund1972.bin-runtime"
+    }
+  },
+  {
+    "contract_id": "neg_clean__03",
+    "group": "neg_clean",
+    "labels": [],
+    "source_path": "benchmarks/injected05/neg_clean__03.sol",
+    "source_sha256": "5ea214c40e3af67cfbb332d67370bf4122323aa9e21aa9131ac79cdbbed08888",
+    "sloc": 12,
+    "solc_version": "0.5.12",
+    "compile_error": "",
+    "runtime_bytecode_paths": {
+      "Treasury6135": "benchmarks/injected05/neg_clean__03__Treasury6135.bin-runtime"
+    }
+  },
+  {
+    "contract_id": "neg_clean__04",
+    "group": "neg_clean",
+    "labels": [],
+    "source_path": "benchmarks/injected05/neg_clean__04.sol",
+    "source_sha256": "a56e472320a2a5eed5e37d749bcc954501c387949714915d4538cf463bdc5abd",
+    "sloc": 13,
+    "solc_version": "0.5.12",
+    "compile_error": "",
+    "runtime_bytecode_paths": {
+      "Escrow6858": "benchmarks/injected05/neg_clean__04__Escrow6858.bin-runtime"
+    }
+  },
+  {
+    "contract_id": "neg_clean__05",
+    "group": "neg_clean",
+    "labels": [],
+    "source_path": "benchmarks/injected05/neg_clean__05.sol",
+    "source_sha256": "fec1b35290bf354da0355c5dbd07d6cd384042a69d3ca32c8990ad93fc7723bf",
+    "sloc": 12,
+    "solc_version": "0.5.12",
+    "compile_error": "",
+    "runtime_bytecode_paths": {
+      "Ledger5671": "benchmarks/injected05/neg_clean__05__Ledger5671.bin-runtime"
+    }
+  },
+  {
+    "contract_id": "neg_clean__06",
+    "group": "neg_clean",
+    "labels": [],
+    "source_path": "benchmarks/injected05/neg_clean__06.sol",
+    "source_sha256": "42488f5aaab0854f9b6bf4794da27499b706bbb755680120844a421225939a11",
+    "sloc": 11,
+    "solc_version": "0.5.12",
+    "compile_error": "",
+    "runtime_bytecode_paths": {
+      "Locker1869": "benchmarks/injected05/neg_clean__06__Locker1869.bin-runtime"
+    }
+  },
+  {
+    "contract_id": "neg_clean__07",
+    "group": "neg_clean",
+    "labels": [],
+    "source_path": "benchmarks/injected05/neg_clean__07.sol",
+    "source_sha256": "0ac1100735a44ed7f57a859af5a88e6e7dc3a5ca94e8cd74c7cc33bbebf267c7",
+    "sloc": 12,
+    "solc_version": "0.5.12",
+    "compile_error": "",
+    "runtime_bytecode_paths": {
+      "Locker1566": "benchmarks/injected05/neg_clean__07__Locker1566.bin-runtime"
+    }
+  },
+  {
+    "contract_id": "neg_clean__08",
+    "group": "neg_clean",
+    "labels": [],
+    "source_path": "benchmarks/injected05/neg_clean__08.sol",
+    "source_sha256": "d317ff4333a91213cba732287507fae75e609643929b86f5167cf3596cc3d340",
+    "sloc": 11,
+    "solc_version": "0.5.12",
+    "compile_error": "",
+    "runtime_bytecode_paths": {
+      "Pool5791": "benchmarks/injected05/neg_clean__08__Pool5791.bin-runtime"
+    }
+  },
+  {
+    "contract_id": "neg_clean__09",
+    "group": "neg_clean",
+    "labels": [],
+    "source_path": "benchmarks/injected05/neg_clean__09.sol",
+    "source_sha256": "205e4b6c75b917acfd8827b3991b1f5c19458d277ab7349e42fb0c4ec9c2419c",
+    "sloc": 13,
+    "solc_version": "0.5.12",
+    "compile_error": "",
+    "runtime_bytecode_paths": {
+      "Treasury6979": "benchmarks/injected05/neg_clean__09__Treasury6979.bin-runtime"
+    }
+  },
+  {
+    "contract_id": "neg_clean__10",
+    "group": "neg_clean",
+    "labels": [],
+    "source_path": "benchmarks/injected05/neg_clean__10.sol",
+    "source_sha256": "e2b91073ba37175c9d9702a4d7507433b444676214b14bb495d708c461456a70",
+    "sloc": 12,
+    "solc_version": "0.5.12",
+    "compile_error": "",
+    "runtime_bytecode_paths": {
+      "Treasury2849": "benchmarks/injected05/neg_clean__10__Treasury2849.bin-runtime"
+    }
+  },
+  {
+    "contract_id": "neg_clean__11",
+    "group": "neg_clean",
+    "labels": [],
+    "source_path": "benchmarks/injected05/neg_clean__11.sol",
+    "source_sha256": "5ab41d21f634ccb35881c2a82f7b6b8ba6634435c189c2ef7db20f68ba518f64",
+    "sloc": 11,
+    "solc_version": "0.5.12",
+    "compile_error": "",
+    "runtime_bytecode_paths": {
+      "Escrow5269": "benchmarks/injected05/neg_clean__11__Escrow5269.bin-runtime"
+    }
+  },
+  {
+    "contract_id": "neg_clean__12",
+    "group": "neg_clean",
+    "labels": [],
+    "source_path": "benchmarks/injected05/neg_clean__12.sol",
+    "source_sha256": "bb22616a01ec5b4796be743acdf38344987278e87e13f66037d33beeb3655f05",
+    "sloc": 13,
+    "solc_version": "0.5.12",
+    "compile_error": "",
+    "runtime_bytecode_paths": {
+      "Bank9133": "benchmarks/injected05/neg_clean__12__Bank9133.bin-runtime"
+    }
+  },
+  {
+    "contract_id": "neg_clean__13",
+    "group": "neg_clean",
+    "labels": [],
+    "source_path": "benchmarks/injected05/neg_clean__13.sol",
+    "source_sha256": "230482e43868b89d71667d01e722528e83fe7ba5a85d1fc6f46bb89d8bd1221b",
+    "sloc": 13,
+    "solc_version": "0.5.12",
+    "compile_error": "",
+    "runtime_bytecode_paths": {
+      "Safe6167": "benchmarks/injected05/neg_clean__13__Safe6167.bin-runtime"
+    }
+  },
+  {
+    "contract_id": "neg_clean__14",
+    "group": "neg_clean",
+    "labels": [],
+    "source_path": "benchmarks/injected05/neg_clean__14.sol",
+    "source_sha256": "243b723fdd373f84c5db136f6e3b13a785a2634f9fe3499f0e40d1aeda88d01e",
+    "sloc": 13,
+    "solc_version": "0.5.12",
+    "compile_error": "",
+    "runtime_bytecode_paths": {
+      "Locker4103": "benchmarks/injected05/neg_clean__14__Locker4103.bin-runtime"
+    }
+  },
+  {
+    "contract_id": "neg_clean__15",
+    "group": "neg_clean",
+    "labels": [],
+    "source_path": "benchmarks/injected05/neg_clean__15.sol",
+    "source_sha256": "7379d3e5af48405dc46b234cab5526ef624edc2534ff96bd455b0702a6d748b8",
+    "sloc": 13,
+    "solc_version": "0.5.12",
+    "compile_error": "",
+    "runtime_bytecode_paths": {
+      "Pool9911": "benchmarks/injected05/neg_clean__15__Pool9911.bin-runtime"
+    }
+  },
+  {
+    "contract_id": "neg_clean__16",
+    "group": "neg_clean",
+    "labels": [],
+    "source_path": "benchmarks/injected05/neg_clean__16.sol",
+    "source_sha256": "1a9365b6ea4d1277350a38d222a23df0fb823033269e8e1b7a0742b57ddc4816",
+    "sloc": 12,
+    "solc_version": "0.5.12",
+    "compile_error": "",
+    "runtime_bytecode_paths": {
+      "Escrow4752": "benchmarks/injected05/neg_clean__16__Escrow4752.bin-runtime"
+    }
+  },
+  {
+    "contract_id": "neg_clean__17",
+    "group": "neg_clean",
+    "labels": [],
+    "source_path": "benchmarks/injected05/neg_clean__17.sol",
+    "source_sha256": "6d45f3f677f11096ef6a5b8c688e9e834863dfb4eccfb1a5f02ab34830c12aad",
+    "sloc": 13,
+    "solc_version": "0.5.12",
+    "compile_error": "",
+    "runtime_bytecode_paths": {
+      "Fund1527": "benchmarks/injected05/neg_clean__17__Fund1527.bin-runtime"
+    }
+  },
+  {
+    "contract_id": "neg_clean__18",
+    "group": "neg_clean",
+    "labels": [],
+    "source_path": "benchmarks/injected05/neg_clean__18.sol",
+    "source_sha256": "b2f1646dc399112c994b17c944e9d795b2b0b4d2e470c3157c4b4dca2d52c159",
+    "sloc": 12,
+    "solc_version": "0.5.12",
+    "compile_error": "",
+    "runtime_bytecode_paths": {
+      "Fund2380": "benchmarks/injected05/neg_clean__18__Fund2380.bin-runtime"
+    }
+  },
+  {
+    "contract_id": "neg_clean__19",
+    "group": "neg_clean",
+    "labels": [],
+    "source_path": "benchmarks/injected05/neg_clean__19.sol",
+    "source_sha256": "6897dd5d25990a41b56a2aaffe88750d6b274b6908d1ca53f9c2112647107cf5",
+    "sloc": 13,
+    "solc_version": "0.5.12",
+    "compile_error": "",
+    "runtime_bytecode_paths": {
+      "Bank9587": "benchmarks/injected05/neg_clean__19__Bank9587.bin-runtime"
+    }
+  },
+  {
+    "contract_id": "neg_clean__20",
+    "group": "neg_clean",
+    "labels": [],
+    "source_path": "benchmarks/injected05/neg_clean__20.sol",
+    "source_sha256": "fe461b078198e16025210209270631102c534b40de5cc23d4e1ca86a9c5138cb",
+    "sloc": 11,
+    "solc_version": "0.5.12",
+    "compile_error": "",
+    "runtime_bytecode_paths": {
+      "Fund1498": "benchmarks/injected05/neg_clean__20__Fund1498.bin-runtime"
+    }
+  },
+  {
+    "contract_id": "neg_clean__21",
+    "group": "neg_clean",
+    "labels": [],
+    "source_path": "benchmarks/injected05/neg_clean__21.sol",
+    "source_sha256": "572fcbd492519e83da9b6b96fd1a9eb0ba39c644e1c594372dbf876200100944",
+    "sloc": 12,
+    "solc_version": "0.5.12",
+    "compile_error": "",
+    "runtime_bytecode_paths": {
+      "Fund5058": "benchmarks/injected05/neg_clean__21__Fund5058.bin-runtime"
+    }
+  },
+  {
+    "contract_id": "neg_clean__22",
+    "group": "neg_clean",
+    "labels": [],
+    "source_path": "benchmarks/injected05/neg_clean__22.sol",
+    "source_sha256": "9312ecb925f6da8f81045a6b22c62d4d331b430c6f81b61329389a11d3d67b3d",
+    "sloc": 13,
+    "solc_version": "0.5.12",
+    "compile_error": "",
+    "runtime_bytecode_paths": {
+      "Bank8993": "benchmarks/injected05/neg_clean__22__Bank8993.bin-runtime"
+    }
+  },
+  {
+    "contract_id": "neg_clean__23",
+    "group": "neg_clean",
+    "labels": [],
+    "source_path": "benchmarks/injected05/neg_clean__23.sol",
+    "source_sha256": "3224c63856de0524bf5893a33e8f5e322bd39238159cc4692584b4d1c984614a",
+    "sloc": 12,
+    "solc_version": "0.5.12",
+    "compile_error": "",
+    "runtime_bytecode_paths": {
+      "Locker8828": "benchmarks/injected05/neg_clean__23__Locker8828.bin-runtime"
+    }
+  },
+  {
+    "contract_id": "neg_clean__24",
+    "group": "neg_clean",
+    "labels": [],
+    "source_path": "benchmarks/injected05/neg_clean__24.sol",
+    "source_sha256": "164172d1cae46d9075e97b767d6fc149083185187eb9e0fde913d450b3c0f9ad",
+    "sloc": 11,
+    "solc_version": "0.5.12",
+    "compile_error": "",
+    "runtime_bytecode_paths": {
+      "Locker3893": "benchmarks/injected05/neg_clean__24__Locker3893.bin-runtime"
+    }
+  },
+  {
+    "contract_id": "neg_clean__25",
+    "group": "neg_clean",
+    "labels": [],
+    "source_path": "benchmarks/injected05/neg_clean__25.sol",
+    "source_sha256": "0c27c740d556bdc55d8b856db0b750d3badf702a984c6e4b5ae44d8751a27e50",
+    "sloc": 12,
+    "solc_version": "0.5.12",
+    "compile_error": "",
+    "runtime_bytecode_paths": {
+      "Wallet3357": "benchmarks/injected05/neg_clean__25__Wallet3357.bin-runtime"
+    }
+  },
+  {
+    "contract_id": "neg_clean__26",
+    "group": "neg_clean",
+    "labels": [],
+    "source_path": "benchmarks/injected05/neg_clean__26.sol",
+    "source_sha256": "6b8706441b4b6115a1e1d3e800ae982291f477eacdb819bb6f3bc841e8527480",
+    "sloc": 12,
+    "solc_version": "0.5.12",
+    "compile_error": "",
+    "runtime_bytecode_paths": {
+      "Treasury3220": "benchmarks/injected05/neg_clean__26__Treasury3220.bin-runtime"
+    }
+  },
+  {
+    "contract_id": "neg_clean__27",
+    "group": "neg_clean",
+    "labels": [],
+    "source_path": "benchmarks/injected05/neg_clean__27.sol",
+    "source_sha256": "df8968b7051d715447fd82afe0b96a0eae75d433668351b814f3858698faaced",
+    "sloc": 13,
+    "solc_version": "0.5.12",
+    "compile_error": "",
+    "runtime_bytecode_paths": {
+      "Fund7158": "benchmarks/injected05/neg_clean__27__Fund7158.bin-runtime"
+    }
+  },
+  {
+    "contract_id": "neg_clean__28",
+    "group": "neg_clean",
+    "labels": [],
+    "source_path": "benchmarks/injected05/neg_clean__28.sol",
+    "source_sha256": "2d9a02bde1ee8d807f89029de67b5515b15027cd56ca0aab17b5d3c817ed3f99",
+    "sloc": 11,
+    "solc_version": "0.5.12",
+    "compile_error": "",
+    "runtime_bytecode_paths": {
+      "Ledger2552": "benchmarks/injected05/neg_clean__28__Ledger2552.bin-runtime"
+    }
+  },
+  {
+    "contract_id": "neg_clean__29",
+    "group": "neg_clean",
+    "labels": [],
+    "source_path": "benchmarks/injected05/neg_clean__29.sol",
+    "source_sha256": "c623efd7a06286c86c32d37bd069536fb45f6c95262ffe21c73c073af952a56d",
+    "sloc": 12,
+    "solc_version": "0.5.12",
+    "compile_error": "",
+    "runtime_bytecode_paths": {
+      "Locker5524": "benchmarks/injected05/neg_clean__29__Locker5524.bin-runtime"
+    }
+  }
+]

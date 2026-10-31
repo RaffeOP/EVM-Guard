@@ -1,0 +1,392 @@
+\documentclass[pdflatex,sn-mathphys]{sn-jnl}
+
+\usepackage[T1]{fontenc}
+\usepackage{graphicx}
+\usepackage{mathtools}
+\usepackage{newtxtext,newtxmath}
+\usepackage[scaled=0.88]{inconsolata}
+\linespread{1.06}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage{booktabs}
+\usepackage{xurl}
+\DeclareUrlCommand\doiurl{\def\UrlLeft{https://doi.org/}}
+\DeclareUrlCommand\burl{}
+\hypersetup{bookmarksdepth=2,colorlinks=true,linkcolor=black,citecolor=black,urlcolor=black}
+\usepackage{multirow}
+
+\graphicspath{{./}{figures/}}
+\jyear{2026}
+
+\theoremstyle{thmstyleone}
+\newtheorem{proposition}{Proposition}
+\newtheorem{definition}{Definition}
+
+\theoremstyle{thmstyletwo}
+\newtheorem{remark}{Remark}
+
+\newenvironment{botherref}{}{}
+
+\raggedbottom
+
+\begin{document}
+
+\title[EVM-Guard: Bytecode Reentrancy Triage]{EVM-Guard: Bytecode-Level Semantic Hazard Triage and State-Falsifiable Sandbox Replay for Ethereum Smart Contracts}
+
+\author{\fnm{Devarsh} \sur{Patel}}\email{devarsh.patel2024@vitstudent.ac.in}
+
+\affil{\orgdiv{School of Computer Science and Engineering}, \orgname{Vellore Institute of Technology}, \orgaddress{\city{Vellore}, \postcode{632014}, \state{Tamil Nadu}, \country{India}}}
+
+\abstract{
+Smart contract execution on Ethereum is irrevocable. Deployed bytecodes cannot be hot-patched, leaving protocols exposed when external calls execute before storage updates settle. Existing static linters require compiler abstract syntax trees, failing entirely on unverified on-chain bytecodes. Conversely, SMT-backed symbolic execution engines encounter combinatorial path explosion, timing out on production contracts. We introduce \textbf{EVM-Guard}, a bytecode-level static hazard analyzer paired with an execution-differential sandbox replay oracle. EVM-Guard recovers basic-block control-flow graphs directly from linear-sweep disassembled bytecode, propagates monotone abstract stack intervals within loop bound $K=10$, tracks storage-slot mutex invariants, and prunes calls restricted to the native 2,300-gas stipend. Candidate static findings are verified inside an isolated \texttt{py-evm} sandbox against strict, falsifiable post-state balance and storage invariants.
+
+On the canonical SmartBugs-curated catalog (143 files, 216 runtime bytecodes), EVM-Guard flags 29 of 31 reentrancy positives, attaining 93.5\% recall (95\% CI [78.6, 99.2]) and 80.6\% precision with 7 false alarms, compared to Slither's 93.5\% recall and 48.3\% precision (31 false alarms). % CHECK: verified ground truth in generated_tables.tex
+Disabling stipend bounds drops precision to 53.7\% (25 false alarms). On denial of service (6 positives), EVM-Guard reaches 83.3\% recall (CI [35.9, 99.6]) at 12.8\% precision, against 33.3\% for Slither. On access control (18 positives), Mythril leads with 72.2\% recall, whereas EVM-Guard flags 2 files (11.1\% recall) at 100.0\% precision because its pattern checks calldata-directed delegatecall taint rather than missing ownership checks. Dynamic sandbox replay confirms 8 findings with 100.0\% precision, though demanding concrete exploit execution reduces reentrancy recall to 12.9\% (4 of 31). EVM-Guard operates at a median latency of 87\,ms per file directly on bytecode, avoiding compiler overhead. The analyzer targets Solidity 0.4--0.5 semantics and leaves 180 dynamic jumps unresolved across the corpus.
+}
+
+\keywords{Smart Contract Security, Formal Methods, Static Analysis, Abstract Interpretation, SMT Solving, EVM Bytecode, Reentrancy}
+
+\maketitle
+
+%% ===========================================================================
+\section{Introduction}\label{sec:intro}
+
+Ethereum smart contracts execute autonomously across decentralized financial networks~\cite{wood2014ethereum}. Because contract bytecode deployed to an address cannot be altered~\cite{wood2014ethereum,atzei2017survey}, logical flaws allow attackers to drain funds irreversibly~\cite{zhou2023sok,chen2020survey}. Reentrancy, access control circumvention, and resource exhaustion remain leading causes of protocol insolvencies~\cite{daian2020flash}. 
+
+Security practitioners rely on automated static analyzers and symbolic execution engines to audit contract code prior to capital deployment. Existing analysis architectures exhibit a sharp trade-off between source-level visibility and computational tractability.
+
+\subsection{Architectural Limitations of Existing Tools}\label{sec:intro:gaps}
+
+Static analyzers such as Slither~\cite{feist2019slither} operate on high-level Solidity Abstract Syntax Trees (ASTs) generated during compilation. When contracts run without published source code on public block explorers, or when auditing upgradeable delegatecall targets fetched on-chain, AST-based inspection cannot execute. Declarative bytecode frameworks such as Securify~\cite{tsankov2018securify} and Vandal~\cite{brent2018vandal} decompile low-level instructions into Datalog relations evaluated by external logic engines such as Souffl{\'e}~\cite{scholz2016souffle}. These frameworks avoid source dependency, but decompilation abstractions frequently drop low-level stack operand provenance, producing false-alarm rates exceeding 50\% on production contracts~\cite{durieux2020empirical,ghaleb2020how}.
+
+Symbolic execution frameworks, pioneered by Oyente~\cite{luu2016making} and advanced by Mythril~\cite{mueller2018mythril} and Manticore~\cite{mossberg2019manticore}, explore program states by converting path constraints into satisfiability queries dispatched to SMT solvers such as Z3~\cite{de2008z3}. Complex loops, cryptographic hashing primitives, and nested calls generate exponential state expansions. On large contract catalogs, symbolic execution triggers severe solver timeouts, leaving substantial fractions of code unverified~\cite{durieux2020empirical}. Property-directed symbolic testers such as hevm~\cite{dxo2024hevm} and Halmos~\cite{a16z2023halmos} verify formal assertions against bytecode, but require security engineers to hand-write concrete specifications for each contract.
+
+\subsection{Research Questions}\label{sec:intro:rqs}
+
+This investigation evaluates whether deterministic dataflow analysis combined with dynamic execution filtering can deliver high-precision vulnerability triage directly on compiled EVM bytecode:
+
+\begin{itemize}
+    \item \textbf{RQ1 (Detection Precision):} Can intra-procedural CFG dataflow tracking and storage-slot mutex recovery reduce reentrancy false positives compared to source-level AST tools while maintaining high detection recall on benchmark suites?
+    \item \textbf{RQ2 (Witness Replay Fidelity):} To what extent can an isolated, state-falsifiable sandbox replay oracle confirm static bytecode warnings with zero false alarms, and what recall penalty does concrete witness execution impose?
+    \item \textbf{RQ3 (Generalization Bounds):} How do precision metrics tuned against standard evaluation suites compare when measured against held-out synthetic contract corpora compiled under distinct compiler baselines?
+\end{itemize}
+
+\subsection{Core Contributions}\label{sec:intro:contrib}
+
+\begin{enumerate}
+    \item \textbf{Bytecode Dataflow Analysis Engine:} An automated analyzer that constructs basic-block control-flow graphs from raw EVM bytecode, executes an abstract stack fixpoint within loop bound $K=10$, and tracks dataflow provenance across storage, calldata, and stack operands without source artifacts (Section~\ref{sec:arch}).
+    \item \textbf{Sound Gas-Stipend Modeling:} An arithmetic upper-bound propagator that tracks gas computations through \texttt{ISZERO}, \texttt{MUL}, and \texttt{AND} opcodes, eliminating false reentrancy alarms from native 2,300-gas transfer patterns that cannot mutate callee storage (Section~\ref{sec:arch:scope}).
+    \item \textbf{Falsifiable Sandbox Replay Oracle:} A dynamic validation harness implemented in \texttt{py-evm} that instantiates concrete transaction sequences and verifies vulnerabilities based strictly on post-state balance differentials and storage mutations (Section~\ref{sec:arch:oracle}).
+    \item \textbf{Rigorous Multi-Corpus Evaluation:} An empirical audit across the 143-file SmartBugs-curated catalog, the 400-file SolidiFI injection suite, a 389-file labeled benchmark, and a pre-registered 210-contract synthetic suite, reporting Clopper--Pearson intervals alongside explicit limitations (Section~\ref{sec:results}).
+\end{enumerate}
+
+%% ===========================================================================
+\section{Low-Level EVM Semantics and Hazard Classes}\label{sec:gaps}
+
+The Ethereum Virtual Machine is a quasi-Turing-complete, big-endian stack machine specified by Wood~\cite{wood2014ethereum}. Machine words occupy 256 bits ($\mathcal{BV}_{256}$). Operations manipulate an execution stack capped at 1,024 elements, a byte-addressable volatile memory space, and a persistent key-value storage mapping.
+
+\subsection{Machine Execution and Gas Accounting}\label{sec:gaps:semantics}
+
+An execution state transition is defined by the operational tuple:
+\begin{equation}
+    \mathcal{S} \triangleq \langle \mathbf{\sigma}, \mathbf{\mu}, \mathbf{\iota} \rangle
+\end{equation}
+where $\mathbf{\sigma}: \mathcal{BV}_{256} \to \mathcal{BV}_{256}$ maps 32-byte storage keys to 32-byte values, $\mathbf{\mu} = \langle \mathbf{s}, \mathbf{m}, \mathrm{pc}, g \rangle$ denotes the machine state (operand stack $\mathbf{s} \in (\mathcal{BV}_{256})^*$, linear memory $\mathbf{m} \in \mathbb{N} \to \mathcal{BV}_{8}$, program counter $\mathrm{pc} \in \mathbb{N}$, and remaining gas $g \in \mathbb{N}$), and $\mathbf{\iota} = \langle A_{\mathrm{caller}}, A_{\mathrm{exec}}, V_{\mathrm{call}}, \mathbf{d} \rangle$ represents the transaction execution context.
+
+Linear memory expansion incurs quadratic gas consumption. Writing to byte index $i$ requires expanding memory to $a = \lceil (i+1)/32 \rceil$ 32-byte words, incurring cost:
+\begin{equation}
+    C_{\mathrm{mem}}(a) = 3a + \left\lfloor \frac{a^2}{512} \right\rfloor
+\end{equation}
+Under EIP-2929 gas semantics, accessing a cold storage slot via \texttt{SLOAD} consumes 2,100 gas, whereas warm accesses consume 100 gas. Cold external account invocations consume 2,600 gas. Storage alterations via \texttt{SSTORE} require 20,000 gas to set a zero slot to a non-zero value, and 5,000 gas for a dirty slot modification.
+
+\subsection{Hazard Class Taxonomy}\label{sec:gaps:taxonomy}
+
+EVM-Guard models six distinct bytecode hazard classes, categorized in Table~\ref{tab:gap_taxonomy}.
+
+\begin{table*}[t]
+\centering
+\small
+\caption{Hazard classes analyzed by EVM-Guard and corresponding formal predicates.}
+\label{tab:gap_taxonomy}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{@{}llp{6.8cm}p{5.2cm}@{}}
+\toprule
+\textbf{Hazard Identifier} & \textbf{SWC Mapping} & \textbf{Bytecode Pattern Mechanism} & \textbf{Formal Predicate} \\
+\midrule
+Reentrancy & SWC-107 & \texttt{CALL} with unconstrained gas preceding reachable \texttt{SSTORE} without mutex & $\Phi_{\mathrm{Reent}}$ (Definition~\ref{def:reent}) \\
+Division Truncation & SWC-101 & \texttt{DIV} quotient directly consumed by subsequent \texttt{MUL} or storage write & $\Phi_{\mathrm{Prec}}$ (Definition~\ref{def:prec}) \\
+Slot Collision & SWC-124 & Implementation storage writes overlapping proxy state variables & $\Phi_{\mathrm{Slot}}$ (Definition~\ref{def:slot}) \\
+Loop Gas Exhaustion & SWC-128 & Induction loop bound determined by unconstrained storage read & $\Phi_{\mathrm{DoS}}$ (Definition~\ref{def:dos}) \\
+Price Manipulation & Non-SWC & Spot AMM reserve queries unadjusted for instantaneous volume & $\Phi_{\mathrm{Flash}}$ (Definition~\ref{def:flash}) \\
+Delegatecall Taint & SWC-112 & \texttt{DELEGATECALL} target loaded from calldata without authorization guard & $\Phi_{\mathrm{Taint}}$ (Definition~\ref{def:taint}) \\
+\bottomrule
+\end{tabular}%
+}
+\end{table*}
+
+\begin{enumerate}
+    \item \textbf{Reentrancy (SWC-107):} An external call transfers execution control to an untrusted callee before the calling contract synchronizes its persistent balance or accounting state. In read-only reentrancy, view functions expose intermediate inconsistent storage states to external observers during call execution.
+    \item \textbf{Division Truncation (SWC-101):} Integer division via the EVM \texttt{DIV} opcode computes $\lfloor x / y \rfloor$, discarding the remainder. Performing division prior to multiplication amplifies precision loss across fixed-point calculations.
+    \item \textbf{Storage-Slot Collision (SWC-124):} Proxy contracts forward calls to logic implementations using \texttt{DELEGATECALL}. When proxy and logic contracts declare state variables occupying identical storage slots with incompatible bit-widths, delegatecall execution corrupts proxy storage.
+    \item \textbf{Loop Gas Exhaustion (SWC-128):} A loop bound reads a dynamic array length from persistent storage. If unprivileged external callers can append elements to the array, iteration costs expand until transaction gas requirements exceed the block gas limit ($G_{\mathrm{block}} = 30 \times 10^6$).
+    \item \textbf{Spot-Price Manipulation:} Lending contracts calculate collateral valuation directly from decentralized exchange spot reserves. Flash-loan volume shifts spot balances, triggering false liquidations.
+    \item \textbf{Delegatecall Taint (SWC-112):} A contract passes calldata-derived values to the target operand of a \texttt{DELEGATECALL} opcode without validating the address against an authorized storage whitelist.
+\end{enumerate}
+
+%% ===========================================================================
+\section{Hazard Specifications over \texorpdfstring{$\mathcal{BV}_{256}$}{BV256}}\label{sec:formal_framework}
+
+The specifications below define safety properties over bit-vector relations. They specify semantic conditions for vulnerability existence, which EVM-Guard's static pass approximates via abstract interpretation.
+
+\subsection{Mathematical Foundations}\label{sec:math:state}
+
+Arithmetic operations execute over the bit-vector domain $\mathcal{BV}_{256}$ modulo $2^{256}$. Unsigned division $\mathrm{UDiv}(u, v) \triangleq \lfloor u / v \rfloor$ and remainder $\mathrm{URem}(u, v) \triangleq u - v \cdot \mathrm{UDiv}(u, v)$ evaluate to zero when $v = 0$, matching EVM opcodes \texttt{DIV} and \texttt{MOD}. Multiplication overflow safety is specified as:
+\begin{equation}
+    \mathrm{NoMulOverflow}(u, v) \equiv (v = 0) \lor \big(\mathrm{UDiv}(u \cdot v, v) = u\big)
+\end{equation}
+
+\subsection{Formal Hazard Predicates}\label{sec:math:invariants}
+
+\begin{definition}[Reentrancy Hazard ($\Phi_{\mathrm{Reent}}$)]\label{def:reent}
+Let $\mathbf{\sigma}_{\mathrm{pre}}$ be storage state preceding an external call instruction $\mathtt{CALL}(g, a, v, \mathrm{in}, \mathrm{insz}, \mathrm{out}, \mathrm{outsz})$ along execution path $\pi$, and let $\mathbf{\sigma}_{\mathrm{post}}$ denote storage upon return. A reentrancy hazard exists if execution forwards unconstrained gas ($g > 2300$), transfers control to an external address $a$, and reaches a subsequent storage modification:
+\begin{equation}
+    \Phi_{\mathrm{Reent}} \equiv (g > 2300) \land \mathrm{Reachable}(\mathrm{pc}_{\mathtt{CALL}}, \mathrm{pc}_{\mathtt{SSTORE}}) \land \neg \mathrm{GuardedByMutex}(\pi)
+\end{equation}
+\end{definition}
+
+\begin{definition}[Storage-Slot Collision ($\Phi_{\mathrm{Slot}}$)]\label{def:slot}
+Let proxy contract $P$ and logic implementation $L$ define variable storage layouts $\mathcal{L}_P, \mathcal{L}_L: \mathrm{Var} \to \mathbb{N}$ and type representations $\mathcal{T}_P, \mathcal{T}_L: \mathrm{Var} \to \mathrm{Type}$. A slot collision occurs when:
+\begin{equation}
+\begin{aligned}
+    \Phi_{\mathrm{Slot}} \equiv \exists v_P \in \mathrm{Var}(P), v_L \in \mathrm{Var}(L) : {} & \big( \mathcal{L}_P(v_P) = \mathcal{L}_L(v_L) \big) \land {} \\
+    & \big( \mathrm{BitWidth}(\mathcal{T}_P(v_P)) \neq \mathrm{BitWidth}(\mathcal{T}_L(v_L)) \big)
+\end{aligned}
+\end{equation}
+\end{definition}
+
+\begin{definition}[Fixed-Point Truncation Hazard ($\Phi_{\mathrm{Prec}}$)]\label{def:prec}
+Let fixed-point scaling factor be $10^k$ for $k \in \{6, 18\}$. A precision truncation hazard exists when division precedes multiplication, discarding fractional remainder values:
+\begin{equation}
+\begin{aligned}
+    \Phi_{\mathrm{Prec}} \equiv \exists x, y \in \mathcal{BV}_{256} : {} & (y > 0) \land \mathrm{NoMulOverflow}(x, 10^k) \land {} \\
+    & (\mathrm{URem}(x \cdot 10^k, y) \neq 0) \land {} \\
+    & \left( \mathrm{UDiv}(\mathrm{URem}(x \cdot 10^k, y) \cdot 10^k, y) > 0 \right)
+\end{aligned}
+\end{equation}
+\end{definition}
+
+\begin{definition}[Unbounded Loop Gas Hazard ($\Phi_{\mathrm{DoS}}$)]\label{def:dos}
+Let $N$ represent the length of a persistent array iterated within loop $\mathcal{L}$, with fixed initialization cost $C_0$ and per-iteration cost $c_{\mathrm{step}}$. For gas limit $G$, a denial of service hazard manifests if:
+\begin{equation}
+    \Phi_{\mathrm{DoS}}(G) \equiv \mathrm{IsPublic}(f_{\mathrm{mut}}) \land \neg \mathrm{HasStaticBound}(N) \land \big( C_0 + N \cdot c_{\mathrm{step}} > G \big)
+\end{equation}
+\end{definition}
+
+\begin{definition}[Spot Price Manipulation ($\Phi_{\mathrm{Flash}}$)]\label{def:flash}
+Let constant-product AMM reserves be $x, y$ with fee $\phi \in [0, 1)$. If post-swap price $P_1(\Delta x) = \frac{x + \Delta x(1-\phi)}{y - \Delta y}$ alters collateral ratio $H = \frac{C \cdot P}{D}$ past minimum solvency $H_{\mathrm{min}}$:
+\begin{equation}
+    \Phi_{\mathrm{Flash}} \equiv \exists \Delta x \le \Lambda_{\mathrm{max}} : \quad \left( \frac{C \cdot P_0}{D} \ge H_{\mathrm{min}} \right) \land \left( \frac{C \cdot P_1(\Delta x)}{D} < H_{\mathrm{min}} \right)
+\end{equation}
+\end{definition}
+
+\begin{definition}[Delegatecall Calldata Taint ($\Phi_{\mathrm{Taint}}$)]\label{def:taint}
+Let $T_{\mathrm{target}} \in \mathcal{BV}_{160}$ denote the target operand of opcode \texttt{DELEGATECALL} on path $\pi$. The call is tainted if:
+\begin{equation}
+    \Phi_{\mathrm{Taint}} \equiv \exists \mathbf{d} : \quad \mathrm{PathFeasible}(\pi) \land \big(T_{\mathrm{target}}(\mathbf{d}) = A_{\mathrm{attacker}}\big) \land \big(A_{\mathrm{attacker}} \notin \mathrm{Authorized}\big)
+\end{equation}
+\end{definition}
+
+%% ===========================================================================
+\section{System Architecture and Implementation}\label{sec:arch}
+
+EVM-Guard operates directly on raw hexadecimal bytecode. The pipeline executes five sequential analysis stages (Figure~\ref{fig:pipeline_arch}).
+
+\begin{figure*}[t]
+\centering
+\includegraphics[width=\textwidth]{fig_pipeline_architecture.png}
+\caption{The EVM-Guard static verification and dynamic replay pipeline. Linear bytecode is disassembled into basic blocks, evaluated by abstract stack interpretation, and filtered through path-sensitive dominator analysis. Candidate findings are validated via SMT parameter checks and execution-differential sandbox replay.}
+\label{fig:pipeline_arch}
+\end{figure*}
+
+\subsection{Static Analysis Pipeline}\label{sec:arch:pipeline}
+
+Algorithm~\ref{alg:verification} formalizes the end-to-end triage sequence.
+
+\begin{algorithm}[t]
+\caption{EVM-Guard Static Analysis and Sandbox Triage Pipeline}
+\label{alg:verification}
+\begin{algorithmic}[1]
+\Require Runtime bytecode string $\mathcal{B}$, unroll bound $K = 10$
+\Ensure Triaged findings set $\mathcal{F}$ with confirmation labels
+\State $\mathcal{B}' \gets \Call{StripMetadataTrailer}{\mathcal{B}}$
+\State $\mathcal{I} \gets \Call{DisassembleLinearSweep}{\mathcal{B}'}$
+\State $\mathcal{G} \gets \Call{ConstructCFG}{\mathcal{I}}$ \Comment{Partition at JUMPDEST and terminators}
+\State $\mathcal{S}_{\mathrm{abstract}} \gets \Call{ComputeAbstractStackFixpoint}{\mathcal{G}, K}$
+\State $\mathcal{D} \gets \Call{ComputeDominatorTree}{\mathcal{G}}$
+\State $\mathcal{R} \gets \Call{ResolveFunctionRegions}{\mathcal{G}}$
+\State $\mathcal{F} \gets \emptyset$
+\For{each hazard rule $h \in \{\Phi_{\mathrm{Reent}}, \Phi_{\mathrm{Prec}}, \Phi_{\mathrm{Slot}}, \Phi_{\mathrm{DoS}}, \Phi_{\mathrm{Flash}}, \Phi_{\mathrm{Taint}}\}$}
+    \State $\mathcal{E} \gets \Call{EvaluateHazardRule}{h, \mathcal{G}, \mathcal{S}_{\mathrm{abstract}}, \mathcal{D}, \mathcal{R}}$
+    \If{$\mathcal{E} \neq \bot$}
+        \State $(sat, \mathcal{M}) \gets \Call{QueryZ3Template}{h, \mathcal{E}}$ \Comment{5-second solver timeout}
+        \If{$sat = \mathrm{SAT}$}
+            \State $\mathit{confirmed} \gets \Call{ReplaySandboxWitness}{h, \mathcal{B}, \mathcal{M}, \mathcal{E}}$
+            \State $\mathcal{F} \gets \mathcal{F} \cup \{(h, \mathcal{E}, \mathit{confirmed})\}$
+        \EndIf
+    \EndIf
+\EndFor
+\State \Return $\mathcal{F}$
+\end{algorithmic}
+\end{algorithm}
+
+\paragraph{Disassembly and Normalization.} Bytecode strings are stripped of Solidity CBOR compiler metadata trailers (\texttt{a265627a7a723...}). The engine performs linear sweep disassembly using \texttt{pyevmasm}, decoding opcodes and literal push operands into instruction arrays.
+
+\paragraph{Control-Flow Graph Construction.} Instructions are partitioned into basic blocks. Basic block boundaries occur at \texttt{JUMPDEST} instructions, immediately following conditional branches (\texttt{JUMPI}), and after unconditional block terminators (\texttt{JUMP}, \texttt{RETURN}, \texttt{REVERT}, \texttt{STOP}, \texttt{INVALID}). Dynamic jump targets are resolved via constant-propagation intervals. When jump targets evaluate to non-constant expressions dependent on calldata or pointer arithmetic, edges remain unresolved. Across the 216 runtime contracts of SmartBugs-curated, 180 dynamic jumps remain unresolved, setting a formal bound on CFG coverage.
+
+\paragraph{Abstract Stack Fixpoint.} Grounded in abstract interpretation~\cite{cousot1977abstract}, the engine maintains an abstract stack domain $\mathcal{D}_{\mathrm{stack}} \triangleq (\mathcal{V}_{\mathrm{abstract}})^{\le 1024}$. Abstract values track known 256-bit constants, storage slot derivations, calldata provenance offsets, and gas upper bounds. Values are propagated across blocks until fixpoint convergence. Induction loop unrolling is capped at bound $K = 10$.
+
+\paragraph{Function Dispatcher Recovery.} Function entry points are recovered by matching dispatcher patterns: \texttt{PUSH4} selector comparisons via \texttt{EQ} followed by \texttt{JUMPI} to a concrete \texttt{JUMPDEST}. Function regions $\mathcal{R}$ are isolated by computing forward reachability sets rooted at each selector entry, excluding entry blocks belonging to alternative selectors.
+
+\subsection{Hazard Detection Implementation}\label{sec:arch:scope}
+
+Table~\ref{tab:impl} details the concrete CFG dataflow checks and Z3 parameter templates executed for each hazard class.
+
+\begin{table*}[t]
+\centering
+\small
+\caption{Hazard detection mechanisms implemented across EVM-Guard modules.}
+\label{tab:impl}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{@{}lp{8.0cm}p{6.0cm}@{}}
+\toprule
+\textbf{Hazard Class} & \textbf{CFG Dataflow Detection Pattern} & \textbf{Z3 SMT Parameter Template} \\
+\midrule
+Reentrancy (SWC-107) & \texttt{CALL} with gas upper-bound $>2300$ reaching \texttt{SSTORE} within identical function region; path is unflagged if dominated by a storage-mutex write ($1$ or $2$) with post-call reset. & Validates non-zero transfer value and distinct transient vs settled storage assignments in $\mathcal{BV}_{256}$. \\
+Division Truncation (SWC-101) & \texttt{DIV} instruction whose quotient stack slot directly feeds operand inputs of subsequent \texttt{MUL} or \texttt{SSTORE} along intra-block dataflow. & Checks existence of non-zero remainder under $10^{18}$ fixed-point scaling factor. \\
+Delegatecall Taint (SWC-112) & \texttt{DELEGATECALL} target operand deriving from \texttt{CALLDATALOAD} and lacking dominating \texttt{CALLER} comparison. & Satisfiable if target address variable is unconstrained by hardcoded address masks. \\
+Storage Collision (SWC-124) & Contract contains \texttt{DELEGATECALL} and defines storage writes to slot 0 without implementing EIP-1967 hashed slots. & Checks bit-width overlap between address (160 bits) and word (256 bits) in slot 0. \\
+Loop Gas (SWC-128) & Loop back-edge whose loop header exit condition depends on an \texttt{SLOAD} array length in an unprivileged public function. & Evaluates $C_0 + N \cdot c_{\mathrm{step}} > 30 \times 10^6$ under unconstrained $N$. \\
+\bottomrule
+\end{tabular}%
+}
+\end{table*}
+
+\paragraph{Gas-Stipend Bound Analysis.} Solidity compiles \texttt{address.transfer} and \texttt{address.send} into a \texttt{CALL} sequence where gas is computed dynamically as $2300 \cdot \mathrm{ISZERO}(v)$, where $v$ is callvalue. Unsound static analyzers flag these instructions as potential reentrancy vectors. EVM-Guard computes arithmetic bounds across the abstract stack:
+\begin{equation}
+    \mathrm{Bound}(\mathtt{ISZERO}(v)) \le 1, \quad \mathrm{Bound}(\mathtt{MUL}(2300, \mathtt{ISZERO}(v))) \le 2300
+\end{equation}
+Any external call with an upper bound $\le 2300$ is soundly excluded from reentrancy warnings, because 2,300 gas is insufficient to execute a state-modifying \texttt{SSTORE} in the callee under EVM gas rules.
+
+\subsection{Dynamic Sandbox Replay Oracle}\label{sec:arch:oracle}
+
+Candidate warnings are dispatched to a local execution sandbox implemented in \texttt{py-evm} configured for Cancun execution semantics. The sandbox executes runtime bytecode directly without invoking source constructors.
+
+\begin{itemize}
+    \item \textbf{Reentrancy Oracle:} Deploys a generic attacking contract that forwards calls to the victim. When the victim returns funds, the attacker's fallback re-enters the victim's target selector once. Confirmation requires that the attacker's net balance strictly increases post-transaction.
+    \item \textbf{Delegatecall Oracle:} Deploys a probe contract that writes sentinel value \texttt{0x2a} to storage slot \texttt{0x5afe}. The oracle invokes the victim passing the probe address; confirmation requires that the victim's own storage at \texttt{0x5afe} mutates to \texttt{0x2a}.
+    \item \textbf{Loop Gas Oracle:} Overwrites the array length storage slot with $10^6$. The oracle executes the target selector under a restricted gas cap of $G_{\mathrm{sandbox}} = 1.5 \times 10^6$. Confirmation requires that the transaction halts with an out-of-gas exception while the baseline contract executes without error.
+\end{itemize}
+
+Transactions that merely execute without reverting are rejected by the oracle. Only verified post-state balance changes or storage mutations register as confirmed findings.
+
+%% ===========================================================================
+\section{Empirical Evaluation}\label{sec:results}
+
+We evaluate EVM-Guard against Slither 0.10.2 and Mythril 0.24.8. Benchmarks ran inside an isolated Linux environment (Python 3.12, \texttt{z3-solver} 4.12.2, \texttt{py-evm} 0.10.1b2).
+
+\subsection{Benchmark Suites}\label{sec:results:corpus}
+
+\begin{enumerate}
+    \item \textbf{SmartBugs-Curated:} 143 Solidity files compiled to 216 runtime bytecodes, spanning reentrancy (31), access control (18), arithmetic (15), and denial of service (6)~\cite{durieux2020empirical}.
+    \item \textbf{SolidiFI Bug-Injection Suite:} 400 contracts consisting of 350 files with injected bugs across 50 clean base contracts compiled via \texttt{solc} 0.5.12~\cite{ghaleb2020how}.
+    \item \textbf{Labeled Real-World Suite:} 389 contracts covering reentrancy (81), arithmetic (65), and access control (33)~\cite{bitsmartcontract2023benchmark}.
+    \item \textbf{Pre-Registered Synthetic Corpus:} 210 contracts compiled under \texttt{solc} 0.5.12 evaluating reentrancy, mutex protections, and loop boundaries under frozen evaluation protocols.
+\end{enumerate}
+
+\subsection{Detection Results on SmartBugs-Curated}\label{sec:results:detection}
+
+\input{generated_tables.tex}
+
+Table~\ref{tab:detection} presents detection results on SmartBugs-curated. Confidence intervals represent exact two-sided 95\% Clopper--Pearson intervals.
+
+\paragraph{Reentrancy.} EVM-Guard detects 29 of 31 positive files, achieving 93.5\% recall (CI [78.6, 99.2]) and 80.6\% precision with 7 false positives (6.2\% FPR). Slither matches recall (93.5\%, 29 TP) but produces 31 false positives, yielding 48.3\% precision (27.7\% FPR). Mythril detects 7 positives (22.6\% recall, CI [9.6, 41.1]) with 30 false positives (18.9\% precision). Enforcing CFG reachability and gas-stipend bounds eliminates 24 false alarms generated by Slither's syntactic AST rules.
+
+\paragraph{Denial of Service.} EVM-Guard flags 5 of 6 positives, reaching 83.3\% recall (CI [35.9, 99.6]) at 12.8\% precision (34 FP). Slither flags 2 files (33.3\% recall, CI [4.3, 77.7]) and Mythril flags 1 file (16.7\% recall, CI [0.4, 64.1]). Due to small sample size ($N=6$), confidence intervals overlap, precluding claims of statistical superiority.
+
+\paragraph{Access Control.} Mythril leads the category, achieving 72.2\% recall (13 of 18, CI [46.5, 90.3]) at 54.2\% precision. Slither reaches 44.4\% recall (8 TP, 37 FP). EVM-Guard flags 2 files (11.1\% recall, CI [1.4, 34.7]) with zero false alarms (100.0\% precision). EVM-Guard checks calldata-directed delegatecall taint, leaving unauthenticated state-variable setters outside its detection scope.
+
+\paragraph{Arithmetic Construct Mismatch.} SmartBugs labels denote integer overflow and underflow, whereas EVM-Guard checks fixed-point division truncation ($\Phi_{\mathrm{Prec}}$). EVM-Guard flags 1 of 15 overflow files (6.7\% recall) and triggers 80 false alarms on clean files (62.5\% FPR). Slither and Mythril produced zero findings on this category. This represents an empirical construct mismatch between detector design and dataset labeling.
+
+\subsection{Replay Confirmation and Recall Trade-Off}\label{sec:results:replay}
+
+Table~\ref{tab:replay} and Table~\ref{tab:replay_scores} document sandbox execution confirmation. Across 104 static warnings on 216 runtime bytecodes, the sandbox confirms 8 vulnerabilities: 4 reentrancy, 3 loop gas, and 1 delegatecall hijack. All 8 confirmed exploits execute successfully without false alarms (100.0\% confirmation precision).
+
+Enforcing dynamic confirmation reduces file-level reentrancy recall from 93.5\% (29/31) to 12.9\% (4/31). Generic test harnesses cannot synthesize multi-transaction deposit histories or multi-parameter constructor environments required to satisfy complex pre-conditions. Replay filtering operates as a high-assurance validation filter for continuous integration rather than an exhaustive discovery oracle.
+
+\subsection{Ablation Analysis: Mutex Tracking and Stipend Bounds}\label{sec:results:ablation}
+
+Table~\ref{tab:correction} records reentrancy performance under component ablations across all three evaluation suites.
+
+\begin{table}[t]
+\centering
+\small
+\caption{Reentrancy detection ablation: impact of sound gas-stipend bounds and slot-mutex tracking across benchmarks.}
+\label{tab:correction}
+\resizebox{\columnwidth}{!}{%
+\begin{tabular}{@{}lrrrr@{}}
+\toprule
+\textbf{Benchmark Suite} & \multicolumn{2}{c}{\textbf{Without Slot-Mutex \& Stipend}} & \multicolumn{2}{c}{\textbf{Full EVM-Guard Pipeline}} \\
+ & Precision (\%) & FPR (\%) & Precision (\%) & FPR (\%) \\
+\midrule
+SmartBugs-curated (31) & 53.7 & 22.3 & \textbf{80.6} & \textbf{6.2} \\
+SolidiFI Injected (50) & 27.8 & 37.1 & \textbf{58.8} & \textbf{10.0} \\
+Labeled Suite (81) & 46.2 & 29.9 & \textbf{76.0} & \textbf{8.1} \\
+\bottomrule
+\end{tabular}%
+}
+\end{table}
+
+Without gas-stipend bounding, false positives on SmartBugs-curated rise from 7 to 25, dropping precision from 80.6\% to 53.7\% % CHECK: verified ground truth in generated_tables.tex
+because native transfers are flagged as unconstrained calls. On SolidiFI, precision improves from 27.8\% to 58.8\%. On the labeled suite, precision rises from 46.2\% to 76.0\%. True positive identification remains constant across all settings.
+
+\subsection{Generalization on SolidiFI and Labeled Benchmarks}\label{sec:results:heldout}
+
+On SolidiFI (Table~\ref{tab:heldout}), EVM-Guard detects all 50 injected reentrancy contracts (100.0\% recall, CI [92.9, 100.0]) with 35 false alarms, yielding 58.8\% precision. Slither detects all 50 positives with 150 false alarms (25.0\% precision). Mythril completed only 84 of 400 contracts due to 308 solver timeouts, detecting 2 positives (4.0\% recall).
+
+On the 389-contract labeled benchmark (Table~\ref{tab:heldout2}), EVM-Guard reaches 97.5\% recall (79 of 81) at 76.0\% precision with 25 false alarms. Slither achieves 97.5\% recall at 41.6\% precision (111 false alarms). Mythril timed out on 231 files, reaching 17.3\% recall.
+
+\subsection{Execution Latency and Completion}\label{sec:results:runtime}
+
+Table~\ref{tab:runtime} summarizes analysis runtimes. EVM-Guard analyzed all 143 SmartBugs files with zero timeouts or errors, recording a median latency of 87\,ms and a mean of $128 \pm 170$\,ms. Slither averaged $304 \pm 135$\,ms (median 289\,ms) with 2 analysis crashes. Mythril timed out on 37 contracts (25.9\%) and raised 20 errors, averaging $30,288 \pm 24,942$\,ms (median 26,025\,ms). EVM-Guard evaluates compiled bytecode directly, whereas Slither and Mythril invoke the Solidity compiler (\texttt{solc}), introducing compilation latency into baseline measurements.
+
+%% ===========================================================================
+\section{Threats to Validity}\label{sec:threats}
+
+\subsection{Construct Validity}\label{sec:threats:construct}
+SmartBugs ground truth maps contracts to single primary vulnerability categories. Clean contracts containing secondary unannotated vulnerabilities count as false positives. The arithmetic evaluation measures integer overflow rather than division precision loss, producing inflated false-positive metrics.
+
+\subsection{Internal Validity}\label{sec:threats:internal}
+Heuristics were refined iteratively against SmartBugs-curated and SolidiFI corpora; reported metrics reflect tuned benchmark performance rather than unseen production distributions. Bytecode CFG recovery leaves 180 dynamic jumps unresolved across SmartBugs-curated, hiding downstream paths. Bounding loop unrolling to $K = 10$ limits invariant discovery across deep execution traces.
+
+\subsection{External Validity}\label{sec:threats:external}
+SmartBugs contracts average 63.4 source lines and compile under legacy \texttt{solc} versions (0.4.0--0.5.0). Evaluation on 210 synthetic contracts compiled under \texttt{solc} 0.8.20 yielded zero detections. Modern Solidity compilers route internal function calls through shared dispatcher helpers, causing abstract stack intervals to merge and obscuring intra-procedural dataflow.
+
+%% ===========================================================================
+\section{Conclusion}\label{sec:conclusion}
+
+EVM-Guard demonstrates that intra-procedural CFG dataflow tracking combined with sound gas-stipend bounds achieves high reentrancy detection precision on compiled EVM bytecode without source code. On SmartBugs-curated, the framework detects 29 of 31 reentrancy vulnerabilities at 80.6\% precision, reducing false alarms from 31 to 7 compared to Slither. Dynamic sandbox replay confirms candidate vulnerabilities with 100.0\% precision, though automated transaction generation constraints reduce reentrancy recall to 12.9\%. Future work will address inter-procedural call graph reconstruction to support Solidity 0.8 compilation structures.
+
+\section*{Declarations}
+\begin{itemize}
+    \item \textbf{Funding:} This research received no specific grant from any funding agency in the public, commercial, or not-for-profit sectors.
+    \item \textbf{Competing Interests:} The author declares no competing financial or non-financial interests.
+    \item \textbf{Ethics Approval:} Not applicable. This study analyzes publicly available benchmark contract bytecodes and does not involve human participants, animals, or attacks on live networks.
+    \item \textbf{Data Availability:} All evaluation benchmarks, ground truth labels, and baseline logs are available in the public artifact repository.
+    \item \textbf{Code Availability:} The EVM-Guard static analyzer, Z3 constraint specifications, and sandbox replay harnesses are archived open-source.
+    \item \textbf{Author Contributions:} Devarsh Patel is the sole author, responsible for system architecture, implementation, empirical evaluation, and manuscript preparation.
+    \item \textbf{Use of AI Tools:} Generative AI computational tools were utilized strictly for grammatical polish, editorial styling, and LaTeX formatting. All conceptual formulations, formal predicates, and empirical results were independently verified by the author.
+\end{itemize}
+
+\bibliography{references}
+
+\end{document}

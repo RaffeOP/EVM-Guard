@@ -1,0 +1,144 @@
+{
+  "success": true,
+  "error": null,
+  "results": {
+    "detectors": [
+      {
+        "elements": [
+          {
+            "type": "pragma",
+            "name": "^0.8.20",
+            "source_mapping": {
+              "start": 32,
+              "length": 24,
+              "filename_relative": "benchmarks/swc_registry/SWC_SWC_124_Case_062.sol",
+              "filename_absolute": "/Users/raffe/Downloads/RSCH_OS/benchmarks/swc_registry/SWC_SWC_124_Case_062.sol",
+              "filename_short": "benchmarks/swc_registry/SWC_SWC_124_Case_062.sol",
+              "is_dependency": false,
+              "lines": [
+                2
+              ],
+              "starting_column": 1,
+              "ending_column": 25
+            },
+            "type_specific_fields": {
+              "directive": [
+                "solidity",
+                "^",
+                "0.8",
+                ".20"
+              ]
+            }
+          }
+        ],
+        "description": "Version constraint ^0.8.20 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)\n\t- VerbatimInvalidDeduplication\n\t- FullInlinerNonExpressionSplitArgumentEvaluationOrder\n\t- MissingSideEffectsOnSelectorAccess.\nIt is used by:\n\t- ^0.8.20 (benchmarks/swc_registry/SWC_SWC_124_Case_062.sol#2)\n",
+        "markdown": "Version constraint ^0.8.20 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)\n\t- VerbatimInvalidDeduplication\n\t- FullInlinerNonExpressionSplitArgumentEvaluationOrder\n\t- MissingSideEffectsOnSelectorAccess.\nIt is used by:\n\t- [^0.8.20](benchmarks/swc_registry/SWC_SWC_124_Case_062.sol#L2)\n",
+        "first_markdown_element": "benchmarks/swc_registry/SWC_SWC_124_Case_062.sol#L2",
+        "id": "29156e8a21241360e0fc37d1a2671862b1d843c360e07e57f7cc908cc7ad0736",
+        "check": "solc-version",
+        "impact": "Informational",
+        "confidence": "High",
+        "reference": "https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity"
+      },
+      {
+        "elements": [
+          {
+            "type": "contract",
+            "name": "SWC_SWC_124_Case_062",
+            "source_mapping": {
+              "start": 58,
+              "length": 298,
+              "filename_relative": "benchmarks/swc_registry/SWC_SWC_124_Case_062.sol",
+              "filename_absolute": "/Users/raffe/Downloads/RSCH_OS/benchmarks/swc_registry/SWC_SWC_124_Case_062.sol",
+              "filename_short": "benchmarks/swc_registry/SWC_SWC_124_Case_062.sol",
+              "is_dependency": false,
+              "lines": [
+                4,
+                5,
+                6,
+                7,
+                8,
+                9,
+                10,
+                11,
+                12,
+                13
+              ],
+              "starting_column": 1,
+              "ending_column": 0
+            },
+            "additional_fields": {
+              "target": "contract",
+              "convention": "CapWords"
+            }
+          }
+        ],
+        "description": "Contract SWC_SWC_124_Case_062 (benchmarks/swc_registry/SWC_SWC_124_Case_062.sol#4-13) is not in CapWords\n",
+        "markdown": "Contract [SWC_SWC_124_Case_062](benchmarks/swc_registry/SWC_SWC_124_Case_062.sol#L4-L13) is not in CapWords\n",
+        "first_markdown_element": "benchmarks/swc_registry/SWC_SWC_124_Case_062.sol#L4-L13",
+        "id": "d6b5b6349bc3edcc3ddecc9a6a66b050fbaccd91b288665a05548b1bd791eaa0",
+        "check": "naming-convention",
+        "impact": "Informational",
+        "confidence": "High",
+        "reference": "https://github.com/crytic/slither/wiki/Detector-Documentation#conformance-to-solidity-naming-conventions"
+      },
+      {
+        "elements": [
+          {
+            "type": "variable",
+            "name": "owner",
+            "source_mapping": {
+              "start": 206,
+              "length": 20,
+              "filename_relative": "benchmarks/swc_registry/SWC_SWC_124_Case_062.sol",
+              "filename_absolute": "/Users/raffe/Downloads/RSCH_OS/benchmarks/swc_registry/SWC_SWC_124_Case_062.sol",
+              "filename_short": "benchmarks/swc_registry/SWC_SWC_124_Case_062.sol",
+              "is_dependency": false,
+              "lines": [
+                7
+              ],
+              "starting_column": 5,
+              "ending_column": 25
+            },
+            "type_specific_fields": {
+              "parent": {
+                "type": "contract",
+                "name": "SWC_SWC_124_Case_062",
+                "source_mapping": {
+                  "start": 58,
+                  "length": 298,
+                  "filename_relative": "benchmarks/swc_registry/SWC_SWC_124_Case_062.sol",
+                  "filename_absolute": "/Users/raffe/Downloads/RSCH_OS/benchmarks/swc_registry/SWC_SWC_124_Case_062.sol",
+                  "filename_short": "benchmarks/swc_registry/SWC_SWC_124_Case_062.sol",
+                  "is_dependency": false,
+                  "lines": [
+                    4,
+                    5,
+                    6,
+                    7,
+                    8,
+                    9,
+                    10,
+                    11,
+                    12,
+                    13
+                  ],
+                  "starting_column": 1,
+                  "ending_column": 0
+                }
+              }
+            }
+          }
+        ],
+        "description": "SWC_SWC_124_Case_062.owner (benchmarks/swc_registry/SWC_SWC_124_Case_062.sol#7) should be constant \n",
+        "markdown": "[SWC_SWC_124_Case_062.owner](benchmarks/swc_registry/SWC_SWC_124_Case_062.sol#L7) should be constant \n",
+        "first_markdown_element": "benchmarks/swc_registry/SWC_SWC_124_Case_062.sol#L7",
+        "id": "2d0aa0a8b1f0f6df370f67a3d1cb6d1d859a129da3871c51919d949e74bee751",
+        "check": "constable-states",
+        "impact": "Optimization",
+        "confidence": "High",
+        "reference": "https://github.com/crytic/slither/wiki/Detector-Documentation#state-variables-that-could-be-declared-constant"
+      }
+    ]
+  }
+}

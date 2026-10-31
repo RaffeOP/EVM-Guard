@@ -1,0 +1,538 @@
+{
+  "success": true,
+  "error": null,
+  "results": {
+    "detectors": [
+      {
+        "elements": [
+          {
+            "type": "pragma",
+            "name": "^0.8.20",
+            "source_mapping": {
+              "start": 32,
+              "length": 24,
+              "filename_relative": "benchmarks/defi_hack_labs/HarvestFinance_FlashArbitrage.sol",
+              "filename_absolute": "/Users/raffe/Downloads/RSCH_OS/benchmarks/defi_hack_labs/HarvestFinance_FlashArbitrage.sol",
+              "filename_short": "benchmarks/defi_hack_labs/HarvestFinance_FlashArbitrage.sol",
+              "is_dependency": false,
+              "lines": [
+                2
+              ],
+              "starting_column": 1,
+              "ending_column": 25
+            },
+            "type_specific_fields": {
+              "directive": [
+                "solidity",
+                "^",
+                "0.8",
+                ".20"
+              ]
+            }
+          }
+        ],
+        "description": "Version constraint ^0.8.20 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)\n\t- VerbatimInvalidDeduplication\n\t- FullInlinerNonExpressionSplitArgumentEvaluationOrder\n\t- MissingSideEffectsOnSelectorAccess.\nIt is used by:\n\t- ^0.8.20 (benchmarks/defi_hack_labs/HarvestFinance_FlashArbitrage.sol#2)\n",
+        "markdown": "Version constraint ^0.8.20 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)\n\t- VerbatimInvalidDeduplication\n\t- FullInlinerNonExpressionSplitArgumentEvaluationOrder\n\t- MissingSideEffectsOnSelectorAccess.\nIt is used by:\n\t- [^0.8.20](benchmarks/defi_hack_labs/HarvestFinance_FlashArbitrage.sol#L2)\n",
+        "first_markdown_element": "benchmarks/defi_hack_labs/HarvestFinance_FlashArbitrage.sol#L2",
+        "id": "32b10b3376c543e947d7640602c140249bd30e587851642e8034f5443cb7373f",
+        "check": "solc-version",
+        "impact": "Informational",
+        "confidence": "High",
+        "reference": "https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity"
+      },
+      {
+        "elements": [
+          {
+            "type": "contract",
+            "name": "HarvestFinance_FlashArbitrage",
+            "source_mapping": {
+              "start": 58,
+              "length": 499,
+              "filename_relative": "benchmarks/defi_hack_labs/HarvestFinance_FlashArbitrage.sol",
+              "filename_absolute": "/Users/raffe/Downloads/RSCH_OS/benchmarks/defi_hack_labs/HarvestFinance_FlashArbitrage.sol",
+              "filename_short": "benchmarks/defi_hack_labs/HarvestFinance_FlashArbitrage.sol",
+              "is_dependency": false,
+              "lines": [
+                4,
+                5,
+                6,
+                7,
+                8,
+                9,
+                10,
+                11,
+                12,
+                13,
+                14,
+                15,
+                16,
+                17,
+                18
+              ],
+              "starting_column": 1,
+              "ending_column": 0
+            },
+            "additional_fields": {
+              "target": "contract",
+              "convention": "CapWords"
+            }
+          }
+        ],
+        "description": "Contract HarvestFinance_FlashArbitrage (benchmarks/defi_hack_labs/HarvestFinance_FlashArbitrage.sol#4-18) is not in CapWords\n",
+        "markdown": "Contract [HarvestFinance_FlashArbitrage](benchmarks/defi_hack_labs/HarvestFinance_FlashArbitrage.sol#L4-L18) is not in CapWords\n",
+        "first_markdown_element": "benchmarks/defi_hack_labs/HarvestFinance_FlashArbitrage.sol#L4-L18",
+        "id": "a3a5a62d62b7d5edce50188d7ba08fc53a93333174461e7288693b79e4760382",
+        "check": "naming-convention",
+        "impact": "Informational",
+        "confidence": "High",
+        "reference": "https://github.com/crytic/slither/wiki/Detector-Documentation#conformance-to-solidity-naming-conventions"
+      },
+      {
+        "elements": [
+          {
+            "type": "function",
+            "name": "slitherConstructorVariables",
+            "source_mapping": {
+              "start": 58,
+              "length": 499,
+              "filename_relative": "benchmarks/defi_hack_labs/HarvestFinance_FlashArbitrage.sol",
+              "filename_absolute": "/Users/raffe/Downloads/RSCH_OS/benchmarks/defi_hack_labs/HarvestFinance_FlashArbitrage.sol",
+              "filename_short": "benchmarks/defi_hack_labs/HarvestFinance_FlashArbitrage.sol",
+              "is_dependency": false,
+              "lines": [
+                4,
+                5,
+                6,
+                7,
+                8,
+                9,
+                10,
+                11,
+                12,
+                13,
+                14,
+                15,
+                16,
+                17,
+                18
+              ],
+              "starting_column": 1,
+              "ending_column": 0
+            },
+            "type_specific_fields": {
+              "parent": {
+                "type": "contract",
+                "name": "HarvestFinance_FlashArbitrage",
+                "source_mapping": {
+                  "start": 58,
+                  "length": 499,
+                  "filename_relative": "benchmarks/defi_hack_labs/HarvestFinance_FlashArbitrage.sol",
+                  "filename_absolute": "/Users/raffe/Downloads/RSCH_OS/benchmarks/defi_hack_labs/HarvestFinance_FlashArbitrage.sol",
+                  "filename_short": "benchmarks/defi_hack_labs/HarvestFinance_FlashArbitrage.sol",
+                  "is_dependency": false,
+                  "lines": [
+                    4,
+                    5,
+                    6,
+                    7,
+                    8,
+                    9,
+                    10,
+                    11,
+                    12,
+                    13,
+                    14,
+                    15,
+                    16,
+                    17,
+                    18
+                  ],
+                  "starting_column": 1,
+                  "ending_column": 0
+                }
+              },
+              "signature": "slitherConstructorVariables()"
+            }
+          },
+          {
+            "type": "node",
+            "name": "reserveY = 10000000e18",
+            "source_mapping": {
+              "start": 146,
+              "length": 37,
+              "filename_relative": "benchmarks/defi_hack_labs/HarvestFinance_FlashArbitrage.sol",
+              "filename_absolute": "/Users/raffe/Downloads/RSCH_OS/benchmarks/defi_hack_labs/HarvestFinance_FlashArbitrage.sol",
+              "filename_short": "benchmarks/defi_hack_labs/HarvestFinance_FlashArbitrage.sol",
+              "is_dependency": false,
+              "lines": [
+                6
+              ],
+              "starting_column": 5,
+              "ending_column": 42
+            },
+            "type_specific_fields": {
+              "parent": {
+                "type": "function",
+                "name": "slitherConstructorVariables",
+                "source_mapping": {
+                  "start": 58,
+                  "length": 499,
+                  "filename_relative": "benchmarks/defi_hack_labs/HarvestFinance_FlashArbitrage.sol",
+                  "filename_absolute": "/Users/raffe/Downloads/RSCH_OS/benchmarks/defi_hack_labs/HarvestFinance_FlashArbitrage.sol",
+                  "filename_short": "benchmarks/defi_hack_labs/HarvestFinance_FlashArbitrage.sol",
+                  "is_dependency": false,
+                  "lines": [
+                    4,
+                    5,
+                    6,
+                    7,
+                    8,
+                    9,
+                    10,
+                    11,
+                    12,
+                    13,
+                    14,
+                    15,
+                    16,
+                    17,
+                    18
+                  ],
+                  "starting_column": 1,
+                  "ending_column": 0
+                },
+                "type_specific_fields": {
+                  "parent": {
+                    "type": "contract",
+                    "name": "HarvestFinance_FlashArbitrage",
+                    "source_mapping": {
+                      "start": 58,
+                      "length": 499,
+                      "filename_relative": "benchmarks/defi_hack_labs/HarvestFinance_FlashArbitrage.sol",
+                      "filename_absolute": "/Users/raffe/Downloads/RSCH_OS/benchmarks/defi_hack_labs/HarvestFinance_FlashArbitrage.sol",
+                      "filename_short": "benchmarks/defi_hack_labs/HarvestFinance_FlashArbitrage.sol",
+                      "is_dependency": false,
+                      "lines": [
+                        4,
+                        5,
+                        6,
+                        7,
+                        8,
+                        9,
+                        10,
+                        11,
+                        12,
+                        13,
+                        14,
+                        15,
+                        16,
+                        17,
+                        18
+                      ],
+                      "starting_column": 1,
+                      "ending_column": 0
+                    }
+                  },
+                  "signature": "slitherConstructorVariables()"
+                }
+              }
+            }
+          }
+        ],
+        "description": "HarvestFinance_FlashArbitrage.slitherConstructorVariables() (benchmarks/defi_hack_labs/HarvestFinance_FlashArbitrage.sol#4-18) uses literals with too many digits:\n\t- reserveY = 10000000e18 (benchmarks/defi_hack_labs/HarvestFinance_FlashArbitrage.sol#6)\n",
+        "markdown": "[HarvestFinance_FlashArbitrage.slitherConstructorVariables()](benchmarks/defi_hack_labs/HarvestFinance_FlashArbitrage.sol#L4-L18) uses literals with too many digits:\n\t- [reserveY = 10000000e18](benchmarks/defi_hack_labs/HarvestFinance_FlashArbitrage.sol#L6)\n",
+        "first_markdown_element": "benchmarks/defi_hack_labs/HarvestFinance_FlashArbitrage.sol#L4-L18",
+        "id": "0f0453c476790ad36277a3915e67027151aeef0182b2adb170ee71a9313cadf1",
+        "check": "too-many-digits",
+        "impact": "Informational",
+        "confidence": "Medium",
+        "reference": "https://github.com/crytic/slither/wiki/Detector-Documentation#too-many-digits"
+      },
+      {
+        "elements": [
+          {
+            "type": "function",
+            "name": "slitherConstructorVariables",
+            "source_mapping": {
+              "start": 58,
+              "length": 499,
+              "filename_relative": "benchmarks/defi_hack_labs/HarvestFinance_FlashArbitrage.sol",
+              "filename_absolute": "/Users/raffe/Downloads/RSCH_OS/benchmarks/defi_hack_labs/HarvestFinance_FlashArbitrage.sol",
+              "filename_short": "benchmarks/defi_hack_labs/HarvestFinance_FlashArbitrage.sol",
+              "is_dependency": false,
+              "lines": [
+                4,
+                5,
+                6,
+                7,
+                8,
+                9,
+                10,
+                11,
+                12,
+                13,
+                14,
+                15,
+                16,
+                17,
+                18
+              ],
+              "starting_column": 1,
+              "ending_column": 0
+            },
+            "type_specific_fields": {
+              "parent": {
+                "type": "contract",
+                "name": "HarvestFinance_FlashArbitrage",
+                "source_mapping": {
+                  "start": 58,
+                  "length": 499,
+                  "filename_relative": "benchmarks/defi_hack_labs/HarvestFinance_FlashArbitrage.sol",
+                  "filename_absolute": "/Users/raffe/Downloads/RSCH_OS/benchmarks/defi_hack_labs/HarvestFinance_FlashArbitrage.sol",
+                  "filename_short": "benchmarks/defi_hack_labs/HarvestFinance_FlashArbitrage.sol",
+                  "is_dependency": false,
+                  "lines": [
+                    4,
+                    5,
+                    6,
+                    7,
+                    8,
+                    9,
+                    10,
+                    11,
+                    12,
+                    13,
+                    14,
+                    15,
+                    16,
+                    17,
+                    18
+                  ],
+                  "starting_column": 1,
+                  "ending_column": 0
+                }
+              },
+              "signature": "slitherConstructorVariables()"
+            }
+          },
+          {
+            "type": "node",
+            "name": "reserveX = 10000000e18",
+            "source_mapping": {
+              "start": 103,
+              "length": 37,
+              "filename_relative": "benchmarks/defi_hack_labs/HarvestFinance_FlashArbitrage.sol",
+              "filename_absolute": "/Users/raffe/Downloads/RSCH_OS/benchmarks/defi_hack_labs/HarvestFinance_FlashArbitrage.sol",
+              "filename_short": "benchmarks/defi_hack_labs/HarvestFinance_FlashArbitrage.sol",
+              "is_dependency": false,
+              "lines": [
+                5
+              ],
+              "starting_column": 5,
+              "ending_column": 42
+            },
+            "type_specific_fields": {
+              "parent": {
+                "type": "function",
+                "name": "slitherConstructorVariables",
+                "source_mapping": {
+                  "start": 58,
+                  "length": 499,
+                  "filename_relative": "benchmarks/defi_hack_labs/HarvestFinance_FlashArbitrage.sol",
+                  "filename_absolute": "/Users/raffe/Downloads/RSCH_OS/benchmarks/defi_hack_labs/HarvestFinance_FlashArbitrage.sol",
+                  "filename_short": "benchmarks/defi_hack_labs/HarvestFinance_FlashArbitrage.sol",
+                  "is_dependency": false,
+                  "lines": [
+                    4,
+                    5,
+                    6,
+                    7,
+                    8,
+                    9,
+                    10,
+                    11,
+                    12,
+                    13,
+                    14,
+                    15,
+                    16,
+                    17,
+                    18
+                  ],
+                  "starting_column": 1,
+                  "ending_column": 0
+                },
+                "type_specific_fields": {
+                  "parent": {
+                    "type": "contract",
+                    "name": "HarvestFinance_FlashArbitrage",
+                    "source_mapping": {
+                      "start": 58,
+                      "length": 499,
+                      "filename_relative": "benchmarks/defi_hack_labs/HarvestFinance_FlashArbitrage.sol",
+                      "filename_absolute": "/Users/raffe/Downloads/RSCH_OS/benchmarks/defi_hack_labs/HarvestFinance_FlashArbitrage.sol",
+                      "filename_short": "benchmarks/defi_hack_labs/HarvestFinance_FlashArbitrage.sol",
+                      "is_dependency": false,
+                      "lines": [
+                        4,
+                        5,
+                        6,
+                        7,
+                        8,
+                        9,
+                        10,
+                        11,
+                        12,
+                        13,
+                        14,
+                        15,
+                        16,
+                        17,
+                        18
+                      ],
+                      "starting_column": 1,
+                      "ending_column": 0
+                    }
+                  },
+                  "signature": "slitherConstructorVariables()"
+                }
+              }
+            }
+          }
+        ],
+        "description": "HarvestFinance_FlashArbitrage.slitherConstructorVariables() (benchmarks/defi_hack_labs/HarvestFinance_FlashArbitrage.sol#4-18) uses literals with too many digits:\n\t- reserveX = 10000000e18 (benchmarks/defi_hack_labs/HarvestFinance_FlashArbitrage.sol#5)\n",
+        "markdown": "[HarvestFinance_FlashArbitrage.slitherConstructorVariables()](benchmarks/defi_hack_labs/HarvestFinance_FlashArbitrage.sol#L4-L18) uses literals with too many digits:\n\t- [reserveX = 10000000e18](benchmarks/defi_hack_labs/HarvestFinance_FlashArbitrage.sol#L5)\n",
+        "first_markdown_element": "benchmarks/defi_hack_labs/HarvestFinance_FlashArbitrage.sol#L4-L18",
+        "id": "9111001043da2515246e2d246a3fa186cfcd9295443383e969bac756ee7ee552",
+        "check": "too-many-digits",
+        "impact": "Informational",
+        "confidence": "Medium",
+        "reference": "https://github.com/crytic/slither/wiki/Detector-Documentation#too-many-digits"
+      },
+      {
+        "elements": [
+          {
+            "type": "variable",
+            "name": "reserveX",
+            "source_mapping": {
+              "start": 103,
+              "length": 37,
+              "filename_relative": "benchmarks/defi_hack_labs/HarvestFinance_FlashArbitrage.sol",
+              "filename_absolute": "/Users/raffe/Downloads/RSCH_OS/benchmarks/defi_hack_labs/HarvestFinance_FlashArbitrage.sol",
+              "filename_short": "benchmarks/defi_hack_labs/HarvestFinance_FlashArbitrage.sol",
+              "is_dependency": false,
+              "lines": [
+                5
+              ],
+              "starting_column": 5,
+              "ending_column": 42
+            },
+            "type_specific_fields": {
+              "parent": {
+                "type": "contract",
+                "name": "HarvestFinance_FlashArbitrage",
+                "source_mapping": {
+                  "start": 58,
+                  "length": 499,
+                  "filename_relative": "benchmarks/defi_hack_labs/HarvestFinance_FlashArbitrage.sol",
+                  "filename_absolute": "/Users/raffe/Downloads/RSCH_OS/benchmarks/defi_hack_labs/HarvestFinance_FlashArbitrage.sol",
+                  "filename_short": "benchmarks/defi_hack_labs/HarvestFinance_FlashArbitrage.sol",
+                  "is_dependency": false,
+                  "lines": [
+                    4,
+                    5,
+                    6,
+                    7,
+                    8,
+                    9,
+                    10,
+                    11,
+                    12,
+                    13,
+                    14,
+                    15,
+                    16,
+                    17,
+                    18
+                  ],
+                  "starting_column": 1,
+                  "ending_column": 0
+                }
+              }
+            }
+          }
+        ],
+        "description": "HarvestFinance_FlashArbitrage.reserveX (benchmarks/defi_hack_labs/HarvestFinance_FlashArbitrage.sol#5) should be constant \n",
+        "markdown": "[HarvestFinance_FlashArbitrage.reserveX](benchmarks/defi_hack_labs/HarvestFinance_FlashArbitrage.sol#L5) should be constant \n",
+        "first_markdown_element": "benchmarks/defi_hack_labs/HarvestFinance_FlashArbitrage.sol#L5",
+        "id": "62a50c11535d83337313dec402664f0700a6a45415ea180f175aa6f1db47efb6",
+        "check": "constable-states",
+        "impact": "Optimization",
+        "confidence": "High",
+        "reference": "https://github.com/crytic/slither/wiki/Detector-Documentation#state-variables-that-could-be-declared-constant"
+      },
+      {
+        "elements": [
+          {
+            "type": "variable",
+            "name": "reserveY",
+            "source_mapping": {
+              "start": 146,
+              "length": 37,
+              "filename_relative": "benchmarks/defi_hack_labs/HarvestFinance_FlashArbitrage.sol",
+              "filename_absolute": "/Users/raffe/Downloads/RSCH_OS/benchmarks/defi_hack_labs/HarvestFinance_FlashArbitrage.sol",
+              "filename_short": "benchmarks/defi_hack_labs/HarvestFinance_FlashArbitrage.sol",
+              "is_dependency": false,
+              "lines": [
+                6
+              ],
+              "starting_column": 5,
+              "ending_column": 42
+            },
+            "type_specific_fields": {
+              "parent": {
+                "type": "contract",
+                "name": "HarvestFinance_FlashArbitrage",
+                "source_mapping": {
+                  "start": 58,
+                  "length": 499,
+                  "filename_relative": "benchmarks/defi_hack_labs/HarvestFinance_FlashArbitrage.sol",
+                  "filename_absolute": "/Users/raffe/Downloads/RSCH_OS/benchmarks/defi_hack_labs/HarvestFinance_FlashArbitrage.sol",
+                  "filename_short": "benchmarks/defi_hack_labs/HarvestFinance_FlashArbitrage.sol",
+                  "is_dependency": false,
+                  "lines": [
+                    4,
+                    5,
+                    6,
+                    7,
+                    8,
+                    9,
+                    10,
+                    11,
+                    12,
+                    13,
+                    14,
+                    15,
+                    16,
+                    17,
+                    18
+                  ],
+                  "starting_column": 1,
+                  "ending_column": 0
+                }
+              }
+            }
+          }
+        ],
+        "description": "HarvestFinance_FlashArbitrage.reserveY (benchmarks/defi_hack_labs/HarvestFinance_FlashArbitrage.sol#6) should be constant \n",
+        "markdown": "[HarvestFinance_FlashArbitrage.reserveY](benchmarks/defi_hack_labs/HarvestFinance_FlashArbitrage.sol#L6) should be constant \n",
+        "first_markdown_element": "benchmarks/defi_hack_labs/HarvestFinance_FlashArbitrage.sol#L6",
+        "id": "c1bc9d4be66bbc5de11537a4b8cb26208ee9ca9f07859fa0eb1b3f33d6e3df71",
+        "check": "constable-states",
+        "impact": "Optimization",
+        "confidence": "High",
+        "reference": "https://github.com/crytic/slither/wiki/Detector-Documentation#state-variables-that-could-be-declared-constant"
+      }
+    ]
+  }
+}
