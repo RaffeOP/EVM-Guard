@@ -102,6 +102,16 @@ def attacker_code() -> bytes:
     return assemble(items)
 
 
+def passive_attacker_code() -> bytes:
+    """Control for the witness replay: forwards outer calls like the attacker, but a receipt only
+    stops, so the victim's call completes without re-entry."""
+    items: List[Item] = ["CALLDATASIZE", "ISZERO", label_ref("receive"), "JUMPI"]
+    items += _store_outer_calldata()
+    items += _forward_outer_call()
+    items += [("LABEL", "receive"), "JUMPDEST", "STOP"]
+    return assemble(items)
+
+
 def delegatecall_probe_code() -> bytes:
     """Probe logic: writes 0x2a to slot 0x5afe of whichever context runs it."""
     return assemble(push(0x2A, 1) + push(PROBE_MARK_SLOT, 2) + ["SSTORE", "STOP"])
@@ -111,4 +121,5 @@ PROBE_MARK_SLOT = 0x5AFE
 PROBE_MARK_VALUE = 0x2A
 PROBE_CODE = delegatecall_probe_code()
 ATTACKER_CODE = attacker_code()
+PASSIVE_ATTACKER_CODE = passive_attacker_code()
 PROBE_ARGUMENT_WORDS = address_word(PROBE_ADDRESS) * CALLDATA_WORDS

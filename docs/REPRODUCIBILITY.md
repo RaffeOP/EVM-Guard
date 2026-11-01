@@ -63,3 +63,46 @@ On 2026-10-31 the flags of every file on all five corpora matched the archived v
 Slither 0.11.6 and Mythril 0.24.8 are run by `src/eval/run_external_baselines.py`. They
 were not rerun on 2026-10-31; their archived outputs are in `results/external/`,
 `results/heldout/`, `results/heldout2/` and the synthetic-test folders.
+
+## Round-3 additions (2026-11-01)
+
+`reproduce.sh` still reruns engine v5 only; it now passes the engine name `v5` to
+`src/eval/run_external_eval.py`, whose default is v6. The runs below are not part of the
+one-command script, because three of them need Docker or Java and one needs a chain node.
+
+### Engine v6 and protocol 7
+
+- Frozen sources: `archive/engine_v6/` with `MANIFEST.sha256`; check with
+  `(cd src && shasum -a 256 -c ../archive/engine_v6/MANIFEST.sha256)`.
+- Protocol, rubric and digests: `docs/ENGINE_V6_EVAL_PROTOCOL.md`,
+  `docs/LABELLING_RUBRIC.md`, `docs/ENGINE_V6_EVAL_FREEZE.sha256`; post-freeze changes to
+  two non-engine files are in `docs/ENGINE_V6_EVAL_ADDENDUM.md`.
+- Run: `python src/eval/run_external_eval.py <catalog> <out> v6` (or `v5`) for
+  `benchmarks/heldout_catalog.json`, `heldout2_catalog.json`, `injected05d_catalog.json`,
+  `injected8c_catalog.json` and `mainnet_catalog.json`. Outputs: `results/protocol7/{v5,v6}/`
+  (mainnet in three shards). Score with `python src/eval/score_protocol7.py`
+  → `results/protocol7/scores.json`.
+- Mainnet corpus: `python src/eval/build_mainnet_catalog.py <sanctuary contracts.json> <rpc url>`
+  (sanctuary commit `015d0105`, block 26,319,084 recorded in the catalog). The runtime code
+  is written to `benchmarks/mainnet/*.bin-runtime`, which is not committed.
+- Hand-check sample: `src/eval/draw_mainnet_sample.py`, `src/eval/blind_export.py`; locked
+  labels `results/protocol7/mainnet_labels_blind.csv` (digest in `.sha256`); scores
+  `python src/eval/score_mainnet_sample.py` → `results/protocol7/mainnet_sample_scores.json`.
+  The blind key, the sampled sources and the sample catalog are not committed (see
+  `.gitignore` and `docs/DISCLOSURE_LOG.md`). Second-rater agreement:
+  `src/eval/rater_agreement.py`.
+- Tests: `python -m unittest tests.test_v6_engine` (fixtures in `tests/fixtures/`).
+
+### Baselines (round 3)
+
+| Tool | Runner | Notes |
+|---|---|---|
+| Slither 0.11.6 | `src/eval/run_external_baselines.py --tool slither` | records detector names (`raw_findings`); scored mapped and strict |
+| EVMLiSA @ `44ae6dd` | `src/eval/run_evmlisa.py` | JDK 21; 60 s; `--rerun-from … --jar <no-dump build> --timeout 600` for the sensitivity rerun |
+| eThor | `src/eval/run_ethor.py` | `smartbugs/ethor:2023`, amd64 under emulation, 120 s, at most 3 containers in a 6 GB Docker VM; SmartBugs and Protocol 6 only |
+| Sailfish | `src/eval/run_sailfish_static.py` | static stage only; the Racket verifier aborts under amd64 emulation (`results/baselines_round3/sailfish/*.log`) |
+
+Score all with `python src/eval/score_baselines_round3.py` → `results/baselines_round3/scores.json`.
+Paired tests for the original baselines: `python src/eval/paired_stats.py` →
+`results/statistics/paired_tests.json`. A first eThor run with four containers in a 4 GB VM
+starved the containers of memory and is kept, unused, in `results/baselines_round3/_discarded/`.

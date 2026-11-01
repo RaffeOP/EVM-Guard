@@ -1,0 +1,121 @@
+blind_id,label,function,justification
+C001,not-exploitable,bankWithdraw,Calls go to the caller-supplied account contract; this contract sends no ether on the path and re-entry only alters the attacker's own pending entry.
+C002,not-exploitable,executeTransaction,Multisig execution: owner-only and executed is set before the call so notExecuted blocks re-entry.
+C003,not-exploitable,approveAndCall/claimDividend,No storage write after the spender callback; dividend payout uses transfer (stipend); controller is admin-set.
+C004,not-exploitable,_escrow/_transfer,Calls go only to the fixed NFT contract.
+C005,not-exploitable,depositToken,Re-entry through a caller-supplied token only credits balances of that same worthless token; withdrawals are admin-only.
+C006,not-exploitable,fallback,Only calls the fixed token contract (mint).
+C007,not-exploitable,receiveApproval/executeProposal,Token callback writes nothing afterwards; proposal execution is member-only and sets executed before the call.
+C008,not-exploitable,buyListing,Callee token is the seller's own; re-entry makes the attacker pay itself and gains nothing; ether goes out by transfer (stipend).
+C009,not-exploitable,approveAndCall/P3DDivstocontract,No write after the spender callback; other callees are fixed contracts.
+C010,not-exploitable,executeTransaction,Multisig: executed set before the call; destination fixed by owner confirmations.
+C011,not-exploitable,withdrawToken,Balances updated before the token transfer (checks-effects-interactions).
+C012,not-exploitable,withdraw/withdrawToken,Balance debited before call.value / token transfer; account-levels contract is admin-set.
+C015,not-exploitable,buyTicketsFor,Only the fixed token contract is called; change returned by transfer (stipend).
+C016,not-exploitable,__callback,Oraclize callback restricted to the oracle; no attacker callee.
+C017,not-exploitable,buyTokens,Only the fixed token contract is called; refund by transfer (stipend).
+C018,not-exploitable,withdraw/withdrawToken,Balance debited before call.value / token transfer.
+C019,not-exploitable,distributeExternal/endRound,Calls go to admin addresses and a fixed dividend contract.
+C020,not-exploitable,commonWithdraw/depositToken,Balance debited before call.value; a caller-supplied token can only credit itself.
+C021,not-exploitable,executeTransaction,Multisig: executed set before the call; destination fixed by owner confirmations.
+C022,not-exploitable,checkAndCallSafeTransfer,ERC721 receiver hook runs after the ownership update; nothing is written afterwards.
+C023,not-exploitable,depositToken/migrateFunds,Caller-supplied token credits only itself; migrateFunds zeroes balances before calling the new exchange.
+C024,not-exploitable,collectAirDropTokenBack,Owner-only calls to fixed token contracts.
+C025,not-exploitable,executeTransaction,Multisig: owner-only; executed set before the call.
+C027,not-exploitable,_escrow/_transfer,Calls go only to the fixed NFT contract.
+C029,not-exploitable,buy,Callees are fixed (finance and jackpot by transfer; fixed share contract); buyer gains nothing from re-entry.
+C030,not-exploitable,_escrow/_transfer,Calls go only to the fixed core NFT contract.
+C032,not-exploitable,processCallback,tokenFallback runs after balances are updated; nothing is written afterwards.
+C033,not-exploitable,approveAndCall/claimDividend,No write after the spender callback; dividend payout by transfer (stipend).
+C034,not-exploitable,transferToken,All calls are owner-only.
+C036,not-exploitable,buy/cancelAuction,Auction deleted before payouts; payouts by transfer (stipend); NFT contract fixed.
+C038,not-exploitable,distributeExternal/endRound,Calls go to admin and a fixed whale contract.
+C028,not-exploitable,_assignBuyoutProceeds,Payouts use send (stipend) with pull-payment fallback; the holding contract is fixed.
+C037,not-exploitable,createAuction/bid,Re-entry through a seller-supplied token only creates auctions of that same token; no ether or other state is gained.
+C040,not-exploitable,executeTransaction,Multisig: executed set before the call; destination fixed by owner confirmations.
+C041,not-exploitable,contribute,Only the fixed reward token is called.
+C044,not-exploitable,withdrawToken,Owner-only token withdrawal.
+C045,not-exploitable,completeBooking/repossessBooking,All token calls go to the fixed unicorn token; the grove index is fixed.
+C046,not-exploitable,executeTransaction,Multisig: executed set before the call; destination fixed by owner confirmations.
+C047,not-exploitable,execute/confirm,Owner-only wallet; the destination cannot re-enter confirm because it is not an owner.
+C048,not-exploitable,transfer/onTokenTransfer,Listener contract is fixed by the owner; nothing is written after the hook.
+C049,not-exploitable,_bid,Auction removed before payouts; payouts by transfer (stipend); NFT contract fixed.
+C051,not-exploitable,withdrawPayout,Only the beneficiary is paid and nothing is written after the call.
+C052,not-exploitable,endRound/distributeExternal,Calls go only to the fixed team contract.
+C053,not-exploitable,withdrawDifferentToken,Owner-only.
+C054,not-exploitable,_escrow/_transfer,Calls go only to the fixed NFT contract.
+C055,not-exploitable,executeTransaction,Multisig: executed set before the call; destination fixed by owner confirmations.
+C057,not-exploitable,distributeExternal/endRound,Calls go only to the admin address.
+C058,not-exploitable,distributeExternal/endRound,Calls go only to the admin address.
+C059,not-exploitable,executeTransaction,Multisig: executed set before the call; destination fixed by owner confirmations.
+C060,not-exploitable,claim,Only the fixed sale token is called.
+C061,not-exploitable,executeTransaction,Multisig: executed set before the call; destination fixed by owner confirmations.
+C062,not-exploitable,distributeExternal/endRound,Calls go only to the admin address.
+C063,not-exploitable,withdrawToken/depositToken,Whitelisted tokens only; balance debited before the transfer.
+C064,not-exploitable,distributeExternal/endRound,Calls go only to the fixed coin_base address.
+C065,not-exploitable,doTrade,Tokens and OTC are admin-set; ether leaves by transfer (stipend).
+C066,not-exploitable,withdraw,EOA-only (tx.origin check); payouts by transfer; admin callee fixed.
+C067,not-exploitable,buyListing,Listing deleted before the call; NFT contract fixed; payout by transfer.
+C068,not-exploitable,openBoxes,Only the fixed VRC/VCX token contracts are called.
+C069,not-exploitable,receiveApproval,Only the fixed GZE token is accepted and called; price feeds are fixed.
+C070,not-exploitable,executeTransaction/contractTokenWithdraw,Multisig with executed set first; token is the fixed ZTH contract.
+C071,not-exploitable,withdrawReward,Payout uses transfer (stipend); the 2300 gas forwarded cannot re-enter.
+C073,not-exploitable,endRound/mintDRSCoin,Calls go only to the fixed DRS coin contract.
+C075,not-exploitable,allocateTokens/mintInternal,Only the fixed token contract is called.
+C076,not-exploitable,executeTransaction,Daily-limit multisig: executed set before the call; destination fixed by owners.
+C077,not-exploitable,forceRefund,Owner-only refund by transfer (stipend).
+C078,not-exploitable,executeTxn,Owner-only; the owner-chosen destination cannot re-enter because it is not an owner.
+C079,not-exploitable,__callback,Oraclize callback restricted to the oracle.
+C080,not-exploitable,endRound/distributeExternal,Calls go only to the fixed corp contract.
+C081,not-exploitable,_deliverTokens,Only the fixed sale token is called.
+C082,not-exploitable,executeTransaction,Multisig: owner-only; executed set before the call.
+C083,not-exploitable,processCallback,tokenFallback runs after balances are updated; nothing is written afterwards.
+C084,not-exploitable,executeTransaction,Multisig: executed set before the call; destination fixed by owner confirmations.
+C085,not-exploitable,payToken,Re-entry through a caller-supplied token only writes a payment record the caller could write directly.
+C087,not-exploitable,distributeExternal/endRound,FoMo3D clone; calls go only to fixed company/admin addresses.
+C088,not-exploitable,executeTransaction,Multisig: executed set before the call; destination fixed by owner confirmations.
+C090,not-exploitable,executeTransaction,Multisig: executed set before the call; destination fixed by owner confirmations.
+C092,not-exploitable,distributeExternal,Calls go only to the fixed admin and share-company addresses.
+C093,not-exploitable,handleETH/finalize,Only the fixed GXC token is called; refunds are pull payments.
+C095,not-exploitable,executeTransaction,Multisig: owner-only; executed set before the call.
+C096,exploitable,payout,"payout() is public and forwards 1,000,000 gas to a depositor (participants[payoutOrder].etherAddress.call.value) but advances payoutOrder only after the call and keeps a stale local balance; a depositor contract that re-enters payout() lets the outer loop advance payoutOrder over the remaining queue while every later call fails for lack of funds, so the backlog of other depositors is skipped and the attacker's later deposits are paid first."
+C097,not-exploitable,buy/cancel,Order marked inactive before the NFT transfer; NFT contract fixed; seller paid by transfer (stipend).
+C098,not-exploitable,payout,"The call.value fallback forwards gas, but the typo balance =- investment makes the loop run past the participants array, so every payout() transaction reverts and no re-entrant gain persists."
+C099,not-exploitable,_escrow/_transfer,Calls go only to the fixed NFT contract.
+C101,not-exploitable,contribute/finished,Only the fixed reward token is called; creator paid by send.
+C102,not-exploitable,fireLottery,Reward paid by transfer (stipend).
+C103,not-exploitable,executeTransaction,Multisig: executed set before the call; destination fixed by owner confirmations.
+C105,not-exploitable,withdraw/withdrawNoLimit/depositToken,Balances debited before send/transfer; a caller-supplied token can only credit itself.
+C106,not-exploitable,endRound/distributeExternal,Calls go only to the fixed Jekyll Island contract.
+C108,not-exploitable,bidDkl/withdrawDekla,Calls go only to the fixed Dekla token and NFT contracts; balances debited before transfer.
+C110,not-exploitable,executeEtherDeltaSell/destroy,Trader-only and owner-only functions.
+C111,not-exploitable,bet,The payout is an internal balance update (transferInner); the only external call is the fixed token contract.
+C112,not-exploitable,fallback,Only the fixed reward token is called; balance set before the call.
+C115,not-exploitable,transfer/claimRefund,ERC223 hook runs after balances are updated; sale token fixed.
+C117,not-exploitable,distributeExternal/endRound,Calls go only to fixed Jekyll Island/Divies/other-F3D contracts.
+C119,not-exploitable,mint/sendToOwners,Only the fixed token contract is called; ether leaves by transfer (stipend).
+C120,not-exploitable,abortGame/withdrawArbFunds,Each pot or holdover is zeroed before the 21000-gas call; nothing can be withdrawn twice.
+C013,not-exploitable,(oracle callbacks),Only the Oraclize resolver is called; payouts by transfer (stipend).
+C014,not-exploitable,executeTransaction,Gnosis multisig: owner-only and executed set before external_call.
+C026,not-exploitable,(payouts),Ether leaves only by send (stipend); oracle is the Oraclize resolver.
+C031,not-exploitable,(payouts),Ether leaves only by transfer (stipend); oracle is the Oraclize resolver.
+C035,not-exploitable,(payouts),Ether leaves only by send (stipend); oracle is the Oraclize resolver.
+C039,not-exploitable,(purchase),Ether leaves only by transfer (stipend).
+C042,not-exploitable,(payouts),Ether leaves only by transfer (stipend); oracle is the Oraclize resolver.
+C043,not-exploitable,(purchase),Ether leaves only by transfer (stipend).
+C050,not-exploitable,(payouts),Ether leaves only by send (stipend); oracle is the Oraclize resolver.
+C056,not-exploitable,(P3D buy),Only the fixed P3D contract is called.
+C072,not-exploitable,(sell),Ether leaves only by transfer (stipend).
+C074,not-exploitable,(payouts),Ether leaves only by send (stipend).
+C086,not-exploitable,(withdraw),Ether leaves only by transfer (stipend).
+C089,not-exploitable,(payouts),Ether leaves only by transfer (stipend); oracle is the Oraclize resolver.
+C091,not-exploitable,(withdraw),Ether leaves only by transfer (stipend).
+C094,not-exploitable,(payouts),Ether leaves only by transfer (stipend); oracle is the Oraclize resolver.
+C100,not-exploitable,(payouts),Ether leaves only by send (stipend).
+C104,not-exploitable,(sell/withdraw),Calls go to the fixed MoonInc contract; ether out by transfer (stipend).
+C107,not-exploitable,executeTransaction,Gnosis multisig: owner-only and executed set before external_call.
+C109,not-exploitable,(buy),Calls go to the fixed exchange contract; ether out by send/transfer (stipend).
+C113,not-exploitable,(payouts),Ether leaves only by send (stipend).
+C114,not-exploitable,executeTransaction,Gnosis multisig: owner-only and executed set before external_call.
+C116,not-exploitable,(P3D buy),Only the fixed P3D contract is called; ether out by transfer (stipend).
+C118,not-exploitable,(withdraw),Ether leaves only by transfer (stipend).

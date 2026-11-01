@@ -1,0 +1,2 @@
+contract_id,labels,status,flagged_categories,latency_ms,raw_findings
+bad_randomness__smart_billions,bad_randomness,ok,reentrancy,268266.29,reentrancy=7

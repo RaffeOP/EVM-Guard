@@ -98,20 +98,20 @@ class Z3EVMEncoder:
                 "bit_width": 256,
                 "economic_loss_wei": hex(economic_loss),
                 "vulnerability": "SWC-101 (Precision Loss / Rounding Decay)",
-                "proof": "Witness for the fixed template in BV_256: Non-zero remainder accumulates economic loss exceeding gas fee",
+                "note": "Witness for the fixed template in BV_256: Non-zero remainder accumulates economic loss exceeding gas fee",
                 "solver_theory": "QF_BV (exact BV256 re-check)"
             }
             return "SAT", witness
         elif res == z3.unsat:
             return "UNSAT", {
                 "status": "UNSAT",
-                "proof": "No witness for the fixed template: Precision truncation strictly bounded by zero remainder invariant",
+                "note": "No witness for the fixed template: Precision truncation strictly bounded by zero remainder invariant",
                 "solver_theory": "QF_BV"
             }
         else:
             return "UNKNOWN", {
                 "status": "UNKNOWN",
-                "proof": "Solver timeout on non-linear modular constraints",
+                "note": "Solver timeout on non-linear modular constraints",
                 "solver_theory": "QF_BV"
             }
 
@@ -179,20 +179,20 @@ class Z3EVMEncoder:
                 "settled_view_ratio": hex(s_ratio),
                 "bit_width": 256,
                 "vulnerability": "SWC-107 (Cross-Contract Read-Only Reentrancy)",
-                "proof": "Witness for the fixed template in BV_256: Intermediate view oracle divergence during unsettled external call frame",
+                "note": "Witness for the fixed template in BV_256: Intermediate view oracle divergence during unsettled external call frame",
                 "solver_theory": "QF_BV"
             }
             return "SAT", witness
         elif res == z3.unsat:
             return "UNSAT", {
                 "status": "UNSAT",
-                "proof": "Witness for the fixed template: View function invariant holds across all external call boundaries",
+                "note": "Witness for the fixed template: View function invariant holds across all external call boundaries",
                 "solver_theory": "QF_BV"
             }
         else:
             return "UNKNOWN", {
                 "status": "UNKNOWN",
-                "proof": "Solver timeout on state transition invariants",
+                "note": "Solver timeout on state transition invariants",
                 "solver_theory": "QF_BV"
             }
 
@@ -246,13 +246,13 @@ class Z3EVMEncoder:
                     "colliding_slot_witness": hex(witness_slot),
                     "colliding_slots": collisions,
                     "vulnerability": "SWC-124 (Proxy Storage-Slot Layout Collision)",
-                    "proof": f"Witness for the fixed template via SMT array theory (QF_ABV): Slot {hex(witness_slot)} exhibits layout mutation across versions",
+                    "note": f"Witness for the fixed template via SMT array theory (QF_ABV): Slot {hex(witness_slot)} exhibits layout mutation across versions",
                     "solver_theory": "QF_ABV (SMT Array Theory)"
                 }
                 return "SAT", witness
         return "UNSAT", {
             "status": "UNSAT",
-            "proof": "Witness for the fixed template via SMT array theory (QF_ABV): Upgraded storage layout is 100% memory-aligned with base implementation",
+            "note": "Witness for the fixed template via SMT array theory (QF_ABV): Upgraded storage layout is 100% memory-aligned with base implementation",
             "solver_theory": "QF_ABV (SMT Array Theory)"
         }
 
@@ -275,7 +275,7 @@ class Z3EVMEncoder:
         if not is_mutator_unrestricted:
             return "UNSAT", {
                 "status": "UNSAT",
-                "proof": "No witness for the fixed template: Array length mutator protected by access-control invariant",
+                "note": "No witness for the fixed template: Array length mutator protected by access-control invariant",
                 "solver_theory": "QF_BV"
             }
             
@@ -305,14 +305,14 @@ class Z3EVMEncoder:
                 "projected_gas_consumption": base_gas + (crit_n * step_gas),
                 "block_gas_limit": block_gas_limit,
                 "vulnerability": "SWC-128 (DoS with Block Gas Limit via Unbounded Loop)",
-                "proof": f"Witness for the fixed template in BV_256: Attacker can exhaust 30M block gas limit after {crit_n} pushes",
+                "note": f"Witness for the fixed template in BV_256: Attacker can exhaust 30M block gas limit after {crit_n} pushes",
                 "solver_theory": "QF_BV"
             }
             return "SAT", witness
         else:
             return "UNSAT", {
                 "status": "UNSAT",
-                "proof": "Witness for the fixed template: Loop execution bounded within block gas limit",
+                "note": "Witness for the fixed template: Loop execution bounded within block gas limit",
                 "solver_theory": "QF_BV"
             }
 
@@ -360,14 +360,14 @@ class Z3EVMEncoder:
                 "status": "SAT",
                 "tainted_target": hex(attacker_addr_int),
                 "vulnerability": "SWC-112 (Delegatecall to Untrusted Target)",
-                "proof": "Formally verified in BV_160: Delegatecall target register satisfies arbitrary attacker address taint under path constraints",
+                "note": "Witness for the fixed template in BV_160: the taint flag set by the check admits an attacker-chosen target",
                 "solver_theory": "QF_BV"
             }
             return "SAT", witness
         else:
             return "UNSAT", {
                 "status": "UNSAT",
-                "proof": "No witness for the fixed template: Delegatecall target register is strictly refuted by path constraints or immutable constant address",
+                "note": "No witness for the fixed template: Delegatecall target register is strictly refuted by path constraints or immutable constant address",
                 "solver_theory": "QF_BV"
             }
 
@@ -419,14 +419,14 @@ class Z3EVMEncoder:
                 "manipulated_spot_price": hex(manipulated_price),
                 "price_shift_bps": price_shift_bps,
                 "vulnerability": "SWC-114 (Transaction Order Dependence / Single-Block Oracle Collapse)",
-                "proof": f"Witness for the fixed template in BV_256: Instantaneous reserve shift induces {price_shift_bps/100:.2f}% price distortion exceeding {tolerance_bps/100:.2f}% threshold",
+                "note": f"Witness for the fixed template in BV_256: Instantaneous reserve shift induces {price_shift_bps/100:.2f}% price distortion exceeding {tolerance_bps/100:.2f}% threshold",
                 "solver_theory": "QF_BV (exact BV256 re-check)"
             }
             return "SAT", witness
         else:
             return "UNSAT", {
                 "status": "UNSAT",
-                "proof": "No witness for the fixed template: Protocol oracle incorporates TWAP or manipulation resistance",
+                "note": "No witness for the fixed template: Protocol oracle incorporates TWAP or manipulation resistance",
                 "solver_theory": "QF_BV"
             }
 
@@ -441,7 +441,7 @@ def main():
     print("\n[+] 1. Evaluating SWC-101 (Precision Loss) in BV_256...")
     status, wit = encoder.encode_swc101_precision_loss()
     print(f"    Status: {status} | Theory: {wit.get('solver_theory')} | Bit-Width: {wit.get('bit_width')}")
-    print(f"    Note:   {wit.get('proof')}")
+    print(f"    Note:   {wit.get('note')}")
     
     print("\n[+] 2. Evaluating SWC-107 (Read-Only Reentrancy) in BV_256...")
     status, wit = encoder.encode_swc107_read_only_reentrancy()
@@ -453,22 +453,22 @@ def main():
     v2 = [{"slot": 0, "name": "multiplier", "type": "uint256", "bit_width": 256}]
     status, wit = encoder.encode_swc124_proxy_storage_collision(v1, v2)
     print(f"    Status: {status} | Collisions: {len(wit.get('colliding_slots', []))}")
-    print(f"    Note:   {wit.get('proof')}")
+    print(f"    Note:   {wit.get('note')}")
     
     print("\n[+] 4. Evaluating SWC-128 (Unbounded Loop Gas DoS) in BV_256...")
     status, wit = encoder.encode_swc128_unbounded_loop_gas_dos()
     print(f"    Status: {status} | Critical N: {wit.get('critical_array_length')}")
-    print(f"    Note:   {wit.get('proof')}")
+    print(f"    Note:   {wit.get('note')}")
     
     print("\n[+] 5. Evaluating SWC-112 (Untrusted Delegatecall) in BV_160...")
     status, wit = encoder.encode_swc112_delegatecall_taint(is_target_user_controlled=True)
     print(f"    Status: {status} | Target: {wit.get('tainted_target')}")
-    print(f"    Note:   {wit.get('proof')}")
+    print(f"    Note:   {wit.get('note')}")
     
     print("\n[+] 6. Evaluating SWC-114 (Flash Loan Oracle Collapse) in BV_256...")
     status, wit = encoder.encode_swc114_atomic_oracle_collapse()
     print(f"    Status: {status} | Price Shift: {wit.get('price_shift_bps', 0) / 100:.2f}%")
-    print(f"    Note:   {wit.get('proof')}")
+    print(f"    Note:   {wit.get('note')}")
     
     print("\n" + "=" * 80)
     print("All 6 templates are encoded as bit-vector or array formulas.")

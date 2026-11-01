@@ -1,4 +1,4 @@
-"""Run EVM-Guard on the SmartBugs-curated catalog under docs/EXTERNAL_EVAL_PROTOCOL.md.
+"""Run EVM-Guard on a catalog: run_external_eval.py <catalog> <out_dir> [v5|v6] (default v6).
 
 Writes one row per runtime contract to results/external/evm_guard_contracts.csv and
 one row per file to results/external/evm_guard_files.csv. Nothing is simulated:
@@ -16,6 +16,7 @@ sys.path.insert(0, os.path.join(REPO, "src", "eval"))
 
 from exploit_synthesizer import ExploitSynthesizer  # noqa: E402
 from repo_paths import resolve  # noqa: E402
+from engine_options import ENGINES  # noqa: E402
 from symbolic_engine import SymbolicEVMInterpreter  # noqa: E402
 
 CATALOG = os.path.join(REPO, "benchmarks/benchmark_catalog_external.json")
@@ -48,12 +49,17 @@ def analyze_contract(engine, synthesizer, name: str, runtime_hex: str) -> dict:
     findings = report.get("findings", [])
     selectors = report.get("dynamic_selectors", [])
     swcs = sorted({f.get("swc", "") for f in findings})
-    confirmed = []
+    confirmed, witness_confirmed, kinds = [], [], []
     for finding in findings:
         payload = synthesizer.synthesize_payload_for_finding(finding, selectors)
         replay = synthesizer.replay_in_sandbox(payload, runtime_bytecode_hex=runtime_hex)
         if replay["replay_verified"]:
             confirmed.append(finding.get("swc", ""))
+        if synthesizer.replay_with_witness(payload, runtime_hex):
+            witness_confirmed.append(finding.get("swc", ""))
+        witness = finding.get("witness", {})
+        if finding.get("swc") == "SWC-107" and "reentrancy_kind" in witness:
+            kinds.append(f"{witness['reentrancy_kind']}:{witness['feasibility']}")
     return {
         "latency_ms": round(elapsed_ms, 3),
         "instruction_count": report.get("instruction_count", 0),
@@ -61,20 +67,24 @@ def analyze_contract(engine, synthesizer, name: str, runtime_hex: str) -> dict:
         "selectors": len(selectors),
         "finding_swcs": ";".join(swcs),
         "confirmed_swcs": ";".join(sorted(set(confirmed))),
+        "witness_confirmed_swcs": ";".join(sorted(set(witness_confirmed))),
+        "reentrancy_kinds": ";".join(kinds),
+        "unresolved_jumps": report.get("unresolved_jumps", 0),
     }
 
 
 def main() -> None:
     catalog_path = sys.argv[1] if len(sys.argv) > 1 else CATALOG
     out_dir = sys.argv[2] if len(sys.argv) > 2 else OUT_DIR
+    engine_name = sys.argv[3] if len(sys.argv) > 3 else "v6"
     os.makedirs(out_dir, exist_ok=True)
     with open(catalog_path, encoding="utf-8") as handle:
         catalog = json.load(handle)
-    engine = SymbolicEVMInterpreter()
+    engine = SymbolicEVMInterpreter(options=ENGINES[engine_name])
     synthesizer = ExploitSynthesizer()
     contract_rows, file_rows = [], []
     for entry in catalog:
-        flagged, confirmed, latency = set(), set(), 0.0
+        flagged, confirmed, witnessed, latency = set(), set(), set(), 0.0
         for cname, path in entry["runtime_bytecode_paths"].items():
             with open(resolve(path), encoding="utf-8") as handle:
                 runtime_hex = handle.read().strip()
@@ -84,6 +94,7 @@ def main() -> None:
             except Exception as error:  # record and continue; every contract is reported
                 result = {"latency_ms": 0.0, "instruction_count": 0, "cyclomatic_complexity": 0,
                           "selectors": 0, "finding_swcs": "", "confirmed_swcs": "",
+                          "witness_confirmed_swcs": "", "reentrancy_kinds": "", "unresolved_jumps": 0,
                           "error": f"{type(error).__name__}: {error}"[:200]}
                 status = "error"
             contract_rows.append({"contract_id": entry["contract_id"], "runtime_contract": cname,
@@ -91,9 +102,12 @@ def main() -> None:
             latency += result["latency_ms"]
             flagged |= {SWC_TO_CATEGORY[s] for s in result["finding_swcs"].split(";") if s in SWC_TO_CATEGORY}
             confirmed |= {SWC_TO_CATEGORY[s] for s in result["confirmed_swcs"].split(";") if s in SWC_TO_CATEGORY}
+            witnessed |= {SWC_TO_CATEGORY[s] for s in result["witness_confirmed_swcs"].split(";")
+                          if s in SWC_TO_CATEGORY}
         file_rows.append({"contract_id": entry["contract_id"], "labels": ";".join(entry["labels"]),
                           "sloc": entry["sloc"], "flagged_categories": ";".join(sorted(flagged)),
                           "confirmed_categories": ";".join(sorted(confirmed)),
+                          "witness_confirmed_categories": ";".join(sorted(witnessed)),
                           "latency_ms": round(latency, 3)})
     for name, rows in (("evm_guard_contracts.csv", contract_rows), ("evm_guard_files.csv", file_rows)):
         fields = sorted({k for row in rows for k in row}, key=lambda k: list(rows[0]).index(k) if k in rows[0] else 99)

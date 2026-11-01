@@ -3,13 +3,17 @@ EVM-Guard hazard analyzer for runtime bytecode.
 
 Pipeline per contract:
   1. Strip the solc CBOR metadata trailer and disassemble with pyevmasm.
-  2. Build a basic-block CFG and run an abstract stack dataflow (evm_dataflow).
-  3. Run one path-sensitive check per hazard class (hazard_rules) over the CFG,
-     dominators, function regions and natural loops (evm_regions).
-  4. For each check that fires, ask the Z3 template encoder for a witness.
+  2. Build a basic-block CFG and run an abstract stack dataflow (evm_dataflow); with
+     return-site tracking (v6) each block is analysed per calling context.
+  3. Run one CFG dataflow check per hazard class (hazard_rules) over the CFG,
+     dominators, function regions and natural loops (evm_regions). The checks do not
+     solve path conditions. In v6, a reentrancy candidate is then sent to Z3, which
+     must fail to refute the call-then-write path and the re-entry (path_feasibility).
+  4. For each check that fires, ask the Z3 template encoder for witness parameters,
+     and in v6 ask Z3 for replay inputs of the reentrancy path (replay_witness).
 
-A finding means the bytecode matches a dataflow pattern. It is not a proof of
-exploitability or of safety. Witness replay is handled by exploit_synthesizer.
+A finding means the bytecode matches a dataflow pattern that Z3 did not refute. It is
+not a proof of exploitability or of safety. Replay is handled by exploit_synthesizer.
 """
 
 import os
@@ -27,6 +31,8 @@ for path in (WORKSPACE_DIR, SRC_DIR):
 
 from src.z3_encoder import Z3EVMEncoder  # noqa: E402
 
+from replay_witness import witness_inputs  # noqa: E402
+
 from engine_options import FULL_ENGINE, EngineOptions  # noqa: E402
 from evm_disasm import disassemble_bytes  # noqa: E402
 from evm_dataflow import FlowGraph, analyze_flow  # noqa: E402
@@ -41,7 +47,7 @@ import hazard_rules as rules  # noqa: E402
 
 ERC1967_SLOT_HEX = "360894a13ba1a3210667c828492db98dca3e2076cc3735a920a3ca505d382bbc"
 SWC_NAMES = {
-    "SWC-107": "Cross-Contract Read-Only Reentrancy",
+    "SWC-107": "Reentrancy",
     "SWC-101": "Fixed-Point Precision Loss & Truncation",
     "SWC-112": "Delegatecall to Untrusted Callee",
     "SWC-124": "Proxy Storage-Slot Layout Collision",
@@ -117,7 +123,7 @@ class SymbolicEVMInterpreter:
         if not instructions:
             return self._empty_report(contract_name, start_time)
 
-        graph = analyze_flow(instructions)
+        graph = analyze_flow(instructions, self.options.should_track_return_sites)
         dominance = Dominance(graph)
         entries = dispatch_entries(instructions, graph.jumpdests)
         scopes = function_scopes(graph, entries)
@@ -132,6 +138,7 @@ class SymbolicEVMInterpreter:
             status, witness = self._solve(swc, instructions)
             if status == "SAT":
                 witness.update(evidence)
+                self._attach_replay_inputs(witness)
                 witness.setdefault("function_selectors", selectors_containing(scopes, evidence.get("block")))
                 findings.append({"swc": swc, "name": SWC_NAMES[swc], "status": "SAT", "witness": witness})
 
@@ -147,6 +154,16 @@ class SymbolicEVMInterpreter:
             "findings_count": len(findings),
             "findings": findings,
         }
+
+    def _attach_replay_inputs(self, witness: Dict[str, Any]) -> None:
+        """Replace the Z3 path result by concrete replay inputs (v6), or drop it."""
+        result = witness.pop("path_result", None)
+        if result is None or not self.options.should_seed_replay_with_witness:
+            return
+        inputs = witness_inputs(result)
+        if inputs is not None:
+            witness["replay_inputs"] = {"calldata": inputs["calldata"].hex(), "callvalue": inputs["callvalue"],
+                                        "storage": inputs["storage"]}
 
     def _run_check(self, swc: str, instructions: List[Any], graph: Any, dominance: Dominance,
                    scopes: Dict[str, set]) -> Optional[Dict[str, Any]]:

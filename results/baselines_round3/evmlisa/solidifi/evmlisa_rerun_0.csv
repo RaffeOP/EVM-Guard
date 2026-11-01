@@ -1,0 +1,16 @@
+contract_id,labels,status,flagged_categories,latency_ms,raw_findings
+Re-entrancy__Re-entrancy_buggy_16,reentrancy,ok,reentrancy,321136.64,reentrancy=46
+Re-entrancy__Re-entrancy_buggy_24,reentrancy,timeout,,603157.23,reentrancy=0
+Re-entrancy__Re-entrancy_buggy_35,reentrancy,ok,reentrancy,378925.61,reentrancy=45
+Re-entrancy__Re-entrancy_buggy_9,reentrancy,ok,reentrancy,109065.15,reentrancy=49
+Overflow-Underflow__Overflow-Underflow_buggy_21,arithmetic,ok,reentrancy,519314.06,reentrancy=2
+Overflow-Underflow__Overflow-Underflow_buggy_28,arithmetic,ok,,79948.44,reentrancy=0
+Overflow-Underflow__Overflow-Underflow_buggy_36,arithmetic,ok,reentrancy,151338.26,reentrancy=1
+Overflow-Underflow__Overflow-Underflow_buggy_47,arithmetic,ok,,124769.74,reentrancy=0
+tx.origin__tx.origin_buggy_18,tx_origin,ok,,134096.13,reentrancy=0
+tx.origin__tx.origin_buggy_27,tx_origin,ok,,186079.62,reentrancy=0
+tx.origin__tx.origin_buggy_36,tx_origin,ok,reentrancy,107240.59,reentrancy=1
+TOD__TOD_buggy_14,transaction_order,ok,reentrancy,93681.14,reentrancy=34
+TOD__TOD_buggy_19,transaction_order,ok,reentrancy,104392.03,reentrancy=26
+TOD__TOD_buggy_23,transaction_order,ok,reentrancy,175712.81,reentrancy=60
+TOD__TOD_buggy_27,transaction_order,ok,reentrancy,530506.21,reentrancy=44

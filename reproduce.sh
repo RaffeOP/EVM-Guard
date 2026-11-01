@@ -30,7 +30,7 @@ git -C external/smartcontract-benchmark checkout -q "$LABELED_COMMIT"
   benchmarks/injected05_catalog.json \
   benchmarks/injected05c_catalog.json
 
-run() { mkdir -p "results/reproduction/$2"; .venv/bin/python src/eval/run_external_eval.py "benchmarks/$1" "results/reproduction/$2"; }
+run() { mkdir -p "results/reproduction/$2"; .venv/bin/python src/eval/run_external_eval.py "benchmarks/$1" "results/reproduction/$2" v5; }
 run benchmark_catalog_external.json smartbugs
 run heldout_catalog.json solidifi
 run heldout2_catalog.json labeled

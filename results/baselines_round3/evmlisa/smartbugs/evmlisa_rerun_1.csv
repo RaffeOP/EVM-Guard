@@ -1,0 +1,2 @@
+contract_id,labels,status,flagged_categories,latency_ms,raw_findings
+denial_of_service__list_dos,denial_of_service,ok,reentrancy,18971.32,reentrancy=19

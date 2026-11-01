@@ -1,0 +1,728 @@
+{
+  "smartbugs": {
+    "slither": {
+      "reentrancy": {
+        "files": 143,
+        "negatives": 112,
+        "positives": 31,
+        "evm_guard": {
+          "tp": 29,
+          "fp": 7,
+          "precision": 0.8056,
+          "precision_ci95": [
+            0.6398,
+            0.9181
+          ]
+        },
+        "baseline": {
+          "tp": 29,
+          "fp": 31,
+          "precision": 0.4833,
+          "precision_ci95": [
+            0.3523,
+            0.6161
+          ]
+        },
+        "mcnemar_false_positives": {
+          "only_evm_guard": 0,
+          "only_baseline": 24,
+          "p_value": 1.19e-07
+        },
+        "mcnemar_true_positives": {
+          "only_evm_guard": 1,
+          "only_baseline": 1,
+          "p_value": 1.0
+        }
+      },
+      "denial_of_service": {
+        "files": 143,
+        "negatives": 137,
+        "positives": 6,
+        "evm_guard": {
+          "tp": 5,
+          "fp": 34,
+          "precision": 0.1282,
+          "precision_ci95": [
+            0.043,
+            0.2743
+          ]
+        },
+        "baseline": {
+          "tp": 2,
+          "fp": 14,
+          "precision": 0.125,
+          "precision_ci95": [
+            0.0155,
+            0.3835
+          ]
+        },
+        "mcnemar_false_positives": {
+          "only_evm_guard": 32,
+          "only_baseline": 12,
+          "p_value": 0.00366
+        },
+        "mcnemar_true_positives": {
+          "only_evm_guard": 3,
+          "only_baseline": 0,
+          "p_value": 0.25
+        }
+      },
+      "access_control": {
+        "files": 143,
+        "negatives": 125,
+        "positives": 18,
+        "evm_guard": {
+          "tp": 2,
+          "fp": 0,
+          "precision": 1.0,
+          "precision_ci95": [
+            0.1581,
+            1.0
+          ]
+        },
+        "baseline": {
+          "tp": 8,
+          "fp": 37,
+          "precision": 0.1778,
+          "precision_ci95": [
+            0.08,
+            0.3205
+          ]
+        },
+        "mcnemar_false_positives": {
+          "only_evm_guard": 0,
+          "only_baseline": 37,
+          "p_value": 1.46e-11
+        },
+        "mcnemar_true_positives": {
+          "only_evm_guard": 0,
+          "only_baseline": 6,
+          "p_value": 0.0312
+        }
+      },
+      "arithmetic": {
+        "files": 143,
+        "negatives": 128,
+        "positives": 15,
+        "evm_guard": {
+          "tp": 1,
+          "fp": 80,
+          "precision": 0.0123,
+          "precision_ci95": [
+            0.0003,
+            0.0669
+          ]
+        },
+        "baseline": {
+          "tp": 0,
+          "fp": 0,
+          "precision": null,
+          "precision_ci95": null
+        },
+        "mcnemar_false_positives": {
+          "only_evm_guard": 80,
+          "only_baseline": 0,
+          "p_value": 1.65e-24
+        },
+        "mcnemar_true_positives": {
+          "only_evm_guard": 1,
+          "only_baseline": 0,
+          "p_value": 1.0
+        }
+      }
+    },
+    "mythril": {
+      "reentrancy": {
+        "files": 143,
+        "negatives": 112,
+        "positives": 31,
+        "evm_guard": {
+          "tp": 29,
+          "fp": 7,
+          "precision": 0.8056,
+          "precision_ci95": [
+            0.6398,
+            0.9181
+          ]
+        },
+        "baseline": {
+          "tp": 7,
+          "fp": 30,
+          "precision": 0.1892,
+          "precision_ci95": [
+            0.0796,
+            0.3516
+          ]
+        },
+        "mcnemar_false_positives": {
+          "only_evm_guard": 4,
+          "only_baseline": 27,
+          "p_value": 3.4e-05
+        },
+        "mcnemar_true_positives": {
+          "only_evm_guard": 23,
+          "only_baseline": 1,
+          "p_value": 2.98e-06
+        }
+      },
+      "denial_of_service": {
+        "files": 143,
+        "negatives": 137,
+        "positives": 6,
+        "evm_guard": {
+          "tp": 5,
+          "fp": 34,
+          "precision": 0.1282,
+          "precision_ci95": [
+            0.043,
+            0.2743
+          ]
+        },
+        "baseline": {
+          "tp": 1,
+          "fp": 24,
+          "precision": 0.04,
+          "precision_ci95": [
+            0.001,
+            0.2035
+          ]
+        },
+        "mcnemar_false_positives": {
+          "only_evm_guard": 34,
+          "only_baseline": 24,
+          "p_value": 0.237
+        },
+        "mcnemar_true_positives": {
+          "only_evm_guard": 4,
+          "only_baseline": 0,
+          "p_value": 0.125
+        }
+      },
+      "access_control": {
+        "files": 143,
+        "negatives": 125,
+        "positives": 18,
+        "evm_guard": {
+          "tp": 2,
+          "fp": 0,
+          "precision": 1.0,
+          "precision_ci95": [
+            0.1581,
+            1.0
+          ]
+        },
+        "baseline": {
+          "tp": 13,
+          "fp": 11,
+          "precision": 0.5417,
+          "precision_ci95": [
+            0.3282,
+            0.7445
+          ]
+        },
+        "mcnemar_false_positives": {
+          "only_evm_guard": 0,
+          "only_baseline": 11,
+          "p_value": 0.000977
+        },
+        "mcnemar_true_positives": {
+          "only_evm_guard": 0,
+          "only_baseline": 11,
+          "p_value": 0.000977
+        }
+      },
+      "arithmetic": {
+        "files": 143,
+        "negatives": 128,
+        "positives": 15,
+        "evm_guard": {
+          "tp": 1,
+          "fp": 80,
+          "precision": 0.0123,
+          "precision_ci95": [
+            0.0003,
+            0.0669
+          ]
+        },
+        "baseline": {
+          "tp": 0,
+          "fp": 0,
+          "precision": null,
+          "precision_ci95": null
+        },
+        "mcnemar_false_positives": {
+          "only_evm_guard": 80,
+          "only_baseline": 0,
+          "p_value": 1.65e-24
+        },
+        "mcnemar_true_positives": {
+          "only_evm_guard": 1,
+          "only_baseline": 0,
+          "p_value": 1.0
+        }
+      }
+    }
+  },
+  "solidifi": {
+    "slither": {
+      "reentrancy": {
+        "files": 400,
+        "negatives": 350,
+        "positives": 50,
+        "evm_guard": {
+          "tp": 50,
+          "fp": 35,
+          "precision": 0.5882,
+          "precision_ci95": [
+            0.4762,
+            0.6939
+          ]
+        },
+        "baseline": {
+          "tp": 50,
+          "fp": 150,
+          "precision": 0.25,
+          "precision_ci95": [
+            0.1916,
+            0.316
+          ]
+        },
+        "mcnemar_false_positives": {
+          "only_evm_guard": 0,
+          "only_baseline": 115,
+          "p_value": 4.81e-35
+        },
+        "mcnemar_true_positives": {
+          "only_evm_guard": 0,
+          "only_baseline": 0,
+          "p_value": 1.0
+        }
+      },
+      "arithmetic": {
+        "files": 400,
+        "negatives": 350,
+        "positives": 50,
+        "evm_guard": {
+          "tp": 45,
+          "fp": 315,
+          "precision": 0.125,
+          "precision_ci95": [
+            0.0927,
+            0.1637
+          ]
+        },
+        "baseline": {
+          "tp": 0,
+          "fp": 0,
+          "precision": null,
+          "precision_ci95": null
+        },
+        "mcnemar_false_positives": {
+          "only_evm_guard": 315,
+          "only_baseline": 0,
+          "p_value": 3e-95
+        },
+        "mcnemar_true_positives": {
+          "only_evm_guard": 45,
+          "only_baseline": 0,
+          "p_value": 5.68e-14
+        }
+      }
+    },
+    "mythril": {
+      "reentrancy": {
+        "files": 400,
+        "negatives": 350,
+        "positives": 50,
+        "evm_guard": {
+          "tp": 50,
+          "fp": 35,
+          "precision": 0.5882,
+          "precision_ci95": [
+            0.4762,
+            0.6939
+          ]
+        },
+        "baseline": {
+          "tp": 2,
+          "fp": 7,
+          "precision": 0.2222,
+          "precision_ci95": [
+            0.0281,
+            0.6001
+          ]
+        },
+        "mcnemar_false_positives": {
+          "only_evm_guard": 35,
+          "only_baseline": 7,
+          "p_value": 1.51e-05
+        },
+        "mcnemar_true_positives": {
+          "only_evm_guard": 48,
+          "only_baseline": 0,
+          "p_value": 7.11e-15
+        }
+      },
+      "arithmetic": {
+        "files": 400,
+        "negatives": 350,
+        "positives": 50,
+        "evm_guard": {
+          "tp": 45,
+          "fp": 315,
+          "precision": 0.125,
+          "precision_ci95": [
+            0.0927,
+            0.1637
+          ]
+        },
+        "baseline": {
+          "tp": 0,
+          "fp": 0,
+          "precision": null,
+          "precision_ci95": null
+        },
+        "mcnemar_false_positives": {
+          "only_evm_guard": 315,
+          "only_baseline": 0,
+          "p_value": 3e-95
+        },
+        "mcnemar_true_positives": {
+          "only_evm_guard": 45,
+          "only_baseline": 0,
+          "p_value": 5.68e-14
+        }
+      }
+    }
+  },
+  "labeled": {
+    "slither": {
+      "reentrancy": {
+        "files": 389,
+        "negatives": 308,
+        "positives": 81,
+        "evm_guard": {
+          "tp": 79,
+          "fp": 25,
+          "precision": 0.7596,
+          "precision_ci95": [
+            0.6659,
+            0.838
+          ]
+        },
+        "baseline": {
+          "tp": 79,
+          "fp": 111,
+          "precision": 0.4158,
+          "precision_ci95": [
+            0.3449,
+            0.4894
+          ]
+        },
+        "mcnemar_false_positives": {
+          "only_evm_guard": 1,
+          "only_baseline": 87,
+          "p_value": 5.75e-25
+        },
+        "mcnemar_true_positives": {
+          "only_evm_guard": 1,
+          "only_baseline": 1,
+          "p_value": 1.0
+        }
+      },
+      "access_control": {
+        "files": 389,
+        "negatives": 356,
+        "positives": 33,
+        "evm_guard": {
+          "tp": 7,
+          "fp": 0,
+          "precision": 1.0,
+          "precision_ci95": [
+            0.5904,
+            1.0
+          ]
+        },
+        "baseline": {
+          "tp": 22,
+          "fp": 152,
+          "precision": 0.1264,
+          "precision_ci95": [
+            0.081,
+            0.1851
+          ]
+        },
+        "mcnemar_false_positives": {
+          "only_evm_guard": 0,
+          "only_baseline": 152,
+          "p_value": 3.5e-46
+        },
+        "mcnemar_true_positives": {
+          "only_evm_guard": 1,
+          "only_baseline": 16,
+          "p_value": 0.000275
+        }
+      },
+      "arithmetic": {
+        "files": 389,
+        "negatives": 324,
+        "positives": 65,
+        "evm_guard": {
+          "tp": 46,
+          "fp": 245,
+          "precision": 0.1581,
+          "precision_ci95": [
+            0.1181,
+            0.2052
+          ]
+        },
+        "baseline": {
+          "tp": 0,
+          "fp": 0,
+          "precision": null,
+          "precision_ci95": null
+        },
+        "mcnemar_false_positives": {
+          "only_evm_guard": 245,
+          "only_baseline": 0,
+          "p_value": 3.54e-74
+        },
+        "mcnemar_true_positives": {
+          "only_evm_guard": 46,
+          "only_baseline": 0,
+          "p_value": 2.84e-14
+        }
+      }
+    },
+    "mythril": {
+      "reentrancy": {
+        "files": 389,
+        "negatives": 308,
+        "positives": 81,
+        "evm_guard": {
+          "tp": 79,
+          "fp": 25,
+          "precision": 0.7596,
+          "precision_ci95": [
+            0.6659,
+            0.838
+          ]
+        },
+        "baseline": {
+          "tp": 14,
+          "fp": 32,
+          "precision": 0.3043,
+          "precision_ci95": [
+            0.1774,
+            0.4575
+          ]
+        },
+        "mcnemar_false_positives": {
+          "only_evm_guard": 22,
+          "only_baseline": 29,
+          "p_value": 0.401
+        },
+        "mcnemar_true_positives": {
+          "only_evm_guard": 66,
+          "only_baseline": 1,
+          "p_value": 9.22e-19
+        }
+      },
+      "access_control": {
+        "files": 389,
+        "negatives": 356,
+        "positives": 33,
+        "evm_guard": {
+          "tp": 7,
+          "fp": 0,
+          "precision": 1.0,
+          "precision_ci95": [
+            0.5904,
+            1.0
+          ]
+        },
+        "baseline": {
+          "tp": 11,
+          "fp": 25,
+          "precision": 0.3056,
+          "precision_ci95": [
+            0.1635,
+            0.4811
+          ]
+        },
+        "mcnemar_false_positives": {
+          "only_evm_guard": 0,
+          "only_baseline": 25,
+          "p_value": 5.96e-08
+        },
+        "mcnemar_true_positives": {
+          "only_evm_guard": 4,
+          "only_baseline": 8,
+          "p_value": 0.388
+        }
+      },
+      "arithmetic": {
+        "files": 389,
+        "negatives": 324,
+        "positives": 65,
+        "evm_guard": {
+          "tp": 46,
+          "fp": 245,
+          "precision": 0.1581,
+          "precision_ci95": [
+            0.1181,
+            0.2052
+          ]
+        },
+        "baseline": {
+          "tp": 0,
+          "fp": 0,
+          "precision": null,
+          "precision_ci95": null
+        },
+        "mcnemar_false_positives": {
+          "only_evm_guard": 245,
+          "only_baseline": 0,
+          "p_value": 3.54e-74
+        },
+        "mcnemar_true_positives": {
+          "only_evm_guard": 46,
+          "only_baseline": 0,
+          "p_value": 2.84e-14
+        }
+      }
+    }
+  },
+  "synthetic_final": {
+    "slither": {
+      "reentrancy": {
+        "files": 210,
+        "negatives": 180,
+        "positives": 30,
+        "evm_guard": {
+          "tp": 30,
+          "fp": 0,
+          "precision": 1.0,
+          "precision_ci95": [
+            0.8843,
+            1.0
+          ]
+        },
+        "baseline": {
+          "tp": 30,
+          "fp": 60,
+          "precision": 0.3333,
+          "precision_ci95": [
+            0.2374,
+            0.4405
+          ]
+        },
+        "mcnemar_false_positives": {
+          "only_evm_guard": 0,
+          "only_baseline": 60,
+          "p_value": 1.73e-18
+        },
+        "mcnemar_true_positives": {
+          "only_evm_guard": 0,
+          "only_baseline": 0,
+          "p_value": 1.0
+        }
+      },
+      "denial_of_service": {
+        "files": 210,
+        "negatives": 180,
+        "positives": 30,
+        "evm_guard": {
+          "tp": 30,
+          "fp": 0,
+          "precision": 1.0,
+          "precision_ci95": [
+            0.8843,
+            1.0
+          ]
+        },
+        "baseline": {
+          "tp": 0,
+          "fp": 0,
+          "precision": null,
+          "precision_ci95": null
+        },
+        "mcnemar_false_positives": {
+          "only_evm_guard": 0,
+          "only_baseline": 0,
+          "p_value": 1.0
+        },
+        "mcnemar_true_positives": {
+          "only_evm_guard": 30,
+          "only_baseline": 0,
+          "p_value": 1.86e-09
+        }
+      }
+    },
+    "mythril": {
+      "reentrancy": {
+        "files": 210,
+        "negatives": 180,
+        "positives": 30,
+        "evm_guard": {
+          "tp": 30,
+          "fp": 0,
+          "precision": 1.0,
+          "precision_ci95": [
+            0.8843,
+            1.0
+          ]
+        },
+        "baseline": {
+          "tp": 30,
+          "fp": 47,
+          "precision": 0.3896,
+          "precision_ci95": [
+            0.2805,
+            0.5075
+          ]
+        },
+        "mcnemar_false_positives": {
+          "only_evm_guard": 0,
+          "only_baseline": 47,
+          "p_value": 1.42e-14
+        },
+        "mcnemar_true_positives": {
+          "only_evm_guard": 0,
+          "only_baseline": 0,
+          "p_value": 1.0
+        }
+      },
+      "denial_of_service": {
+        "files": 210,
+        "negatives": 180,
+        "positives": 30,
+        "evm_guard": {
+          "tp": 30,
+          "fp": 0,
+          "precision": 1.0,
+          "precision_ci95": [
+            0.8843,
+            1.0
+          ]
+        },
+        "baseline": {
+          "tp": 0,
+          "fp": 0,
+          "precision": null,
+          "precision_ci95": null
+        },
+        "mcnemar_false_positives": {
+          "only_evm_guard": 0,
+          "only_baseline": 0,
+          "p_value": 1.0
+        },
+        "mcnemar_true_positives": {
+          "only_evm_guard": 30,
+          "only_baseline": 0,
+          "p_value": 1.86e-09
+        }
+      }
+    }
+  }
+}

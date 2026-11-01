@@ -2,7 +2,7 @@
 
 from typing import Any, Dict, List, Optional, Set, Tuple
 
-from evm_dataflow import FlowGraph
+from evm_dataflow import FlowGraph, node_pc
 
 ERC1967_IMPLEMENTATION_SLOT = 0x360894A13BA1A3210667C828492DB98DCA3E2076CC3735A920A3CA505D382BBC
 SELECTOR_WINDOW = 5
@@ -69,15 +69,24 @@ def dispatch_entries(instructions: List[Any], jumpdests: Set[int]) -> Dict[str, 
 
 
 def function_scopes(graph: FlowGraph, entries: Dict[str, int]) -> Dict[str, Set[int]]:
-    """Blocks reachable from each function entry without entering another function's entry."""
+    """Nodes reachable from each function entry without entering another function's entry.
+    An entry block analysed in several contexts has one node per context."""
     if not entries:
         return {"": set(graph.reachable)}
-    stops = set(entries.values())
+    nodes_by_pc: Dict[int, Set[int]] = {}
+    for node in graph.reachable:
+        nodes_by_pc.setdefault(node_pc(node), set()).add(node)
+    entry_nodes = {selector: nodes_by_pc.get(pc, set()) for selector, pc in entries.items()}
+    all_entries = set().union(*entry_nodes.values())
     scopes = {}
-    for selector, entry in entries.items():
-        if entry not in graph.reachable:
+    for selector, own in entry_nodes.items():
+        if not own:
             continue
-        scopes[selector] = {entry} | reach_within(graph, entry, graph.reachable - (stops - {entry}))
+        allowed = graph.reachable - (all_entries - own)
+        scope = set(own)
+        for entry in own:
+            scope |= reach_within(graph, entry, allowed)
+        scopes[selector] = scope
     return scopes
 
 
@@ -111,10 +120,10 @@ def loop_exit_jumpis(graph: FlowGraph, body: Set[int]) -> List[int]:
     """Blocks in body ending in JUMPI with a successor outside the loop that does not revert."""
     exits = []
     for block in body:
-        if graph.block_last_op.get(block) != "JUMPI":
+        if graph.last_op(block) != "JUMPI":
             continue
         for target in graph.successors.get(block, []):
-            if target not in body and graph.block_last_op.get(target) not in ("REVERT", "INVALID"):
+            if target not in body and graph.last_op(target) not in ("REVERT", "INVALID"):
                 exits.append(block)
                 break
     return exits

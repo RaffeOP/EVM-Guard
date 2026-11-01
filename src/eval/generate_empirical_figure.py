@@ -1,99 +1,68 @@
+"""Draw Figure 2: SmartBugs-curated recall with 95% Clopper-Pearson intervals, and run completion.
+
+Values are those of Table 4 (engine v5; v5 has the same recall as v1-v3 on these categories).
+Drawn at its printed size. Writes paper/figures/fig_smartbugs_empirical.png.
+"""
+import os
+
 import matplotlib.pyplot as plt
 import numpy as np
 
-# Professional academic font styling
-plt.rcParams['font.family'] = 'DejaVu Sans'
-plt.rcParams['font.size'] = 9.0
+REPO = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+OUT = os.path.join(REPO, "paper", "figures", "fig_smartbugs_empirical.png")
+CATEGORIES = ["Reentrancy\n(31)", "Denial of\nservice (6)", "Access\ncontrol (18)"]
+# tool: (recall %, lower CI, upper CI, colour, hatch)
+RECALL = {
+    "EVM-Guard v5": ([93.5, 83.3, 11.1], [78.6, 35.9, 1.4], [99.2, 99.6, 34.7], "#1E3A8A", ""),
+    "Slither 0.11.6": ([93.5, 33.3, 44.4], [78.6, 4.3, 21.5], [99.2, 77.7, 69.2], "#475569", "//"),
+    "Mythril 0.24.8": ([22.6, 16.7, 72.2], [9.6, 0.4, 46.5], [41.1, 64.1, 90.3], "#94A3B8", ".."),
+}
+# tool: (completed, errors, timeouts)
+COMPLETION = {"EVM-Guard v5": (143, 0, 0), "Slither 0.11.6": (141, 2, 0), "Mythril 0.24.8": (86, 20, 37)}
+TOTAL_FILES = 143
+BAR_WIDTH = 0.26
 
-fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(13.5, 4.0), dpi=300)
 
-# ----------------- PANEL A: Recall Comparison -----------------
-categories = ['Reentrancy\n(31 files)', 'Denial of Service\n(6 files)', 'Access Control\n(18 files)']
-x = np.arange(len(categories))
-width = 0.25
+def recall_panel(ax) -> None:
+    x = np.arange(len(CATEGORIES))
+    for index, (tool, (values, low, high, colour, hatch)) in enumerate(RECALL.items()):
+        errors = [np.subtract(values, low), np.subtract(high, values)]
+        ax.bar(x + (index - 1) * BAR_WIDTH, values, BAR_WIDTH, yerr=errors, capsize=2.5, label=tool, color=colour,
+               edgecolor="#0F172A", linewidth=0.6, hatch=hatch, error_kw={"linewidth": 0.8})
+    ax.set_ylabel("Recall (%)")
+    ax.set_title("(a) Recall with 95% Clopper–Pearson intervals", fontsize=8)
+    ax.set_xticks(x)
+    ax.set_xticklabels(CATEGORIES)
+    ax.set_ylim(0, 105)
+    ax.grid(axis="y", linestyle="--", alpha=0.35)
+    ax.legend(loc="upper center", bbox_to_anchor=(0.5, -0.22), ncol=3, frameon=False, fontsize=6.5)
 
-# Recall data
-rec_eg = [93.5, 83.3, 11.1]
-rec_sl = [93.5, 33.3, 44.4]
-rec_my = [22.6, 16.7, 72.2]
 
-# Clopper-Pearson 95% CIs for recall
-err_eg_low = [93.5 - 78.6, 83.3 - 35.9, 11.1 - 1.4]
-err_eg_high = [99.2 - 93.5, 99.6 - 83.3, 34.7 - 11.1]
-err_sl_low = [93.5 - 78.6, 33.3 - 4.3, 44.4 - 21.5]
-err_sl_high = [99.2 - 93.5, 77.7 - 33.3, 69.2 - 44.4]
-err_my_low = [22.6 - 9.6, 16.7 - 0.4, 72.2 - 46.5]
-err_my_high = [41.1 - 22.6, 64.1 - 16.7, 90.3 - 72.2]
+def completion_panel(ax) -> None:
+    tools = list(COMPLETION)
+    y = np.arange(len(tools))[::-1]
+    done, errs, outs = (np.array([COMPLETION[t][i] for t in tools]) for i in range(3))
+    ax.barh(y, done, 0.5, label="Completed", color="#1E3A8A", edgecolor="#0F172A", linewidth=0.6)
+    ax.barh(y, errs, 0.5, left=done, label="Error", color="#64748B", edgecolor="#0F172A", linewidth=0.6, hatch="\\\\")
+    ax.barh(y, outs, 0.5, left=done + errs, label="Timeout (60 s)", color="#CBD5E1", edgecolor="#0F172A",
+            linewidth=0.6, hatch="xx")
+    ax.set_yticks(y)
+    ax.set_yticklabels(tools)
+    ax.set_xlim(0, TOTAL_FILES)
+    ax.set_xlabel(f"Files ({TOTAL_FILES})")
+    ax.set_title("(b) Run completion", fontsize=8)
+    ax.legend(loc="upper center", bbox_to_anchor=(0.5, -0.32), ncol=3, frameon=False, fontsize=6.5)
 
-# Formal academic monochrome/steel palette:
-# EVM-Guard: Deep Navy Slate (#1E3A8A)
-# Slither: Charcoal Slate (#475569)
-# Mythril: Cool Neutral Gray (#94A3B8)
-rects1 = ax1.bar(x - width, rec_eg, width, yerr=[err_eg_low, err_eg_high], capsize=4,
-                 label='EVM-Guard v2 (Ours)', color='#1E3A8A', edgecolor='#0F172A', linewidth=1.2, ecolor='#0F172A')
-rects2 = ax1.bar(x, rec_sl, width, yerr=[err_sl_low, err_sl_high], capsize=4,
-                 label='Slither 0.11.6', color='#475569', edgecolor='#1E293B', linewidth=1.2, ecolor='#1E293B', hatch='//')
-rects3 = ax1.bar(x + width, rec_my, width, yerr=[err_my_low, err_my_high], capsize=4,
-                 label='Mythril 0.24.8', color='#94A3B8', edgecolor='#334155', linewidth=1.2, ecolor='#334155', hatch='..')
 
-ax1.set_ylabel('Detection Recall (%)', fontweight='bold', color='#0F172A')
-ax1.set_title('(a) Detection Recall with 95% Clopper-Pearson CIs', fontweight='bold', pad=18, color='#0F172A')
-ax1.set_xticks(x)
-ax1.set_xticklabels(categories, fontweight='medium', color='#1E293B')
-ax1.set_ylim(0, 115)
-ax1.grid(axis='y', linestyle='--', alpha=0.35, color='#94A3B8')
-ax1.legend(frameon=True, facecolor='#F8FAFC', edgecolor='#CBD5E1', framealpha=0.95, loc='upper right')
+def main() -> None:
+    plt.rcParams.update({"font.family": "DejaVu Sans", "font.size": 7})
+    fig, (left, right) = plt.subplots(1, 2, figsize=(7.0, 2.7), dpi=300, gridspec_kw={"width_ratios": [1.15, 1]})
+    recall_panel(left)
+    completion_panel(right)
+    fig.tight_layout()
+    fig.savefig(OUT, dpi=300, bbox_inches="tight", facecolor="white")
+    print(OUT)
 
-# Add recall numerical annotations
-for rects in [rects1, rects2, rects3]:
-    for rect in rects:
-        height = rect.get_height()
-        ax1.annotate(f'{height:.1f}%',
-                    xy=(rect.get_x() + rect.get_width() / 2, height),
-                    xytext=(0, 14),
-                    textcoords="offset points",
-                    ha='center', va='bottom', fontsize=7.5, color='#0F172A', fontweight='semibold')
 
-# ----------------- PANEL B: Tool Completion & Robustness -----------------
-tools = ['EVM-Guard v2', 'EVM-Guard v1', 'Slither', 'Mythril']
-completed = np.array([143, 143, 141, 86])
-timeouts = np.array([0, 0, 0, 37])
-errors = np.array([0, 0, 2, 20])
-
-y = np.arange(len(tools))
-bar_height = 0.50
-
-# Formal stacked bar chart in academic tones:
-# Completed: Deep Navy (#1E3A8A)
-# Errors: Muted Slate (#64748B)
-# Timeouts: Neutral Tint (#CBD5E1)
-p1 = ax2.barh(y, completed, bar_height, label='Completed Analysis (Success)', color='#1E3A8A', edgecolor='#0F172A', linewidth=1.1)
-p2 = ax2.barh(y, errors, bar_height, left=completed, label='Tool Execution Errors', color='#64748B', edgecolor='#1E293B', linewidth=1.1, hatch='\\\\')
-p3 = ax2.barh(y, timeouts, bar_height, left=completed + errors, label='Execution Timeouts (>60s)', color='#CBD5E1', edgecolor='#334155', linewidth=1.1, hatch='xx')
-
-ax2.set_xlabel('Number of Contracts Processed (Total = 143)', fontweight='bold', color='#0F172A')
-ax2.set_title('(b) Execution Reliability and Completion Rates', fontweight='bold', pad=18, color='#0F172A')
-ax2.set_yticks(y)
-ax2.set_yticklabels(tools, fontweight='medium', color='#1E293B')
-ax2.set_xlim(0, 160)
-ax2.grid(axis='x', linestyle='--', alpha=0.35, color='#94A3B8')
-ax2.legend(frameon=True, facecolor='#F8FAFC', edgecolor='#CBD5E1', framealpha=0.95, loc='lower right')
-
-# Add total count annotations
-for i in range(len(tools)):
-    total = completed[i] + errors[i] + timeouts[i]
-    detail = []
-    if timeouts[i] > 0:
-        detail.append(f"{timeouts[i]} timeouts")
-    if errors[i] > 0:
-        detail.append(f"{errors[i]} errors")
-    txt = f"{completed[i]}/143 (100%)" if completed[i] == 143 else f"{completed[i]}/143 ({', '.join(detail)})"
-    ax2.annotate(txt,
-                xy=(145, y[i]),
-                xytext=(5, 0),
-                textcoords="offset points",
-                ha='left', va='center', fontsize=7.5, fontweight='semibold', color='#0F172A')
-
-plt.tight_layout()
-plt.savefig("paper/figures/fig_smartbugs_empirical.png", dpi=300, bbox_inches='tight', facecolor='white')
-print("Empirical figure updated with formal academic palette.")
+if __name__ == "__main__":
+    main()

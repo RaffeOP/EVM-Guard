@@ -1,0 +1,13 @@
+docs/ENGINE_V6_EVAL_PROTOCOL.md: OK
+docs/LABELLING_RUBRIC.md: OK
+archive/engine_v6/MANIFEST.sha256: OK
+src/eval/build_mainnet_catalog.py: FAILED
+src/eval/build_injected_corpus.py: OK
+src/eval/build_injected_corpus_05.py: OK
+src/eval/blind_export.py: OK
+src/eval/run_external_eval.py: OK
+src/eval/run_evmlisa.py: FAILED
+src/eval/run_external_baselines.py: OK
+tests/test_v6_engine.py: OK
+shasum: WARNING: 1 line is improperly formatted
+shasum: WARNING: 2 computed checksums did NOT match

@@ -1,0 +1,2 @@
+contract_id,labels,status,flagged_categories,latency_ms,raw_findings
+reentrancy__spank_chain_payment,reentrancy,ok,,18270.88,reentrancy=0;unlinked=LedgerChannel

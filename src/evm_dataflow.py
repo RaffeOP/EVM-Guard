@@ -4,6 +4,13 @@ Every stack slot carries an AbstractValue: a constant if one is known, and
 flags for calldata, caller, storage and DIV provenance. Jump edges come from
 constant jump targets found during the fixpoint, so the CFG contains only
 edges the abstract stack justifies. Unresolved jumps are counted, not guessed.
+
+With return-site tracking, a block is analysed once per context: the sequence of
+JUMPDEST addresses held on the abstract stack when control enters it (the pending
+return addresses of internal calls, at most CONTEXT_DEPTH of them). An internal
+function called from two sites is then analysed twice, and each copy returns only
+to its own caller. A node of the graph is a (context index, block pc) pair packed
+into one integer, so with tracking disabled every node is the block pc itself.
 """
 
 from collections import defaultdict
@@ -13,6 +20,10 @@ from typing import Any, Dict, FrozenSet, List, Optional, Set, Tuple
 WORD_MODULUS = 2 ** 256
 STACK_CAP = 1024
 CALLDATA_PARAMETER_OFFSET = 4
+PC_BITS = 32
+PC_MASK = (1 << PC_BITS) - 1
+CONTEXT_DEPTH = 4
+MAX_CONTEXTS_PER_BLOCK = 32
 TERMINATORS = frozenset({"STOP", "RETURN", "REVERT", "INVALID", "SELFDESTRUCT"})
 BLOCK_ENDERS = TERMINATORS | {"JUMP", "JUMPI"}
 CALL_FAMILY = frozenset({"CALL", "CALLCODE", "DELEGATECALL", "STATICCALL"})
@@ -40,6 +51,11 @@ class AbstractValue:
 
 
 UNKNOWN = AbstractValue()
+
+
+def node_pc(node: int) -> int:
+    """The block pc of a graph node."""
+    return node & PC_MASK
 
 
 def value_bound(value: AbstractValue) -> Optional[int]:
@@ -127,6 +143,9 @@ class FlowGraph:
     unresolved_jumps: int = 0
     entry: int = 0
 
+    def last_op(self, node: int) -> Optional[str]:
+        return self.block_last_op.get(node_pc(node))
+
     def predecessors(self) -> Dict[int, List[int]]:
         preds: Dict[int, List[int]] = {node: [] for node in self.reachable}
         for node in self.reachable:
@@ -194,6 +213,7 @@ def _execute_data_op(frame: _Frame, inst: Any, index: int, block: int, events: L
         frame.push(AbstractValue(from_caller=True))
     elif name == "SLOAD":
         slot = frame.pop()
+        events.append({"kind": "sload", "block": block, "pc": inst.pc, "order": index, "slot": slot})
         frame.push(AbstractValue(from_storage=True, storage_slot=slot.const))
     elif name == "SSTORE":
         slot = frame.pop()
@@ -243,16 +263,16 @@ def _binary_bound(name: str, left: AbstractValue, right: AbstractValue) -> Optio
     return None
 
 
-def _run_block(graph: FlowGraph, start_pc: int, state: Tuple[AbstractValue, ...],
+def _run_block(graph: FlowGraph, node: int, state: Tuple[AbstractValue, ...],
                events: Optional[List[Dict[str, Any]]]) -> Tuple[Tuple[AbstractValue, ...], Optional[int], List[int]]:
-    """Run one block; return (out_state, jump_target, successor pcs)."""
-    first, end = graph.block_ranges[start_pc]
+    """Run one block; return (out_state, jump_target, successor pcs). Events name the node."""
+    first, end = graph.block_ranges[node_pc(node)]
     frame = _Frame(state)
     sink = events if events is not None else []
     for index in range(first, end):
-        _execute_instruction(frame, graph.instructions[index], index, start_pc, sink)
+        _execute_instruction(frame, graph.instructions[index], index, node, sink)
     last = graph.instructions[end - 1]
-    successors = _block_successors(graph, start_pc, end, last.name, frame.jump_target)
+    successors = _block_successors(graph, node, end, last.name, frame.jump_target)
     return frame.snapshot(), frame.jump_target, successors
 
 
@@ -269,32 +289,56 @@ def _block_successors(graph: FlowGraph, block: int, end: int, last_name: str,
     return [fallthrough] if fallthrough is not None else []
 
 
-def analyze_flow(instructions: List[Any]) -> FlowGraph:
-    """Compute reachable blocks, resolved edges and dataflow events by worklist fixpoint."""
+class _Contexts:
+    """Interns (block pc, context) pairs as nodes. Past the per-block cap, a block's further
+    contexts share one overflow node, whose joined state loses their return addresses."""
+
+    def __init__(self, jumpdests: Set[int], should_track: bool):
+        self.jumpdests = jumpdests
+        self.should_track = should_track
+        self.by_block: Dict[int, Dict[Tuple[int, ...], int]] = defaultdict(dict)
+
+    def node(self, pc: int, state: Tuple[AbstractValue, ...]) -> int:
+        if not self.should_track:
+            return pc
+        context = tuple(v.const for v in state if v.const in self.jumpdests)[-CONTEXT_DEPTH:]
+        known = self.by_block[pc]
+        if context not in known:
+            known[context] = min(len(known), MAX_CONTEXTS_PER_BLOCK)
+        return (known[context] << PC_BITS) | pc
+
+
+def analyze_flow(instructions: List[Any], should_track_return_sites: bool = False) -> FlowGraph:
+    """Compute reachable nodes, resolved edges and dataflow events by worklist fixpoint."""
     jumpdests = {inst.pc for inst in instructions if inst.name == "JUMPDEST"}
     graph = FlowGraph(instructions=instructions, jumpdests=jumpdests, entry=instructions[0].pc)
     graph.block_ranges = split_blocks(instructions)
     for start, (first, end) in graph.block_ranges.items():
         graph.block_last_op[start] = instructions[end - 1].name
+    contexts = _Contexts(jumpdests, should_track_return_sites)
     in_states: Dict[int, Tuple[AbstractValue, ...]] = {graph.entry: ()}
     worklist = [graph.entry]
     while worklist:
-        block = worklist.pop()
-        out_state, _, successors = _run_block(graph, block, in_states[block], None)
-        for target in successors:
+        node = worklist.pop()
+        out_state, _, successors = _run_block(graph, node, in_states[node], None)
+        for target_pc in successors:
+            target = contexts.node(target_pc, out_state)
             previous = in_states.get(target)
             joined = out_state if previous is None else join_states(previous, out_state)
             if previous is None or joined != previous:
                 in_states[target] = joined
                 worklist.append(target)
-    _record_final_pass(graph, in_states)
+    _record_final_pass(graph, in_states, contexts)
     graph.reachable = set(in_states)
     return graph
 
 
-def _record_final_pass(graph: FlowGraph, in_states: Dict[int, Tuple[AbstractValue, ...]]) -> None:
-    for block, state in in_states.items():
-        _, _, successors = _run_block(graph, block, state, graph.events)
-        graph.successors[block] = successors
-        if graph.block_last_op[block] == "JUMP" and not successors:
-            graph.unresolved_jumps += 1
+def _record_final_pass(graph: FlowGraph, in_states: Dict[int, Tuple[AbstractValue, ...]],
+                       contexts: _Contexts) -> None:
+    unresolved: Set[int] = set()
+    for node, state in in_states.items():
+        out_state, _, successors = _run_block(graph, node, state, graph.events)
+        graph.successors[node] = [contexts.node(pc, out_state) for pc in successors]
+        if graph.last_op(node) == "JUMP" and not successors:
+            unresolved.add(node_pc(node))
+    graph.unresolved_jumps = len(unresolved)

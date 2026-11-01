@@ -3,7 +3,6 @@ import argparse
 import csv
 import json
 import os
-import shutil
 import subprocess
 import tempfile
 import time
@@ -13,8 +12,8 @@ from repo_paths import resolve
 REPO = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 CATALOG = os.path.join(REPO, "benchmarks/benchmark_catalog_external.json")
 OUT_DIR = os.path.join(REPO, "results/external")
-SLITHER = os.environ.get("SLITHER_BIN") or shutil.which("slither") or os.path.join(REPO, ".venv/bin/slither")
-MYTHRIL = os.environ.get("MYTHRIL_BIN") or shutil.which("myth") or os.path.join(REPO, ".venv/bin/myth")
+SLITHER = os.path.join(REPO, ".venv/bin/slither")
+MYTHRIL = "/private/tmp/claude-501/mythvenv/bin/myth"
 SOLC_TEMPLATE = os.path.expanduser("~/.solc-select/artifacts/solc-{v}/solc-{v}")
 TIMEOUT_S = 60
 SLITHER_MAP = {
@@ -47,14 +46,15 @@ def run_slither(entry: dict) -> tuple:
     try:
         subprocess.run(command, capture_output=True, text=True, timeout=TIMEOUT_S, check=False)
     except subprocess.TimeoutExpired:
-        return "timeout", [], TIMEOUT_S * 1000.0
+        return "timeout", [], TIMEOUT_S * 1000.0, []
     elapsed = (time.perf_counter() - start) * 1000.0
     try:
         with open(report, encoding="utf-8") as handle:
             detectors = json.load(handle)["results"].get("detectors", [])
     except (OSError, json.JSONDecodeError, KeyError):
-        return "error", [], elapsed
-    return "ok", categories_for({d["check"] for d in detectors}, SLITHER_MAP), elapsed
+        return "error", [], elapsed, []
+    checks = {d["check"] for d in detectors}
+    return "ok", categories_for(checks, SLITHER_MAP), elapsed, sorted(checks)
 
 
 def solc_path_dir(version: str) -> str:
@@ -78,16 +78,16 @@ def run_mythril(entry: dict) -> tuple:
         done = subprocess.run(command, capture_output=True, text=True, timeout=TIMEOUT_S,
                               check=False, env=env)
     except subprocess.TimeoutExpired:
-        return "timeout", [], TIMEOUT_S * 1000.0
+        return "timeout", [], TIMEOUT_S * 1000.0, []
     elapsed = (time.perf_counter() - start) * 1000.0
     try:
         output = json.loads(done.stdout)
     except json.JSONDecodeError:
-        return "error", [], elapsed
+        return "error", [], elapsed, []
     if not output.get("success", True):
-        return "error", [], elapsed
-    issues = output.get("issues", [])
-    return "ok", categories_for({str(i.get("swc-id", "")) for i in issues}, MYTHRIL_MAP), elapsed
+        return "error", [], elapsed, []
+    swc_ids = {str(i.get("swc-id", "")) for i in output.get("issues", [])}
+    return "ok", categories_for(swc_ids, MYTHRIL_MAP), elapsed, sorted(swc_ids)
 
 
 def main() -> None:
@@ -114,13 +114,13 @@ def main() -> None:
     out = os.path.join(args.out_dir, f"{args.tool}_files_{args.shard}.csv")
     with open(out, "w", newline="", encoding="utf-8") as handle:
         writer = csv.DictWriter(handle, fieldnames=["contract_id", "labels", "status",
-                                                    "flagged_categories", "latency_ms"])
+                                                    "flagged_categories", "latency_ms", "raw_findings"])
         writer.writeheader()
         for entry in catalog:
-            status, cats, ms = runner(entry)
+            status, cats, ms, raw = runner(entry)
             writer.writerow({"contract_id": entry["contract_id"], "labels": ";".join(entry["labels"]),
                              "status": status, "flagged_categories": ";".join(cats),
-                             "latency_ms": round(ms, 2)})
+                             "latency_ms": round(ms, 2), "raw_findings": ";".join(raw)})
             handle.flush()
     print(out)
 

@@ -12,6 +12,7 @@ from typing import Any, Callable, Dict, List, Optional, Tuple
 
 from replay_probes import (
     ATTACKER_CODE,
+    PASSIVE_ATTACKER_CODE,
     PROBE_ARGUMENT_WORDS,
     PROBE_CODE,
     PROBE_MARK_SLOT,
@@ -93,6 +94,34 @@ def replay_reentrancy(runtime_hex: str, payload: Dict[str, Any]) -> Tuple[bool, 
     return False, {"attempts": len(deposits) * len(withdraws)}
 
 
+def _witness_run(runtime_hex: str, inputs: Dict[str, Any], attacker_code: bytes) -> Tuple[int, bool]:
+    """One witness transaction from the solver-chosen state; returns (attacker gain, re-entered)."""
+    storage = {int(slot): value for slot, value in inputs["storage"].items()}
+    accounts = _victim(runtime_hex, storage=storage)
+    accounts[ATTACKER_ADDRESS] = account(attacker_code)
+    sandbox = Sandbox(accounts)
+    before = sandbox.balance(ATTACKER_ADDRESS)
+    sandbox.send(ATTACKER_ADDRESS, bytes.fromhex(inputs["calldata"]), value=inputs["callvalue"])
+    gained = sandbox.balance(ATTACKER_ADDRESS) - before
+    return gained, sandbox.storage(ATTACKER_ADDRESS, REENTRY_FLAG_SLOT) == 1
+
+
+def replay_reentrancy_witness(runtime_hex: str, payload: Dict[str, Any]) -> Tuple[bool, Dict[str, Any]]:
+    """Calldata, call value and starting storage come from the Z3 model of the call-then-write path
+    (replay_witness). The same transaction runs twice from that state: once with the re-entering
+    attacker and once with a passive receiver. Confirmed only when re-entry yields strictly more
+    than the passive run, so a balance the solver credited to the attacker does not count. The
+    starting storage need not be reachable from deployment, so this tier is reported separately."""
+    inputs = payload.get("replay_inputs")
+    if not inputs:
+        return False, {"reason": "no witness inputs"}
+    reentrant_gain, reentered = _witness_run(runtime_hex, inputs, ATTACKER_CODE)
+    passive_gain, _ = _witness_run(runtime_hex, inputs, PASSIVE_ATTACKER_CODE)
+    detail = {"callvalue_wei": inputs["callvalue"], "reentrant_gain_wei": reentrant_gain,
+              "passive_gain_wei": passive_gain, "reentered": reentered, "seeded_slots": len(inputs["storage"])}
+    return reentered and reentrant_gain > passive_gain, detail
+
+
 def replay_delegatecall_taint(runtime_hex: str, payload: Dict[str, Any]) -> Tuple[bool, Dict[str, Any]]:
     """Confirmed when the victim executes probe code in its own storage context, which requires the
     DELEGATECALL target to be the attacker-supplied probe address."""
@@ -133,6 +162,8 @@ def replay_unbounded_loop(runtime_hex: str, payload: Dict[str, Any]) -> Tuple[bo
             return True, {"selector": selector, "bound_slot": slot}
     return False, {}
 
+
+WITNESS_ORACLES: Dict[str, Oracle] = {"SWC-107": replay_reentrancy_witness}
 
 ORACLES: Dict[str, Oracle] = {
     "SWC-107": replay_reentrancy,

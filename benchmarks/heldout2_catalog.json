@@ -2523,7 +2523,7 @@
     ],
     "sloc": 337,
     "solc_version": null,
-    "solc_error": "external/smartcontract-benchmark/labelled-dataset/unsafe_delegatecall/BeaconProxy.sol:20:1: Error: Expected import directiv",
+    "solc_error": "external/smartcontract-benchmark/labelled-dataset/unsafe_delegatecall/BeaconProxy.sol:20:1: Error: Expected import directive or contract definition.",
     "runtime_bytecode_paths": {},
     "repository_commit": "8b903aae40648ad0ead87662857c6685542710d5"
   },
@@ -2537,7 +2537,7 @@
     ],
     "sloc": 31,
     "solc_version": null,
-    "solc_error": "external/smartcontract-benchmark/labelled-dataset/unsafe_delegatecall/Delegation.sol:14:16: Error: Expected identifier, got",
+    "solc_error": "external/smartcontract-benchmark/labelled-dataset/unsafe_delegatecall/Delegation.sol:14:16: Error: Expected identifier, got 'LParen'",
     "runtime_bytecode_paths": {},
     "repository_commit": "8b903aae40648ad0ead87662857c6685542710d5"
   },
@@ -2551,7 +2551,7 @@
     ],
     "sloc": 265,
     "solc_version": null,
-    "solc_error": "external/smartcontract-benchmark/labelled-dataset/unsafe_delegatecall/ERC1967Proxy.sol:21:1: Error: Expected import directi",
+    "solc_error": "external/smartcontract-benchmark/labelled-dataset/unsafe_delegatecall/ERC1967Proxy.sol:21:1: Error: Expected import directive or contract definition.",
     "runtime_bytecode_paths": {},
     "repository_commit": "8b903aae40648ad0ead87662857c6685542710d5"
   },
@@ -2737,7 +2737,7 @@
     ],
     "sloc": 230,
     "solc_version": null,
-    "solc_error": "external/smartcontract-benchmark/labelled-dataset/tx_origin/BitCash.sol:10:1: Error: Expected import directive or contract ",
+    "solc_error": "external/smartcontract-benchmark/labelled-dataset/tx_origin/BitCash.sol:10:1: Error: Expected import directive or contract definition.",
     "runtime_bytecode_paths": {},
     "repository_commit": "8b903aae40648ad0ead87662857c6685542710d5"
   },
@@ -2751,7 +2751,7 @@
     ],
     "sloc": 204,
     "solc_version": null,
-    "solc_error": "external/smartcontract-benchmark/labelled-dataset/tx_origin/CareerOnToken.sol:23:38: Error: Expected token Comma got 'Payab",
+    "solc_error": "external/smartcontract-benchmark/labelled-dataset/tx_origin/CareerOnToken.sol:23:38: Error: Expected token Comma got 'Payable'",
     "runtime_bytecode_paths": {},
     "repository_commit": "8b903aae40648ad0ead87662857c6685542710d5"
   },
@@ -2877,7 +2877,7 @@
     ],
     "sloc": 29,
     "solc_version": null,
-    "solc_error": "external/smartcontract-benchmark/labelled-dataset/unsafe_suicide/BankOfEther.sol:13:14: Error: Expected identifier, got 'LP",
+    "solc_error": "external/smartcontract-benchmark/labelled-dataset/unsafe_suicide/BankOfEther.sol:13:14: Error: Expected identifier, got 'LParen'",
     "runtime_bytecode_paths": {},
     "repository_commit": "8b903aae40648ad0ead87662857c6685542710d5"
   },
@@ -2910,7 +2910,7 @@
     ],
     "sloc": 51,
     "solc_version": null,
-    "solc_error": "external/smartcontract-benchmark/labelled-dataset/unsafe_suicide/EthRoulette.sol:7:1: Error: Source file requires different",
+    "solc_error": "external/smartcontract-benchmark/labelled-dataset/unsafe_suicide/EthRoulette.sol:7:1: Error: Source file requires different compiler version (current compiler is 0.4.0+commit.3a456737.Darwin.appleclan",
     "runtime_bytecode_paths": {},
     "repository_commit": "8b903aae40648ad0ead87662857c6685542710d5"
   },
@@ -2990,7 +2990,7 @@
     ],
     "sloc": 39,
     "solc_version": null,
-    "solc_error": "external/smartcontract-benchmark/labelled-dataset/unsafe_suicide/bug_3.sol:26:27: Error: Expected token Semicolon got 'LPar",
+    "solc_error": "external/smartcontract-benchmark/labelled-dataset/unsafe_suicide/bug_3.sol:26:27: Error: Expected token Semicolon got 'LParen'",
     "runtime_bytecode_paths": {},
     "repository_commit": "8b903aae40648ad0ead87662857c6685542710d5"
   },
@@ -5866,7 +5866,7 @@
     "labels": [],
     "sloc": 38,
     "solc_version": null,
-    "solc_error": "external/smartcontract-benchmark/labelled-dataset/gasless_send/HFConditionalTransfer.sol:9:1: Error: Source \"/home/hjwang/T",
+    "solc_error": "external/smartcontract-benchmark/labelled-dataset/gasless_send/HFConditionalTransfer.sol:9:1: Error: Source \"/home/hjwang/Tools/ContraMaster/contracts/HFConditionalTransfer.sol\" not found: File not fo",
     "runtime_bytecode_paths": {},
     "repository_commit": "8b903aae40648ad0ead87662857c6685542710d5"
   },

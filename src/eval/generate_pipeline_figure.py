@@ -1,120 +1,83 @@
-import matplotlib.pyplot as plt
+"""Draw Figure 1, the EVM-Guard pipeline, at its printed size (text width of the journal page).
+
+Each stage lists what the code does. Items marked "v6" exist only in engine v6; everything else
+is shared by v5 and v6. Writes paper/figures/fig_pipeline_architecture.png.
+"""
+import os
+
 import matplotlib.patches as patches
+import matplotlib.pyplot as plt
 
-# Professional academic typography and styling
-plt.rcParams['font.family'] = 'DejaVu Sans'
-plt.rcParams['font.size'] = 9.0
+REPO = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+OUT = os.path.join(REPO, "paper", "figures", "fig_pipeline_architecture.png")
+WIDTH_IN, HEIGHT_IN = 7.2, 2.25
+BOX_W, BOX_H, BOX_Y, HEADER_H, GAP = 1.30, 2.05, 0.10, 0.46, 0.135
+TITLE_PT, BODY_PT, TAG_PT = 7.0, 6.1, 5.6
+LINE_STEP = 0.145
+HEADER_BG, BODY_BG, BORDER, V6_COLOR = "#1E293B", "#F8FAFC", "#475569", "#9A3412"
 
-# 14.5 x 3.3 inches at 300 DPI - formal publication dimensions
-fig, ax = plt.subplots(figsize=(14.5, 3.3), dpi=300)
-ax.set_xlim(0, 14.5)
-ax.set_ylim(0, 3.3)
-ax.axis('off')
-
-# Formal academic styling: muted slate and steel-blue palette
-# No rainbow or garish colors; elegant corporate/academic IEEE styling
-stages = [
-    {
-        "num": "Stage 1",
-        "title": "Disassembly &\nPreprocessing",
-        "subtitle": "• Strip CBOR metadata trailer\n• Linear-sweep pyevmasm\n• Recover 4-byte dispatchers",
-        "header_bg": "#1E293B",  # Deep Slate Navy
-        "box_bg": "#F8FAFC",     # Crisp White-Slate
-        "border": "#475569",     # Slate Gray
-        "x": 0.3
-    },
-    {
-        "num": "Stage 2",
-        "title": "CFG & Abstract\nStack Dataflow",
-        "subtitle": "• Basic-block leader partition\n• Monotone stack fixpoint\n• Provenance & value bounds\n• Natural loop extraction",
-        "header_bg": "#334155",  # Muted Slate
-        "box_bg": "#F8FAFC",
-        "border": "#475569",
-        "x": 3.2
-    },
-    {
-        "num": "Stage 3",
-        "title": "Path-Sensitive\nHazard Checking",
-        "subtitle": "• Dominance tree analysis\n• External call reachability\n• Mutex lock recognition\n• Gas bound <= 2300 prune",
-        "header_bg": "#1E293B",
-        "box_bg": "#F8FAFC",
-        "border": "#475569",
-        "x": 6.1
-    },
-    {
-        "num": "Stage 4",
-        "title": "SMT Constraint\nWitness Synthesis",
-        "subtitle": "• Z3 bit-vector templates\n• Z3 parameter solve\n• Target calldata synthesis\n• Concrete witness vector",
-        "header_bg": "#334155",
-        "box_bg": "#F8FAFC",
-        "border": "#475569",
-        "x": 9.0
-    },
-    {
-        "num": "Stage 5",
-        "title": "Dual-State Dynamic\nSandbox Replay",
-        "subtitle": "• Isolated py-evm harness\n• Synthesized attack execution\n• State post-condition check\n• Post-state criterion, not exit status",
-        "header_bg": "#0F172A",  # Darkest Navy
-        "box_bg": "#F8FAFC",
-        "border": "#334155",
-        "x": 11.9
-    }
+STAGES = [
+    ("Disassembly", ["Strip CBOR trailer", "Disassemble", "Recover selectors"], []),
+    ("CFG and abstract\nstack dataflow", ["Basic blocks", "Stack fixpoint;", "  constant jumps", "Gas bounds,", "  provenance"],
+     ["Per-context return", "  sites (depth 4)"]),
+    ("Reentrancy check", ["CALL, then SSTORE", "  in same function", "Mutex rules", "Skip gas <= 2300"],
+     ["Z3 path feasibility;", "  only UNSAT rejects", "Attacker model"]),
+    ("Z3 parameters", ["Fixed template;", "  SAT gives witness", "  parameters"],
+     ["Witness calldata,", "  value, storage"]),
+    ("Sandbox replay", ["py-evm sandbox", "Post-state check,", "  not exit status", "Label confirmed", "  or unconfirmed"],
+     ["Re-entering vs", "  passive attacker"]),
 ]
 
-box_width = 2.38
-box_height = 2.65
-box_y = 0.35
-header_height = 0.68
 
-for s in stages:
-    # Outer box container
-    rect = patches.FancyBboxPatch(
-        (s["x"], box_y), box_width, box_height,
-        boxstyle="round,pad=0.04,rounding_size=0.12",
-        linewidth=1.4, edgecolor=s["border"], facecolor=s["box_bg"], zorder=2
-    )
-    ax.add_patch(rect)
-    
-    # Header box banner
-    header = patches.FancyBboxPatch(
-        (s["x"], box_y + box_height - header_height), box_width, header_height,
-        boxstyle="round,pad=0.04,rounding_size=0.12",
-        linewidth=1.4, edgecolor=s["border"], facecolor=s["header_bg"], zorder=3
-    )
-    ax.add_patch(header)
-    
-    # Fill the lower corners of header banner to square with the body
-    fill_rect = patches.Rectangle(
-        (s["x"] + 0.03, box_y + box_height - header_height), box_width - 0.06, 0.15,
-        linewidth=0, facecolor=s["header_bg"], zorder=3
-    )
-    ax.add_patch(fill_rect)
+def draw_line(ax, x: float, y: float, line: str, color: str) -> None:
+    """A bullet item, or its indented continuation when the text starts with two spaces."""
+    is_continuation = line.startswith("  ")
+    text = line.strip() if is_continuation else "\u2022 " + line.strip()
+    ax.text(x + (0.15 if is_continuation else 0.07), y, text, ha="left", va="top", fontsize=BODY_PT, color=color,
+            zorder=4)
 
-    # Stage Badge & Title in Header
-    ax.text(s["x"] + box_width/2.0, box_y + box_height - 0.22, s["num"].upper(),
-            ha='center', va='center', fontsize=8.0, fontweight='bold', color='#94A3B8', zorder=4)
-    ax.text(s["x"] + box_width/2.0, box_y + box_height - 0.47, s["title"],
-            ha='center', va='center', fontsize=9.2, fontweight='bold', color='#FFFFFF', zorder=4,
-            linespacing=0.95)
 
-    # Subtitle / bullet items in body
-    ax.text(s["x"] + 0.14, box_y + 0.95, s["subtitle"],
-            ha='left', va='center', fontsize=8.2, color='#1E293B', zorder=4,
-            linespacing=1.35)
+def draw_stage(ax, x: float, title: str, shared: list, v6_only: list) -> None:
+    ax.add_patch(patches.FancyBboxPatch((x, BOX_Y), BOX_W, BOX_H, boxstyle="round,pad=0.02,rounding_size=0.06",
+                                        linewidth=0.9, edgecolor=BORDER, facecolor=BODY_BG, zorder=2))
+    ax.add_patch(patches.FancyBboxPatch((x, BOX_Y + BOX_H - HEADER_H), BOX_W, HEADER_H,
+                                        boxstyle="round,pad=0.02,rounding_size=0.06",
+                                        linewidth=0.9, edgecolor=BORDER, facecolor=HEADER_BG, zorder=3))
+    ax.text(x + BOX_W / 2, BOX_Y + BOX_H - HEADER_H / 2, title, ha="center", va="center", fontsize=TITLE_PT,
+            fontweight="bold", color="white", zorder=4, linespacing=1.0)
+    y = BOX_Y + BOX_H - HEADER_H - 0.12
+    for line in shared:
+        draw_line(ax, x, y, line, "#0F172A")
+        y -= LINE_STEP
+    if v6_only:
+        y -= 0.05
+        ax.text(x + 0.07, y, "v6 only", ha="left", va="top", fontsize=TAG_PT, fontweight="bold", color=V6_COLOR,
+                zorder=4)
+        y -= 0.15
+        for line in v6_only:
+            draw_line(ax, x, y, line, V6_COLOR)
+            y -= LINE_STEP
 
-# High-precision arrows connecting stages
-for i in range(len(stages) - 1):
-    start_x = stages[i]["x"] + box_width + 0.03
-    end_x = stages[i+1]["x"] - 0.03
-    mid_y = box_y + box_height / 2.0
-    
-    arrow = patches.FancyArrowPatch(
-        (start_x, mid_y), (end_x, mid_y),
-        arrowstyle='-|>,head_length=5,head_width=3.5',
-        color='#475569', linewidth=1.8, zorder=5
-    )
-    ax.add_patch(arrow)
 
-plt.tight_layout()
-plt.savefig("paper/rewrite/figures/fig_pipeline_architecture.png", dpi=300, bbox_inches='tight', facecolor='white')
-print("Pipeline figure updated with formal academic palette.")
+def main() -> None:
+    plt.rcParams["font.family"] = "DejaVu Sans"
+    fig, ax = plt.subplots(figsize=(WIDTH_IN, HEIGHT_IN), dpi=300)
+    ax.set_xlim(0, WIDTH_IN)
+    ax.set_ylim(0, HEIGHT_IN)
+    ax.axis("off")
+    left = (WIDTH_IN - (len(STAGES) * BOX_W + (len(STAGES) - 1) * GAP)) / 2
+    for index, (title, shared, v6_only) in enumerate(STAGES):
+        x = left + index * (BOX_W + GAP)
+        draw_stage(ax, x, title, shared, v6_only)
+        if index < len(STAGES) - 1:
+            mid = BOX_Y + BOX_H / 2
+            ax.add_patch(patches.FancyArrowPatch((x + BOX_W + 0.02, mid), (x + BOX_W + GAP - 0.02, mid),
+                                                 arrowstyle="-|>,head_length=3,head_width=2", color=BORDER,
+                                                 linewidth=1.0, zorder=5))
+    os.makedirs(os.path.dirname(OUT), exist_ok=True)
+    fig.savefig(OUT, dpi=300, bbox_inches="tight", pad_inches=0.02, facecolor="white")
+    print(OUT)
+
+
+if __name__ == "__main__":
+    main()

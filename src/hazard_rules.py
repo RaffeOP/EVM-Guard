@@ -1,19 +1,25 @@
 """Hazard checks over a FlowGraph (CFG reachability, dominance and dataflow patterns).
 
 Each check returns evidence for one finding or None. Evidence names the
-program points involved, so the replay oracle can target them. The checks do
-not solve path conditions.
+program points involved, so the replay oracle can target them. The pattern checks
+follow CFG edges and do not solve path conditions. With path feasibility enabled
+(engine v6), a reentrancy candidate that passes the pattern is kept only if Z3 does
+not refute the call-then-write path or the re-entrant invocation (path_feasibility).
 """
 
+import time
 from typing import Any, Dict, List, Optional, Set
 
 from engine_options import FULL_ENGINE, EngineOptions
-from evm_dataflow import FlowGraph, value_bound
+from evm_dataflow import FlowGraph, node_pc, value_bound
 from evm_regions import Dominance, loop_exit_jumpis, natural_loops, reach_within
+from path_feasibility import INFEASIBLE, UNKNOWN, AttackerModel, code_addresses, decide, settable_slots
 
 STIPEND_GAS = 2300
 MUTEX_SET_VALUES = (1, 2)
 MUTEX_RESET_VALUES = (0, 1)
+MAX_STORES_PER_CALL = 6
+CONTRACT_FEASIBILITY_BUDGET_S = 30.0
 
 
 def dominates_event(dominance: Dominance, earlier: Dict[str, Any], later: Dict[str, Any]) -> bool:
@@ -34,8 +40,10 @@ def events_of(graph: FlowGraph, kind: str) -> List[Dict[str, Any]]:
 
 def check_reentrancy(graph: FlowGraph, dominance: Dominance,
                      scopes: Dict[str, Set[int]], options: EngineOptions = FULL_ENGINE) -> Optional[Dict[str, Any]]:
-    """SWC-107: a CALL that can re-enter, followed on some path by an SSTORE, with no mutex around it."""
+    """SWC-107: a CALL that can re-enter, followed on some path by an SSTORE, with no mutex around it.
+    With path feasibility, Z3 must also fail to refute the path and the re-entry (Definition 1)."""
     stores = events_of(graph, "sstore")
+    feasibility = _Feasibility(graph, dominance, scopes, options)
     for call in events_of(graph, "call"):
         if call["op"] not in ("CALL", "CALLCODE") or _excluded_by_stipend(call, options):
             continue
@@ -45,8 +53,51 @@ def check_reentrancy(graph: FlowGraph, dominance: Dominance,
             later = [s for s in stores if s["block"] in scope and reaches_event(graph, call, s, scope)]
             if not later or _mutex_protected(graph, dominance, call, scope, stores, options):
                 continue
-            return {"block": call["block"], "call_pc": call["pc"], "store_pc": later[0]["pc"], "scope": selector}
+            evidence = {"block": call["block"], "call_pc": call["pc"], "store_pc": later[0]["pc"], "scope": selector}
+            if not options.should_check_path_feasibility:
+                return evidence
+            decision = feasibility.decide(selector, call, later)
+            if decision["verdict"] != INFEASIBLE:
+                return {**evidence, **feasibility.describe(decision)}
     return None
+
+
+class _Feasibility:
+    """Z3 decisions for one contract, cached per (call, function), under a time budget. Past the
+    budget a candidate is kept as unknown, never dropped."""
+
+    def __init__(self, graph: FlowGraph, dominance: Dominance, scopes: Dict[str, Set[int]], options: EngineOptions):
+        self.graph, self.scopes = graph, scopes
+        callers = events_of(graph, "caller")
+        settable = settable_slots(graph, lambda store: any(dominates_event(dominance, c, store) for c in callers))
+        self.model = AttackerModel(options.should_assume_unprivileged_attacker, code_addresses(graph), settable)
+        self.deadline = time.monotonic() + CONTRACT_FEASIBILITY_BUDGET_S
+        self.cache: Dict[Any, Dict[str, Any]] = {}
+
+    def decide(self, selector: str, call: Dict[str, Any], later: List[Dict[str, Any]]) -> Dict[str, Any]:
+        unique = list({(node_pc(s["block"]), s["order"]): s for s in later}.values())
+        key = (node_pc(call["block"]), call["order"], selector, tuple(sorted((node_pc(s["block"]), s["order"]) for s in unique)))
+        if key not in self.cache:
+            if time.monotonic() > self.deadline:
+                self.cache[key] = {"verdict": UNKNOWN, "kind": "unclassified", "reason": "contract budget"}
+            else:
+                self.cache[key] = decide(self.graph, self.scopes, selector, call, unique[:MAX_STORES_PER_CALL],
+                                         self.model)
+        return self.cache[key]
+
+    def describe(self, decision: Dict[str, Any]) -> Dict[str, Any]:
+        kind = decision.get("kind", "unclassified")
+        reader = decision.get("reader")
+        if kind == "cross-function" and reader is not None and self._is_view(reader):
+            kind = "read-only"
+        described = {"feasibility": decision["verdict"], "reentrancy_kind": kind, "path_result": decision.get("first")}
+        if reader is not None:
+            described["stale_reader"] = reader
+        return described
+
+    def _is_view(self, selector: str) -> bool:
+        scope = self.scopes.get(selector, set())
+        return not any(e["block"] in scope for e in self.graph.events if e["kind"] in ("sstore", "call"))
 
 
 def _excluded_by_stipend(call: Dict[str, Any], options: EngineOptions) -> bool:
@@ -157,7 +208,7 @@ def check_unbounded_loop(graph: FlowGraph, dominance: Dominance,
         for block in loop_exit_jumpis(graph, body):
             condition = jumpi_by_block[block]["cond"]
             if condition.from_storage:
-                return {"block": header, "loop_header_pc": header, "loop_slot": condition.storage_slot,
+                return {"block": header, "loop_header_pc": node_pc(header), "loop_slot": condition.storage_slot,
                         "function_selectors": selectors}
     return None
 

@@ -1,0 +1,75 @@
+{
+  "sample": 120,
+  "labels": {
+    "exploitable": 1,
+    "not-exploitable": 119
+  },
+  "v5": {
+    "flagged_in_sample": 62,
+    "exploitable": 1,
+    "precision": 0.0161,
+    "precision_ci95": [
+      0.0004,
+      0.0866
+    ]
+  },
+  "v6": {
+    "flagged_in_sample": 107,
+    "exploitable": 1,
+    "precision": 0.0093,
+    "precision_ci95": [
+      0.0002,
+      0.051
+    ]
+  },
+  "slither_mapped": {
+    "flagged_in_sample": 114,
+    "exploitable": 1,
+    "precision": 0.0088,
+    "precision_ci95": [
+      0.0002,
+      0.0479
+    ]
+  },
+  "slither_strict": {
+    "flagged_in_sample": 79,
+    "exploitable": 1,
+    "precision": 0.0127,
+    "precision_ci95": [
+      0.0003,
+      0.0685
+    ]
+  },
+  "v5_vs_slither_mapped": {
+    "false_positives": {
+      "only_evm_guard": 1,
+      "only_baseline": 53,
+      "p_value": 6.11e-15
+    }
+  },
+  "v5_vs_slither_strict": {
+    "false_positives": {
+      "only_evm_guard": 16,
+      "only_baseline": 33,
+      "p_value": 0.0213
+    }
+  },
+  "v5_vs_v6": {
+    "false_positives": {
+      "only_evm_guard": 13,
+      "only_baseline": 58,
+      "p_value": 6.27e-08
+    },
+    "true_positives": {
+      "only_evm_guard": 0,
+      "only_baseline": 0,
+      "p_value": 1.0
+    }
+  },
+  "exploitable_flagged_by": {
+    "v5": 1,
+    "v6": 1,
+    "slither_mapped": 1,
+    "slither_strict": 1
+  }
+}
