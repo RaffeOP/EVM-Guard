@@ -34,7 +34,7 @@ catalog lists.
 
 On 2026-10-31 the flags of every file on all five corpora matched the archived v5 runs
 (`results/v5_old/`, `results/final_v5/`) exactly. The reproduction outputs are in
-`results/reproduction_2026-10-31/`.
+`results/reproduction_reference/`.
 
 ## Known differences from the frozen records
 

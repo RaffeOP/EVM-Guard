@@ -13,9 +13,11 @@ import re
 import shutil
 import subprocess
 
+import sys
+
 REPO = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-BENCH_ROOT = "/tmp/solidifi_bench/SolidiFI-benchmark-master"  # extracted from the pinned archive
-CLEAN_ROOT = "/tmp/solidifi/SolidiFI-master/contracts"
+BENCH_ROOT = sys.argv[1] if len(sys.argv) > 1 else os.environ.get("SOLIDIFI_BENCH_ROOT", "/tmp/solidifi_bench/SolidiFI-benchmark-master")
+CLEAN_ROOT = sys.argv[2] if len(sys.argv) > 2 else os.environ.get("SOLIDIFI_CLEAN_ROOT", "/tmp/solidifi/SolidiFI-master/contracts")
 SOLC_DIR = os.path.expanduser("~/.solc-select/artifacts")
 OUT_CATALOG = os.path.join(REPO, "benchmarks/heldout_catalog.json")
 OUT_BYTECODE = os.path.join(REPO, "benchmarks/heldout")

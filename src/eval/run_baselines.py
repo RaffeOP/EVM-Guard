@@ -89,7 +89,7 @@ def _run(command: list, timeout_s: float, parse) -> tuple:
 
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--catalog", default="benchmarks/benchmark_catalog_226.json")
+    parser.add_argument("--catalog", default="benchmarks/benchmark_catalog_external.json")
     parser.add_argument("--out", required=True)
     parser.add_argument("--tool", choices=["slither", "mythril", "securify"], required=True)
     parser.add_argument("--repeats", type=int, default=10)

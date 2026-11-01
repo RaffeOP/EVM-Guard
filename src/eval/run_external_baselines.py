@@ -12,8 +12,8 @@ from repo_paths import resolve
 REPO = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 CATALOG = os.path.join(REPO, "benchmarks/benchmark_catalog_external.json")
 OUT_DIR = os.path.join(REPO, "results/external")
-SLITHER = os.path.join(REPO, ".venv/bin/slither")
-MYTHRIL = "/private/tmp/claude-501/mythvenv/bin/myth"
+SLITHER = os.environ.get("SLITHER_BIN", os.path.join(REPO, ".venv/bin/slither"))
+MYTHRIL = os.environ.get("MYTHRIL_BIN", "myth")
 SOLC_TEMPLATE = os.path.expanduser("~/.solc-select/artifacts/solc-{v}/solc-{v}")
 TIMEOUT_S = 60
 SLITHER_MAP = {

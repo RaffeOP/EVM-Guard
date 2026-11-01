@@ -36,3 +36,10 @@ Thumbs.db
 benchmarks/heldout2_local/
 benchmarks/**/*.bin-runtime
 results/reproduction/
+
+# Confidential mainnet sample artifacts (prevents disclosing exploitable contract addresses)
+results/protocol7/mainnet_sample.json
+results/protocol7/mainnet_sample_catalog.json
+results/protocol7/mainnet_sample_sources/
+results/protocol7/*key*.csv
+

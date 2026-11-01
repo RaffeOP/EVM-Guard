@@ -32,10 +32,10 @@ from score_protocol7 import confusion  # noqa: E402
 
 CATEGORY = "reentrancy"
 STRICT_DETECTORS = {"reentrancy-eth", "reentrancy-no-eth"}
-GUARD = {"smartbugs": {"v5": "results/reproduction_2026-10-31/smartbugs"},
+GUARD = {"smartbugs": {"v5": "results/reproduction_reference/smartbugs"},
          "solidifi": {"v5": "results/protocol7/v5/solidifi", "v6": "results/protocol7/v6/solidifi"},
          "labeled": {"v5": "results/protocol7/v5/labeled", "v6": "results/protocol7/v6/labeled"},
-         "synthetic_final": {"v5": "results/reproduction_2026-10-31/synthetic_final"}}
+         "synthetic_final": {"v5": "results/reproduction_reference/synthetic_final"}}
 
 
 def read_csv(pattern: str) -> list:

@@ -22,7 +22,7 @@ sys.path.insert(0, os.path.join(REPO, "src", "eval"))
 
 from score_external import clopper_pearson  # noqa: E402
 
-V5 = "reproduction_2026-10-31"
+V5 = "reproduction_reference"
 CORPORA = {
     "smartbugs": {"evm_guard": f"{V5}/smartbugs", "baselines": "external",
                   "categories": ["reentrancy", "denial_of_service", "access_control", "arithmetic"]},
